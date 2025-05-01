@@ -5,11 +5,31 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
 {
     public class UpdateCampaignOfferModel : PageModel
     {
-        public void OnGet()
+        private Services.CampaignOfferService _campaignOfferService;
+        public UpdateCampaignOfferModel(Services.CampaignOfferService campaignOfferService)
         {
+            _campaignOfferService = campaignOfferService;
         }
-        public void OnPost()
+        [BindProperty]
+        public Models.CampaignOffer CampaignOffer { get; set; }
+        public IActionResult OnGet(int id)
         {
+            CampaignOffer = _campaignOfferService.ReadCampaignOffer(id);
+            if (CampaignOffer == null)
+            {
+                // Handle not found case
+                RedirectToPage("./Index"); // Redirect to the index page if not found
+            }
+            return Page();
+        }
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            _campaignOfferService.UpdateCampaignOffer(CampaignOffer.Id, CampaignOffer);
+            return RedirectToPage("./Index"); // Redirect to the index page after updating
         }
     }
 }

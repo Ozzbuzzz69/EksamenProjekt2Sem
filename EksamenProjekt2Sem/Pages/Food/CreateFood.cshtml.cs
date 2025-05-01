@@ -5,11 +5,25 @@ namespace EksamenProjekt2Sem.Pages.Food
 {
     public class CreateFoodModel : PageModel
     {
-        public void OnGet()
+        private Services.FoodService _foodService;
+        public CreateFoodModel(Services.FoodService foodService)
         {
+            _foodService = foodService;
         }
-        public void OnPost()
+        [BindProperty]
+        public Models.Food Food { get; set; }
+        public IActionResult OnGet()
         {
+            return Page();
+        }
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            _foodService.CreateFood(Food);
+            return RedirectToPage("./Index");
         }
     }
 }
