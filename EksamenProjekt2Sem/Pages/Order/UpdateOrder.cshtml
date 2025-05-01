@@ -1,9 +1,33 @@
-﻿@page
+﻿@page "{id:int}"
 @model EksamenProjekt2Sem.Pages.Order.UpdateOrderModel
 @{
 }
-<h1>Update Order</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Order.Id" class="control-lable"></label>
+        <input asp-for="Order.Id" class="form-control" readonly="@(true)" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Order.User" class="control-label"></label>
+        <input asp-for="Order.User" class="form-control" />
+        <span asp-validation-for="Order.User" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Order.PickupTime" class="control-label"></label>
+        <input asp-for="Order.PickupTime" class="form-control" />
+        <span asp-validation-for="Order.PickupTime" class="text-danger"></span>
+    </div>
+    @{
+        /* More inputs should be added here */
+    }
 
-<div>
-    <h2>Update the order details goes here</h2>
-</div>
+    <p>
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </p>
+</form>
+
+<p>
+    <a asp-page="/Order/ReadAllOrders">Back to List</a>
+</p>

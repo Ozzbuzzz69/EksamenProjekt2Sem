@@ -1,9 +1,33 @@
-﻿@page
+﻿@page "{id:int}"
 @model EksamenProjekt2Sem.Pages.Food.UpdateFoodModel
 @{
 }
-<h1>Update Food</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Food.Id" class="control-lable"></label>
+        <input asp-for="Food.Id" class="form-control" readonly="@(true)" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Food.Ingredients" class="control-label"></label>
+        <input asp-for="Food.Ingredients" class="form-control" />
+        <span asp-validation-for="Food.Ingredients" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Food.Price" class="control-label"></label>
+        <input asp-for="Food.Price" class="form-control" />
+        <span asp-validation-for="Food.Price" class="text-danger"></span>
+    </div>
+    @{
+        /* More inputs should be added here */
+    }
 
-<div>
-    <h2>Update the food details goes here</h2>
-</div>
+    <p>
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </p>
+</form>
+
+<p>
+    <a asp-page="/Food/ReadAllFood">Back to List</a>
+</p>
