@@ -72,5 +72,3 @@ namespace EksamenProjekt2Sem.Models
         }
     }
 }
-
-// push test
