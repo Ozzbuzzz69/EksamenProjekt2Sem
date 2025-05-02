@@ -40,7 +40,7 @@ namespace EksamenProjekt2Sem.Services
             // Delete order from Database
             return new Order(); // Placeholder return
         }
-        public double CalculateTotalPrice(List<OrderLine> orderlines)
+        public double CalculateTotalPrice(int id)
         {
             // Go through each orderline in the list to calculate the total price
 
