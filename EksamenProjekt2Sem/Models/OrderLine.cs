@@ -7,9 +7,9 @@ namespace EksamenProjekt2Sem.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         [Required]
-        public int Quantity { get; private set; }
+        public int Quantity { get; set; }
         [Required]
         public double Price { get; set; }
         public Food Food { get; set; }
@@ -27,8 +27,6 @@ namespace EksamenProjekt2Sem.Models
         {
             Id = id;
             Quantity = quantity;
-           
-            
         }
     }
 }
