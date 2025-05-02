@@ -20,7 +20,7 @@ namespace EksamenProjekt2Sem.Models
         
         public CampaignOffer()
         { }
-        //f;
+        
        
         public CampaignOffer(int id, string name, string imageLink, double price)
         {
