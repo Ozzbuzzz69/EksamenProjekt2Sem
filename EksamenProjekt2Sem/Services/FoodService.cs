@@ -40,5 +40,9 @@ namespace EksamenProjekt2Sem.Services
             // Delete food from Database
             return new Sandwich(); // Placeholder return
         }
+
+        //+ FilterFoodByType(string str) : List<Food>
+        //+ SpecialOffer(Food food, double price, DateTime dateFrom, DateTime dateTo) : void  
+        //+ FilterFoodByCriteria(?) : List<Food>
     }
 }

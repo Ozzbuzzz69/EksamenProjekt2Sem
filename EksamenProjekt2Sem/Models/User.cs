@@ -37,9 +37,8 @@ namespace EksamenProjekt2Sem.Models
         public User()
         { }
 
-        public User(int id, string name, string email, string phoneNumber, string password)
-        {
-            Id = id;
+        public User(string name, string email, string phoneNumber, string password)
+        { 
             Name = name;
             Email = email;
             PhoneNumber = phoneNumber;
