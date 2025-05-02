@@ -14,14 +14,6 @@ namespace EksamenProjekt2Sem.Models
         public Food()
         { }
 
-        /// <summary>
-        /// Constructor for Food class
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="ingredients"></param>
-        /// <param name="inSeason"></param>
-        /// <param name="meatType"></param>
-        /// <param name="price"></param>
         public Food(int id, string ingredients, bool? inSeason, string? meatType, double? price)
         {
             Id = id;

@@ -11,14 +11,6 @@
         public OrderLine()
         { }
 
-        /// <summary>
-        /// Constructor for OrderLine class
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="quantity"></param>
-        /// <param name="price"></param>
-        /// <param name="food"></param>
-        /// <param name="campaignOffer"></param>
         public OrderLine(int id, int quantity, double price, Food food, CampaignOffer campaignOffer)
         {
             Id = id;
