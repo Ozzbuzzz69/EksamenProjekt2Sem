@@ -14,18 +14,17 @@ namespace EksamenProjekt2Sem.Models
         public double Price { get; set; }
         public Food Food { get; set; }
         public CampaignOffer CampaignOffer { get; set; }
-        public User User { get; set; }
-        public int UserId { get; set; }
-        public int FoodId { get; set; }
+       
+        
+        
         public int CampaignOfferId { get; set; }
 
         public OrderLine()
         { }
 
         
-        public OrderLine(int id, int quantity)
+        public OrderLine(object foodObj, int quantity)
         {
-            Id = id;
             Quantity = quantity;
         }
     }
