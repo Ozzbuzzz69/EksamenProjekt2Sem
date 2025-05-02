@@ -5,18 +5,21 @@ namespace EksamenProjekt2Sem.Models
 {
     public class Order
     {
-
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public User User { get; set; }
 
-
+        public DateTime OrderTime { get; } = DateTime.Now;
         public DateTime PickupTime { get; set; }
 
         public double TotalPrice { get { return GetTotalPrice(); } }
 
         private List<OrderLine> orderLines = new List<OrderLine>();
 
+
+        //Lav orderline funktion
         public Order()
         { }
 
@@ -27,9 +30,8 @@ namespace EksamenProjekt2Sem.Models
         /// <param name="user"></param>
         /// <param name="pickupTime"></param>
         /// <param name="totalPrice"></param>
-        public Order(int id, User user, DateTime pickupTime)
+        public Order(User user, DateTime pickupTime)
         {
-            Id = id;
             User = user;
             PickupTime = pickupTime;
         }
