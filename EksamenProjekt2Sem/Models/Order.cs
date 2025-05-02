@@ -6,12 +6,12 @@ namespace EksamenProjekt2Sem.Models
     public class Order
     {
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
-        public User User { get; private set; }
+        public User User { get; set; }
 
 
-        public DateTime PickupTime { get; private set; }
+        public DateTime PickupTime { get; set; }
 
         public double TotalPrice { get { return GetTotalPrice(); } }
 
@@ -33,36 +33,7 @@ namespace EksamenProjekt2Sem.Models
             User = user;
             PickupTime = pickupTime;
         }
-        /// <summary>
-        /// Function to set otherwise private id
-        /// </summary>
-        /// <param name="id"></param>
-        public void SetId(int id)
-        {
-            Id = id;
-        }
-        /// <summary>
-        /// Function to set otherwise private user
-        /// </summary>
-        /// <param name="user"></param>
-        public void SetUser(User user)
-        {
-            User = user;
-        }
-        /// <summary>
-        /// Function to set otherwise private pickup time.
-        /// Checks for pickup time in the past.
-        /// </summary>
-        /// <param name="pickupTime"></param>
-        /// <exception cref="ArgumentException"></exception>
-        public void SetPickupTime(DateTime pickupTime)
-        {
-            if (pickupTime < DateTime.Now)
-            {
-                throw new ArgumentException("Pickup time cannot be in the past");
-            }
-            PickupTime = pickupTime;
-        }
+       
         /// <summary>
         /// Calculates the total price based on the order lines.
         /// </summary>
