@@ -40,10 +40,10 @@ namespace EksamenProjekt2Sem.Services
             // Delete user from Database
             return new User(); // Placeholder return
         }
-        public Order Order(List<OrderLine> orderlines)
-        {
-            // Create order from orderlines
-            return new Order(); // Placeholder return
-        }
+        //public Order Order(List<OrderLine> orderlines)
+        //{
+        //    // Create order from orderlines
+        //    return new Order(); // Placeholder return
+        //}
     }
 }

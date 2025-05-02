@@ -4,6 +4,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class CampaignOfferService : GenericDbService<CampaignOffer>
     {
+        private List<CampaignOffer> _campaignOffers;
         private GenericDbService<CampaignOffer> _dbService;
 
         public CampaignOfferService(CampaignOfferService campaignOfferService)
@@ -33,6 +34,11 @@ namespace EksamenProjekt2Sem.Services
         {
             // Delete campaign offer from Database
             return new CampaignOffer(); // Placeholder return
+        }
+
+        public void UploadPicture(string picture) 
+        { 
+            //Upload pic awesome
         }
     }
 }

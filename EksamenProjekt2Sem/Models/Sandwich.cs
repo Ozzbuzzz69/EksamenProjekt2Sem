@@ -14,9 +14,8 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Sandwich(int id, string ingredients, bool? inSeason, string? meatType, double price) : base(ingredients, inSeason, meatType, price)
+        public Sandwich(string ingredients, bool? inSeason, string? meatType, double price) : base(ingredients, inSeason, meatType, price)
         {
-            Id = id;
         }
       
     }
