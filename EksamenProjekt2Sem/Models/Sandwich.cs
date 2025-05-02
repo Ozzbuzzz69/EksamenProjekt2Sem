@@ -1,14 +1,23 @@
-﻿namespace EksamenProjekt2Sem.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace EksamenProjekt2Sem.Models
 {
     public class Sandwich : Food
     {
-        public string Category { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+       
         public Sandwich()
         { }
 
-        public Sandwich(int id, string ingredients, bool? inSeason, string? meatType, double? price, string category) : base(id, ingredients, inSeason, meatType, price)
+        
+        public Sandwich(int id, string ingredients, bool? inSeason, string? meatType, double price) : base(ingredients, inSeason, meatType, price)
         {
-            Category = category;
+            Id = id;
         }
+      
     }
 }

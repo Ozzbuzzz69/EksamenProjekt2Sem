@@ -1,0 +1,16 @@
+﻿@page
+@model EksamenProjekt2Sem.Pages.Food.DeleteFoodModel
+@{
+}
+<h1>Delete Confirmation</h1>
+<div class="alert alert-danger">
+        <h4>Are you sure you want to delete this food?</h4>
+    <p>
+        <strong>Food Ingredients:</strong> @Model.Food.Ingredients
+    </p>
+    <form method="post">
+        <input type="hidden" asp-for="Food.Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -22,7 +22,7 @@ namespace EksamenProjekt2Sem.Models
         public string Email { get; set; } // Bruges som login
 
         [Required(ErrorMessage = "Indtast gyldigt nummer")]
-        [RegularExpression(@"^\+?[0-9]{8,10}$", ErrorMessage = "Indtast gyldigt telefonnummer")] // +45 12345678
+        [RegularExpression(@"^+?[0-9]{8,10}$", ErrorMessage = "Indtast gyldigt telefonnummer")] // +45 12345678
         [StringLength(10, ErrorMessage = "Telefonnummeret må max være 10 tegn langt")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
@@ -30,7 +30,7 @@ namespace EksamenProjekt2Sem.Models
         [Required(ErrorMessage = "Indtast gyldig kode")]
         [MinLength(8, ErrorMessage = "Koden skal minimum indeholde 8 tegn")]
         [MaxLength(20, ErrorMessage = "Koden må max være 20 tegn langt")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "Koden skal indeholde mindst 1 stort bogstav, 1 lille bogstav og 1 tal")] // "\d" konverter tal til en string
+        [RegularExpression(@"^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "Koden skal indeholde mindst 1 stort bogstav, 1 lille bogstav og 1 tal")] // "\d" konverter tal til en string
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

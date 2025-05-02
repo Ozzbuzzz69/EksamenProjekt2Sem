@@ -1,0 +1,30 @@
+﻿@page
+@model EksamenProjekt2Sem.Pages.Food.CreateFoodModel
+@{
+    //Very incorrect implementation of the page, but it is a placeholder for the actual implementation.
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Food.Id" class="control-label"></label>
+        <input asp-for="@Model.Food.Id" class="form-control" />
+        <span asp-validation-for="@Model.Food.Id" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Food.Ingredients" class="control-label"></label>
+        <input asp-for="@Model.Food.Ingredients" class="form-control" />
+        <span asp-validation-for="@Model.Food.Ingredients" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Food.Price" class="control-label"></label>
+        <input asp-for="@Model.Food.Price" class="form-control" />
+        <span asp-validation-for="@Model.Food.Price" class="text-danger"></span>
+    </div>
+    @{/* More inputs should be added here */}
+
+    <p>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </p>
+</form>
