@@ -37,7 +37,7 @@ namespace EksamenProjekt2Sem.Services
                         c.Price = campaignOffer.Price;
                     }
                 }
-                _dbService.SaveObjectsAsync(_campaignOffers);
+                _dbService.SaveObjects(_campaignOffers);
             }
         }
         public CampaignOffer DeleteCampaignOffer(int? id)
@@ -54,7 +54,7 @@ namespace EksamenProjekt2Sem.Services
             if (campaignOfferToBeDeleted != null)
             {
                 _campaignOffers.Remove(campaignOfferToBeDeleted);
-                _dbService.SaveObjectsAsync(_campaignOffers);
+                _dbService.SaveObjects(_campaignOffers);
             }
             return campaignOfferToBeDeleted;
         }
