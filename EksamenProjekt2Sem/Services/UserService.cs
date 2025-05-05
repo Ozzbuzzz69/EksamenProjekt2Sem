@@ -4,17 +4,18 @@ namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        private List<User> _users; // Overskud fra domain model
+        
         private GenericDbService<User> _dbService; // Overskud fra domain model
+        public List<User> Users { get; set; }
 
         public UserService(UserService userService)
         {
-            _users = new List<User>();
+            
             _dbService = userService;
         }
         public UserService()
         {
-            _users = new List<User>();
+            
             _dbService = new GenericDbService<User>();
         }
         public void CreateUser(User user)
