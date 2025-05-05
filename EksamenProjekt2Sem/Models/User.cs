@@ -15,19 +15,19 @@ namespace EksamenProjekt2Sem.Models
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Indtast gyldig Email")]
+        [Required(ErrorMessage = "Email må ikke være tomt")]
         [EmailAddress(ErrorMessage = "Indtast gyldig email adresse")]
         [StringLength(50, ErrorMessage = "Email må max være 50 tegn langt")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; } // Bruges som login
 
-        [Required(ErrorMessage = "Indtast gyldigt nummer")]
+        [Required(ErrorMessage = "Telefon nummer må ikke være tomt")]
         [RegularExpression(@"^+?[0-9]{8,10}$", ErrorMessage = "Indtast gyldigt telefonnummer")] // +45 12345678
         [StringLength(10, ErrorMessage = "Telefonnummeret må max være 10 tegn langt")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Indtast gyldig kode")]
+        [Required(ErrorMessage = "Kodeord må ikke være tomt")]
         [MinLength(8, ErrorMessage = "Koden skal minimum indeholde 8 tegn")]
         [MaxLength(20, ErrorMessage = "Koden må max være 20 tegn langt")]
         [RegularExpression(@"^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "Koden skal indeholde mindst 1 stort bogstav, 1 lille bogstav og 1 tal")] // "\d" konverter tal til en string
