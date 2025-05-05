@@ -8,6 +8,7 @@ namespace EksamenProjekt2Sem.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public int MinPersonAmount { get; set; }
 
         public WarmMeal()
