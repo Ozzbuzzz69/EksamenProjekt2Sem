@@ -12,7 +12,7 @@ namespace EksamenProjekt2Sem.Services
         {
             _dbService = dbService;
             _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-            _dbService.SaveObjectsAsync(_sandwiches);
+            _dbService.SaveObjects(_sandwiches);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace EksamenProjekt2Sem.Services
                         s.Price = sandwich.Price;
                     }
                 }
-                _dbService.SaveObjectsAsync(_sandwiches);
+                _dbService.SaveObjects(_sandwiches);
             }
         }
 
@@ -80,7 +80,7 @@ namespace EksamenProjekt2Sem.Services
             {
                 if (sandwich.Id == id) _sandwiches.Remove(sandwich);
             }
-            _dbService.SaveObjectsAsync(_sandwiches);
+            _dbService.SaveObjects(_sandwiches);
         }
 
         /// <summary>
