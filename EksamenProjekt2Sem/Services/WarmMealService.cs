@@ -75,13 +75,25 @@ namespace EksamenProjekt2Sem.Services
         /// Deletes the warm meal with same id as in argument.
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteWarmMeal(int id)
+        public WarmMeal DeleteWarmMeal(int? id)
         {
+            WarmMeal warmMealToBeDeleted = null;
+
             foreach (WarmMeal warmMeal in _warmMeals)
             {
-                if (warmMeal.Id == id) _warmMeals.Remove(warmMeal);
+                if (warmMeal.Id == id)
+                {
+                    warmMealToBeDeleted = warmMeal;
+                    break;
+                } 
             }
-            _dbService.SaveObjects(_warmMeals);
+
+            if (warmMealToBeDeleted != null)
+            {
+                _warmMeals.Remove(warmMealToBeDeleted);
+                _dbService.SaveObjects(_warmMeals);
+            }
+            return warmMealToBeDeleted;
         }
 
         /// <summary>
