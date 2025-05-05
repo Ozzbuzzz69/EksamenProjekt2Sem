@@ -74,13 +74,24 @@ namespace EksamenProjekt2Sem.Services
         /// Deletes the sandwich with the same id as given in argument
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteSandwich(int id)
+        public Sandwich DeleteSandwich(int? id)
         {
+            Sandwich sandwichToBeDeleted = null;
             foreach (Sandwich sandwich in _sandwiches)
             {
-                if (sandwich.Id == id) _sandwiches.Remove(sandwich);
+                if (sandwich.Id == id)
+                {
+                    sandwichToBeDeleted = sandwich;
+                    break;
+                }
             }
-            _dbService.SaveObjects(_sandwiches);
+
+            if (sandwichToBeDeleted != null)
+            {
+                _sandwiches.Remove(sandwichToBeDeleted);
+                _dbService.SaveObjects(_sandwiches);
+            }
+            return sandwichToBeDeleted;
         }
 
         /// <summary>
