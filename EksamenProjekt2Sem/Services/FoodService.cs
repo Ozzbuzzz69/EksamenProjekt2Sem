@@ -12,28 +12,50 @@ namespace EksamenProjekt2Sem.Services
             _sandwiches = new List<Food>();
             _dbService = foodService;
         }
+
         public FoodService()
         {
             _sandwiches = new List<Food>();
             _dbService = new GenericDbService<Food>();
         }
+
+        /// <summary>
+        /// Adds the food object from argument to the database, and the _sandwiches list.
+        /// </summary>
+        /// <param name="food"></param>
         public void CreateFood(Food food)
         {
-            // Add food to Database
+            _sandwiches.Add(food);
+            _dbService.AddObjectAsync(food);
         }
+
+        /// <summary>
+        /// Reads the food object from the database by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>
+        /// Returns the food object from the database.
+        /// </returns>
         public Food ReadFood(int id)
         {
-            // Read food from Database
-            return new Sandwich(); // Placeholder return
+            return _dbService.GetObjectByIdAsync(id).Result;
         }
+
+        /// <summary>
+        /// Reads all food objects from the database.
+        /// </summary>
+        /// <returns>
+        /// A list of food objects from the database.
+        /// </returns>
         public List<Food> ReadAllFood()
         {
-            // Read all food from Database
-            return new List<Food>(); // Placeholder return
+            return _dbService.GetObjectsAsync().Result.ToList();
         }
+
+
         public void UpdateFood(int id, Food food)
         {
-            // Update food by id in Database
+            _dbService.UpdateObjectAsync(food);
         }
         public Food DeleteFood(int id)
         {
