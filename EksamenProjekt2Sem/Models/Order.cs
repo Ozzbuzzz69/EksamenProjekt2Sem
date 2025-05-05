@@ -11,7 +11,11 @@ namespace EksamenProjekt2Sem.Models
 
         public User User { get; set; }
 
+        [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; } = DateTime.Now;
+
+        [Required(ErrorMessage = "Der skal angives en afhentningstid")]
+        [DataType(DataType.DateTime)]
         public DateTime PickupTime { get; set; }
 
         public double TotalPrice { get { return GetTotalPrice(); } }
