@@ -5,6 +5,7 @@ namespace EksamenProjekt2Sem.Models
 {
     public class Order
     {
+      private DateTime pickupTime;
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,22 +17,16 @@ namespace EksamenProjekt2Sem.Models
 
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
-        public DateTime PickupTime
+public DateTime PickupTime
         {
-            get { return PickupTime; }
-            set
+            get => pickupTime; set
             {
-                try
-                {
+                
                     if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
                     {
                         throw new ArgumentNullException("Ugyldig dato");
                     }
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }       
+                       
             }             
         }
 

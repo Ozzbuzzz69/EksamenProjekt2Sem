@@ -32,6 +32,7 @@ builder.Services.Configure<CookiePolicyOptions>(options => {
 
 });
 
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
     cookieOptions.LoginPath = "/Login/LogInPage";
 
