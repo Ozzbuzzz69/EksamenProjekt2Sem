@@ -33,7 +33,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         public async Task<IActionResult> OnPost()
         {
 
-            List<Models.User> users = _userService.Users;
+            List<Models.User> users = _userService._users;
             foreach (Models.User user in users)
             {
 
@@ -49,7 +49,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                         if (Email == "admin@admin.com") claims.Add(new Claim(ClaimTypes.Role, "admin"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/Item/GetAllItems");
+                        return RedirectToPage("/Index");
                     }
                 }
 

@@ -1,4 +1,7 @@
-﻿namespace EksamenProjekt2Sem.Services
+﻿using EksamenProjekt2Sem.AppDbContext;
+using Microsoft.EntityFrameworkCore;
+
+namespace EksamenProjekt2Sem.Services
 {
     using EksamenProjekt2Sem.AppDbContext;
     using Microsoft.EntityFrameworkCore;
@@ -7,14 +10,14 @@
     {
         public async Task<IEnumerable<T>> GetObjectsAsync()
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 return await context.Set<T>().AsNoTracking().ToListAsync();
             }
         }
         public async Task AddObjectAsync(T obj)
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 context.Set<T>().Add(obj);
                 await context.SaveChangesAsync();
@@ -22,7 +25,7 @@
         }
         public async Task SaveObjects(List<T> objs)
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 foreach (T obj in objs)
                 {
@@ -35,7 +38,7 @@
         }
         public async Task DeleteObjectAsync(T obj)
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 context.Set<T>().Remove(obj);
                 await context.SaveChangesAsync();
@@ -43,7 +46,7 @@
         }
         public async Task UpdateObjectAsync(T obj)
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 context.Set<T>().Update(obj);
                 await context.SaveChangesAsync();
@@ -51,7 +54,7 @@
         }
         public async Task<T> GetObjectByIdAsync(int id)
         {
-            using (var context = new AppDbContext())
+            using (var context = new MadDbContext())
             {
                 return await context.Set<T>().FindAsync(id);
             }

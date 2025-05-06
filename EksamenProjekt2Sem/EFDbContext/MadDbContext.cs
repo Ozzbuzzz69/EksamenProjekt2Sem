@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 namespace EksamenProjekt2Sem.AppDbContext
 {
-    public class AppDbContext : DbContext
+    public class MadDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -12,9 +12,8 @@ namespace EksamenProjekt2Sem.AppDbContext
         public DbSet<Sandwich> Sandwiches { get; set; }
         public DbSet<WarmMeal> WarmMeals { get; set; }
         public DbSet<Order> Orders { get; set; }
-        //public DbSet<OrderLine> OrderLines { get; set; }
+        public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<Food> Foods { get; set; }
 
 
     }
