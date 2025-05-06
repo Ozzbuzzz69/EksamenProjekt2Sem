@@ -71,9 +71,12 @@ namespace EksamenProjekt2Sem.Services
         }
 
         /// <summary>
-        /// Deletes the sandwich with the same id as given in argument
+        /// Deletes the sandwich with the same id as given in argument.
         /// </summary>
         /// <param name="id"></param>
+        /// <returns>
+        /// Returns the sandwich to be deleted.
+        /// </returns>
         public Sandwich DeleteSandwich(int? id)
         {
             Sandwich sandwichToBeDeleted = null;
