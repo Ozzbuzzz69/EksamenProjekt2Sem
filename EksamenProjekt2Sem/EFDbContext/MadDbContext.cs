@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 namespace EksamenProjekt2Sem.AppDbContext
 {
-    public class AppDbContext : DbContext
+    public class MadDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
