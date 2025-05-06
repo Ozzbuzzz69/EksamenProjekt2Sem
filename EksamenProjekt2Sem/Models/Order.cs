@@ -16,23 +16,8 @@ namespace EksamenProjekt2Sem.Models
 
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
-        public DateTime PickupTime
-        {
-            get; set
-            {
-                try
-                {
-                    if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
-                    {
-                        throw new ArgumentNullException("Ugyldig dato");
-                    }
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }       
-            }             
-        }
+        public DateTime PickupTime { get; set; }
+
 
         public double TotalPrice { get; set; }
 
