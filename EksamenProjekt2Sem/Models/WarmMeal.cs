@@ -5,9 +5,6 @@ namespace EksamenProjekt2Sem.Models
 {
     public class WarmMeal : Food
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
 
         public int MinPersonAmount { get; set; }
 
