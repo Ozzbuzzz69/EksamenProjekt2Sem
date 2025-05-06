@@ -33,7 +33,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         public async Task<IActionResult> OnPost()
         {
 
-            List<Models.User> users = _userService.Users;
+            List<Models.User> users = _userService._users;
             foreach (Models.User user in users)
             {
 
