@@ -1,5 +1,8 @@
 ﻿namespace EksamenProjekt2Sem.Services
 {
+    using EksamenProjekt2Sem.AppDbContext;
+    using Microsoft.EntityFrameworkCore;
+
     public class GenericDbService<T> where T : class
     {
         
