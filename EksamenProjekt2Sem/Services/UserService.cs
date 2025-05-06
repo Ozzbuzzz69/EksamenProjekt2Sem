@@ -1,46 +1,97 @@
 ﻿using EksamenProjekt2Sem.Models;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        
+        public List<User> _users; // Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
-        public List<User> Users { get; set; }
 
         public UserService(UserService userService)
         {
-            
             _dbService = userService;
         }
         public UserService()
         {
-            
             _dbService = new GenericDbService<User>();
         }
+
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="user"></param>
         public void CreateUser(User user)
         {
-            // Add user to Database
+            _users.Add(user);
+            _dbService.AddObjectAsync(user);
         }
+
+        /// <summary>
+        /// Finds user with given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User ReadUser(int id)
         {
-            // Read user from Database
-            return new User(); // Placeholder return
+            return _users.Find(user => user.Id == id);
         }
+
+        /// <summary>
+        /// Reads all users. 
+        /// </summary>
+        /// <returns></returns>
         public List<User> ReadAllUsers()
         {
-            // Read all users from Database
-            return new List<User>(); // Placeholder return
+            return _users;
         }
+
+        /// <summary>
+        /// Updates user with given id. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
         public void UpdateUser(int id, User user)
         {
-            // Update user by id in Database
+            if (user != null)
+            { 
+                 foreach (User u in _users)
+                 {
+                    if (u.Id == id)
+                    {
+                         u.Name = user.Name;
+                         u.Email = user.Email;
+                         u.PhoneNumber = user.PhoneNumber;
+                         u.Password = user.Password;
+                    }
+                 }
+            }
+            _dbService.SaveObjects(_users);
         }
+
+        /// <summary>
+        /// Deletes user with given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User DeleteUser(int id)
         {
-            // Delete user from Database
-            return new User(); // Placeholder return
+            User userToBeDeleted = null;
+            foreach (User u in _users)
+            {
+                if (u.Id == id)
+                {
+                    userToBeDeleted = u;
+                }
+            }
+            if (userToBeDeleted != null)
+            {
+                _users.Remove(userToBeDeleted);
+                _dbService.DeleteObjectAsync(userToBeDeleted);
+            }
+            return userToBeDeleted;
         }
+
         //public Order Order(List<OrderLine> orderlines)
         //{
         //    // Create order from orderlines
