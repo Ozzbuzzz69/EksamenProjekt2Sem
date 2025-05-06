@@ -8,24 +8,23 @@ namespace EksamenProjekt2Sem.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
+        [Display(Name = "Antal")]
         public int Quantity { get; set; }
-        [Required]
+        [Display(Name = "Total Pris")]
+        
         public double Price { get; set; }
         public Food Food { get; set; }
         public CampaignOffer CampaignOffer { get; set; }
-       
         
-        
-        public int CampaignOfferId { get; set; }
-
         public OrderLine()
         { }
 
         
-        public OrderLine(object foodObj, int quantity)
+        public OrderLine(int quantity, Food? food, CampaignOffer? campaign)
         {
             Quantity = quantity;
+            Food = food;
+            CampaignOffer = campaign;
         }
     }
 }

@@ -5,18 +5,15 @@ namespace EksamenProjekt2Sem.Services
     public class FoodService : GenericDbService<Food>
     {
         private List<Food> _sandwiches;
+
         private GenericDbService<Food> _dbService;
 
-        public FoodService(FoodService foodService)
+        public FoodService(GenericDbService<Food> dbService)
         {
-            _sandwiches = new List<Food>();
-            _dbService = foodService;
-        }
+            _dbService = dbService;
 
-        public FoodService()
-        {
-            _sandwiches = new List<Food>();
-            _dbService = new GenericDbService<Food>();
+            _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+            _dbService.SaveObjectsAsync(_sandwiches);
         }
 
         /// <summary>
@@ -53,9 +50,15 @@ namespace EksamenProjekt2Sem.Services
         }
 
 
-        public void UpdateFood(int id, Food food)
+        public void UpdateFood(Food food)
         {
-            _dbService.UpdateObjectAsync(food);
+            if (food != null)
+            {
+                foreach (Food f in _sandwiches)
+                {
+
+                }
+            }
         }
         public Food DeleteFood(int id)
         {

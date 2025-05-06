@@ -1,7 +1,6 @@
 ﻿@page
 @model EksamenProjekt2Sem.Pages.CampaignOffer.CreateCampaignOfferModel
 @{
-    //Mostly correct implementation of the page, but it is a placeholder.
 }
 
 <form method="post">
@@ -16,14 +15,9 @@
         <span asp-validation-for="@Model.CampaignOffer.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.CampaignOffer.Description" class="control-label"></label>
-        <input asp-for="@Model.CampaignOffer.Description" class="form-control" />
-        <span asp-validation-for="@Model.CampaignOffer.Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.CampaignOffer.Description" class="control-label"></label>
-        <input asp-for="@Model.CampaignOffer.Description" class="form-control" />
-        <span asp-validation-for="@Model.CampaignOffer.Description" class="text-danger"></span>
+        <label asp-for="@Model.CampaignOffer.ImageLink" class="control-label"></label>
+        <input asp-for="@Model.CampaignOffer.ImageLink" class="form-control" />
+        <span asp-validation-for="@Model.CampaignOffer.ImageLink" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.CampaignOffer.Price" class="control-label"></label>

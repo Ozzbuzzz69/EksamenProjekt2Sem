@@ -5,39 +5,58 @@
 
     public class GenericDbService<T> where T : class
     {
-        
-        public GenericDbService() { } // Placeholder for the constructor
+        public async Task<IEnumerable<T>> GetObjectsAsync()
+        {
+            using (var context = new AppDbContext())
+            {
+                return await context.Set<T>().AsNoTracking().ToListAsync();
+            }
+        }
+        public async Task AddObjectAsync(T obj)
+        {
+            using (var context = new AppDbContext())
+            {
+                context.Set<T>().Add(obj);
+                await context.SaveChangesAsync();
+            }
+        }
+        public async Task SaveObjects(List<T> objs)
+        {
+            using (var context = new AppDbContext())
+            {
+                foreach (T obj in objs)
+                {
+                    context.Set<T>().Add(obj);
+                    context.SaveChanges();
+                }
 
-        public Task<IEnumerable<T>> GetObjectsAsync()
-        {
-            // Placeholder for the method to get objects from the database
-            return Task.FromResult<IEnumerable<T>>(new List<T>());
+                context.SaveChanges();
+            }
         }
-        public Task AddObjectAsync(T obj)
+        public async Task DeleteObjectAsync(T obj)
         {
-            // Placeholder for the method to add an object to the database
-            return Task.CompletedTask;
+            using (var context = new AppDbContext())
+            {
+                context.Set<T>().Remove(obj);
+                await context.SaveChangesAsync();
+            }
         }
-        public Task SaveObjectsAsync(List<T> objects)
+        public async Task UpdateObjectAsync(T obj)
         {
-            // Placeholder for the method to save objects to the database
-            return Task.CompletedTask;
+            using (var context = new AppDbContext())
+            {
+                context.Set<T>().Update(obj);
+                await context.SaveChangesAsync();
+            }
         }
-        public Task DeleteObjectAsync(T obj)
+        public async Task<T> GetObjectByIdAsync(int id)
         {
-            // Placeholder for the method to delete an object from the database
-            return Task.CompletedTask;
+            using (var context = new AppDbContext())
+            {
+                return await context.Set<T>().FindAsync(id);
+            }
         }
-        public Task UpdateObjectAsync(T obj)
-        {
-            // Placeholder for the method to update an object in the database
-            return Task.CompletedTask;
-        }
-        public Task<T> GetObjectByIdAsync(int id)
-        {
-            // Placeholder for the method to get an object by ID from the database
-            return Task.FromResult(default(T));
-        }
+
 
     }
 }

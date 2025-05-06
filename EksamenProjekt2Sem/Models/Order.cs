@@ -11,23 +11,37 @@ namespace EksamenProjekt2Sem.Models
 
         public User User { get; set; }
 
+        [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; } = DateTime.Now;
-        public DateTime PickupTime { get; set; }
 
-        public double TotalPrice { get { return GetTotalPrice(); } }
+        [Required(ErrorMessage = "Der skal angives en afhentningstid")]
+        [DataType(DataType.DateTime)]
+        public DateTime PickupTime
+        {
+            get; set
+            {
+                try
+                {
+                    if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
+                    {
+                        throw new ArgumentNullException("Ugyldig dato");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }       
+            }             
+        }
+
+        public double TotalPrice { get; set; }
 
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         public Order()
         { }
 
-        /// <summary>
-        /// Constructor for Order class
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="user"></param>
-        /// <param name="pickupTime"></param>
-        /// <param name="totalPrice"></param>
+        
         public Order(User user, DateTime pickupTime)
         {
             User = user;

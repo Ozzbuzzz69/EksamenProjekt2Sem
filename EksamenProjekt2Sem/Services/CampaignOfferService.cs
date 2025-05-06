@@ -7,38 +7,56 @@ namespace EksamenProjekt2Sem.Services
         private List<CampaignOffer> _campaignOffers;
         private GenericDbService<CampaignOffer> _dbService;
 
-        public CampaignOfferService(CampaignOfferService campaignOfferService)
+        public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
-            // Constructor logic here
-            _dbService = campaignOfferService;
+            _dbService = dbService;
         }
         public void CreateCampaignOffer(CampaignOffer campaignOffer)
         {
-            // Add campaign offer to Database
-        }
+            _campaignOffers.Add(campaignOffer);
+			_dbService.AddObjectAsync(campaignOffer);
+		}
         public CampaignOffer ReadCampaignOffer(int id)
         {
-            // Read campaign offer from Database
-            return new CampaignOffer(); // Placeholder return
-        }
+            return _dbService.GetObjectByIdAsync(id).Result;
+		}
         public List<CampaignOffer> ReadAllCampaignOffers()
         {
-            // Read all campaign offers from Database
-            return new List<CampaignOffer>(); // Placeholder return
-        }
-        public void UpdateCampaignOffer(int id, CampaignOffer campaignOffer)
+            return _dbService.GetObjectsAsync().Result.ToList();
+		}
+        public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
-            // Update campaign offer by id in Database
+            if (campaignOffer != null)
+            {
+                foreach (CampaignOffer c in _campaignOffers)
+                {
+                    if (c.Id == campaignOffer.Id)
+                    {
+                        c.Name = campaignOffer.Name;
+                        c.ImageLink = campaignOffer.ImageLink;
+                        c.Price = campaignOffer.Price;
+                    }
+                }
+                _dbService.SaveObjects(_campaignOffers);
+            }
         }
-        public CampaignOffer DeleteCampaignOffer(int id)
+        public CampaignOffer DeleteCampaignOffer(int? id)
         {
-            // Delete campaign offer from Database
-            return new CampaignOffer(); // Placeholder return
-        }
-
-        public void UploadPicture(string picture) 
-        { 
-            //Upload pic awesome
+           CampaignOffer campaignOfferToBeDeleted = null;
+            foreach (CampaignOffer c in _campaignOffers)
+            {
+                if (c.Id == id)
+                {
+                    campaignOfferToBeDeleted = c;
+                    break;
+                }
+            }
+            if (campaignOfferToBeDeleted != null)
+            {
+                _campaignOffers.Remove(campaignOfferToBeDeleted);
+                _dbService.SaveObjects(_campaignOffers);
+            }
+            return campaignOfferToBeDeleted;
         }
     }
 }
