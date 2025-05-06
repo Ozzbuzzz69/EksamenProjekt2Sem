@@ -49,7 +49,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                         if (Email == "admin@admin.com") claims.Add(new Claim(ClaimTypes.Role, "admin"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/Item/GetAllItems");
+                        return RedirectToPage("/Index");
                     }
                 }
 
