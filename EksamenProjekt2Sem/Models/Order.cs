@@ -20,17 +20,12 @@ namespace EksamenProjekt2Sem.Models
         {
             get; set
             {
-                try
-                {
+                
                     if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
                     {
                         throw new ArgumentNullException("Ugyldig dato");
                     }
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }       
+                       
             }             
         }
 
