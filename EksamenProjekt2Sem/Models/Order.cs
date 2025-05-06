@@ -18,7 +18,8 @@ namespace EksamenProjekt2Sem.Models
         [DataType(DataType.DateTime)]
         public DateTime PickupTime
         {
-            get; set
+            get { return PickupTime; }
+            set
             {
                 try
                 {
@@ -34,7 +35,7 @@ namespace EksamenProjekt2Sem.Models
             }             
         }
 
-        public double TotalPrice { get; set; }
+        public double TotalPrice { get { return GetTotalPrice(); } }
 
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
