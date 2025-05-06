@@ -6,6 +6,10 @@ namespace EksamenProjekt2Sem.Models
     public abstract class Food
     {
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Ingredienser")]
         [Required(ErrorMessage = "Der skal angives ingredienser")]
         [StringLength(100, ErrorMessage = "Maks 100 tegn")]
