@@ -2,6 +2,7 @@
 
 namespace EksamenProjekt2Sem.Services
 {
+    /*
     public class FoodService : GenericDbService<Food>
     {
         private List<Food> _sandwiches;
@@ -70,4 +71,5 @@ namespace EksamenProjekt2Sem.Services
         //+ SpecialOffer(Food food, double price, DateTime dateFrom, DateTime dateTo) : void  
         //+ FilterFoodByCriteria(?) : List<Food>
     }
+    */
 }
