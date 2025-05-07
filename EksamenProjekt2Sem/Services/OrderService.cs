@@ -171,9 +171,18 @@ namespace EksamenProjekt2Sem.Services
         {
             order.OrderLines = order.OrderLines.OrderByDescending(ol => ol.Id).ToList();
         }
-    #endregion
+        #endregion
 
         #region Orderline manipulation
+        /// <summary>
+        /// Calculates the total price of a given orderline.
+        /// </summary>
+        /// <param name="orderLine"></param>
+        /// <returns></returns>
+        public double GetTotalPriceLine(OrderLine orderLine)
+        {
+            return orderLine.Price * orderLine.Quantity;
+        }
         /// <summary>
         /// Adds the orderline object from argument to the order object given by Id
         /// </summary>

@@ -1,11 +1,40 @@
 ﻿@page
 @model EksamenProjekt2Sem.Pages.Order.ReadAllOrdersModel
 @{
-    // Have not touched ReadAll, as it takes a lot and I don't want to have to redo it.
-
 }
-<h1>Orders</h1>
 
-<div>
-    <h2>Here goes setup for look of Order</h2>
-</div>
+<h1>All Orders</h1>
+
+<form method="post">
+    <input type="text" asp-for="SearchString" placeholder="Search by ingredient..." />
+    <button type="submit">Search</button>
+</form>
+
+@if (Model.Orders != null && Model.Orders.Any())
+{
+    <ul>
+        @foreach (var order in Model.Orders)
+        {
+            <li>
+                <strong>Order ID:</strong> @order.Id<br />
+                <strong>Customer:</strong> @order.User.Name<br />
+                <strong>Date:</strong> @order.PickupTime.ToShortDateString()
+                <ul>
+                    @foreach (var line in order.OrderLines)
+                    {
+                        <li>
+                            <strong>Food:</strong> @line.Food.Ingredients<br />
+                            <strong>Price:</strong> @line.Food.Price<br />
+                            <strong>Quantity:</strong> @line.Quantity<br/>
+                            <strong>Total:</strong> @line.Price
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No orders found.</p>
+}
