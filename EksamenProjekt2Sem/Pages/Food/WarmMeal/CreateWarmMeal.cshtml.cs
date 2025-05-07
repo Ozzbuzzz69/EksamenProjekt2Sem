@@ -1,9 +1,12 @@
 using EksamenProjekt2Sem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
 {
+    [Authorize(Roles = "admin")]
+
     public class CreateWarmMealModel : PageModel
     {
         private WarmMealService _warmMealService;

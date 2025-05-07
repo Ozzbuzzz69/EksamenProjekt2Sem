@@ -34,6 +34,8 @@ namespace EksamenProjekt2Sem.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+
+
         public User()
         { }
 
