@@ -5,8 +5,7 @@ namespace EksamenProjekt2Sem.Models
 {
     public class Sandwich : Food
     {
-
-
+        [Display(Name = "Kategori")]
         public string Category { get; set; }
 
        
@@ -14,7 +13,7 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Sandwich(string ingredients, bool? inSeason, string? meatType, double price, string category) : base(ingredients, inSeason, meatType, price)
+        public Sandwich(int id, string ingredients, bool? inSeason, string? meatType, double price, string category) : base(id, ingredients, inSeason, meatType, price)
         {
             Category = category;
         }

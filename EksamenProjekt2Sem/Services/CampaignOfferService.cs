@@ -10,28 +10,20 @@ namespace EksamenProjekt2Sem.Services
         public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
             _dbService = dbService;
-            _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
         }
         public void CreateCampaignOffer(CampaignOffer campaignOffer)
         {
             _campaignOffers.Add(campaignOffer);
 			_dbService.AddObjectAsync(campaignOffer);
 		}
-        public CampaignOffer? ReadCampaignOffer(int id)
+        public CampaignOffer ReadCampaignOffer(int id)
         {
-            foreach (CampaignOffer campaignOffer in _campaignOffers)
-            {
-                if (campaignOffer.Id == id)
-                {
-                    return campaignOffer;
-                }
-            }
-            return null;
-        }
+            return _dbService.GetObjectByIdAsync(id).Result;
+		}
         public List<CampaignOffer> ReadAllCampaignOffers()
         {
-            return _campaignOffers;
-        }
+            return _dbService.GetObjectsAsync().Result.ToList();
+		}
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
             if (campaignOffer != null)
@@ -45,12 +37,12 @@ namespace EksamenProjekt2Sem.Services
                         c.Price = campaignOffer.Price;
                     }
                 }
-                _dbService.UpdateObjectAsync(campaignOffer);
+                _dbService.SaveObjects(_campaignOffers);
             }
         }
         public CampaignOffer DeleteCampaignOffer(int? id)
         {
-           CampaignOffer? campaignOfferToBeDeleted = null;
+           CampaignOffer campaignOfferToBeDeleted = null;
             foreach (CampaignOffer c in _campaignOffers)
             {
                 if (c.Id == id)
