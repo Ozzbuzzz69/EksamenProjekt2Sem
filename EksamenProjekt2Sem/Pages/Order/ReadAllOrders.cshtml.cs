@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.Order
 {
+    using EksamenProjekt2Sem.Models;
     public class ReadAllOrdersModel : PageModel
     {
         private Services.OrderService _orderService;
@@ -10,7 +11,7 @@ namespace EksamenProjekt2Sem.Pages.Order
         {
             _orderService = orderService;
         }
-        public List<Models.Order> Orders { get; set; }
+        public List<Order> Orders { get; set; }
         [BindProperty]
         public string SearchString { get; set; }
         // Other search criteria properties can be added here:
@@ -26,12 +27,28 @@ namespace EksamenProjekt2Sem.Pages.Order
                 RedirectToPage("./Index");
             }
         }
+        /// <summary>
+        /// Search for ingredients in the order's lines
+        /// </summary>
+        /// <returns>Updated list which fits the searchstring</returns>
         public IActionResult OnPost()
         {
             // Handle search input
             if (!string.IsNullOrEmpty(SearchString))
             {
-                Orders = _orderService.ReadAllOrders().ToList();
+                List<Order> temp = new();
+                foreach (Order o in Orders)
+                {
+                    foreach (OrderLine ol in o.OrderLines)
+                    {
+                        if (ol.Food.Ingredients.ToLower().Contains(SearchString.ToLower()))
+                        {
+                            temp.Add(o);
+                            break;
+                        }
+                    }
+                }
+                Orders = temp;
             }
             return Page();
         }

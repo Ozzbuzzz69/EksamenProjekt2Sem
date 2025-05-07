@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.Order
 {
+    using EksamenProjekt2Sem.Models;
     public class DeleteOrderModel : PageModel
     {
         private Services.OrderService _orderService;
@@ -11,7 +12,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             _orderService = orderService;
         }
         [BindProperty]
-        public Models.Order Order { get; set; }
+        public Order? Order { get; set; }
         public IActionResult OnGet(int id)
         {
             // Get the order by id
@@ -25,7 +26,7 @@ namespace EksamenProjekt2Sem.Pages.Order
         }
         public IActionResult OnPost()
         {
-            Models.Order deletedOrder = _orderService.DeleteOrder(Order.Id);
+            Order? deletedOrder = _orderService.DeleteOrder(Order.Id);
             if (deletedOrder == null)
             {
                 // Handle not found case

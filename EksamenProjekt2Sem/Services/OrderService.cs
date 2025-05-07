@@ -107,7 +107,20 @@ namespace EksamenProjekt2Sem.Services
                 throw new Exception("Order not found");
             }
         }
-    #region Sorting functions
+
+        public Order? ReadOrderByUserId(int userId)
+        {
+            foreach (Order order in _orders)
+            {
+                if (order.User.Id == userId)
+                {
+                    return order;
+                }
+            }
+            return null;
+        }
+
+        #region Sorting functions
         /// <summary>
         /// Sorts the orderlines in a given order by price in ascending order.
         /// </summary>
