@@ -11,7 +11,7 @@ namespace EksamenProjekt2Sem.Models
         { }
 
        
-        public WarmMeal(string ingredients, bool? inSeason, string? meatType, double price, int minPersonAmount) : base(ingredients, inSeason, meatType, price)
+        public WarmMeal(int id, string ingredients, bool? inSeason, string? meatType, double price, int minPersonAmount) : base(id, ingredients, inSeason, meatType, price)
         {
             MinPersonAmount = minPersonAmount;
         }

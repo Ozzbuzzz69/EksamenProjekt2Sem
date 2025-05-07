@@ -1,11 +1,15 @@
 using EksamenProjekt2Sem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.Food.Sandwich
 {
+    [Authorize(Roles = "admin")]
+
     public class CreateSandwichModel : PageModel
     {
+
         private SandwichService _sandwichService;
 
         public CreateSandwichModel(SandwichService sandwichService)

@@ -100,14 +100,29 @@ namespace EksamenProjekt2Sem.Services
             Order? order = ReadOrder(id);
             if (order != null)
             {
-                return order.GetTotalPrice(); // Use the method from the Order class to calculate total price
+                return GetTotalPrice(order);
             }
             else
             {
                 throw new Exception("Order not found");
             }
+
+
         }
-    #region Sorting functions
+
+        public Order? ReadOrderByUserId(int userId)
+        {
+            foreach (Order order in _orders)
+            {
+                if (order.User.Id == userId)
+                {
+                    return order;
+                }
+            }
+            return null;
+        }
+
+        #region Sorting functions
         /// <summary>
         /// Sorts the orderlines in a given order by price in ascending order.
         /// </summary>
@@ -156,9 +171,18 @@ namespace EksamenProjekt2Sem.Services
         {
             order.OrderLines = order.OrderLines.OrderByDescending(ol => ol.Id).ToList();
         }
-    #endregion
+        #endregion
 
-    #region Orderline manipulation
+        #region Orderline manipulation
+        /// <summary>
+        /// Calculates the total price of a given orderline.
+        /// </summary>
+        /// <param name="orderLine"></param>
+        /// <returns></returns>
+        public double GetTotalPriceLine(OrderLine orderLine)
+        {
+            return orderLine.Price * orderLine.Quantity;
+        }
         /// <summary>
         /// Adds the orderline object from argument to the order object given by Id
         /// </summary>
@@ -169,7 +193,7 @@ namespace EksamenProjekt2Sem.Services
             Order? order = ReadOrder(orderId);
             if (order != null)
             {
-                order.AddOrderLine(orderLine);
+                order.OrderLines.Add(orderLine);
                 _dbService.UpdateObjectAsync(order);
             }
         }
@@ -183,7 +207,7 @@ namespace EksamenProjekt2Sem.Services
             Order? order = ReadOrder(orderId);
             if (order != null)
             {
-                return order.GetOrderLines();
+                return order.OrderLines;
             }
             return null;
         }
@@ -196,10 +220,16 @@ namespace EksamenProjekt2Sem.Services
         public void UpdateOrderLine(int orderId, int orderLineId, OrderLine orderLine)
         {
             Order? order = ReadOrder(orderId);
-            if (order != null)
+            foreach (var ol in order.OrderLines)
             {
-                order.UpdateOrderLine(orderLineId, orderLine);
-                _dbService.UpdateObjectAsync(order);
+                if (ol.Id == orderLineId)
+                {
+                    ol.Quantity = orderLine.Quantity;
+                    ol.Price = orderLine.Price;
+                    ol.Food = orderLine.Food;
+                    ol.CampaignOffer = orderLine.CampaignOffer;
+                    _dbService.UpdateObjectAsync(order);
+                }
             }
         }
         /// <summary>
@@ -212,11 +242,43 @@ namespace EksamenProjekt2Sem.Services
             Order? order = ReadOrder(orderId);
             if (order != null)
             {
-                order.RemoveOrderLine(orderLineId);
+                order.OrderLines.Remove(GetOrderLine(order, orderLineId));
                 _dbService.UpdateObjectAsync(order);
             }
         }
-    #endregion
+        #endregion
+
+        #region Former model:
+        /// <summary>
+        /// Calculates the total price based on the order lines.
+        /// </summary>
+        /// <returns>0 or Orderlines total</returns>
+        public double GetTotalPrice(Order order)
+        {
+            double totalPrice = 0;
+            foreach (var orderLine in order.OrderLines)
+            {
+                totalPrice += orderLine.Price * orderLine.Quantity;
+            }
+            return totalPrice;
+        }
+        /// <summary>
+        /// Gets the orderline object from id in argument
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Orderline</returns>
+        public OrderLine? GetOrderLine(Order order, int id)
+        {
+            foreach (var orderLine in order.OrderLines)
+            {
+                if (orderLine.Id == id)
+                {
+                    return orderLine;
+                }
+            }
+            return null;
+        }
+        #endregion
 
     }
 }

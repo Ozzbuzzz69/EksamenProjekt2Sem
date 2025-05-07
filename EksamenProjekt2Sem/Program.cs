@@ -1,16 +1,32 @@
-using EksamenProjekt2Sem.AppDbContext;
 using EksamenProjekt2Sem.Models;
 using EksamenProjekt2Sem.Services;
+using EksamenProjektTest.EFDbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<MadDbContext>();
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<SandwichService>();
-builder.Services.AddTransient<GenericDbService<Sandwich>, GenericDbService<Sandwich>>();
+builder.Services.AddSingleton<OrderService, OrderService>();
+builder.Services.AddSingleton<CampaignOfferService, CampaignOfferService>();
+builder.Services.AddSingleton<UserService, UserService>();
+builder.Services.AddSingleton<SandwichService, SandwichService>();
+builder.Services.AddSingleton<WarmMealService, WarmMealService>();
+
+// Add DB context
+builder.Services.AddDbContext<FoodContext>();
+builder.Services.AddTransient<GenericDbService<OrderService>, GenericDbService<OrderService>>();
+builder.Services.AddTransient<GenericDbService<CampaignOfferService>, GenericDbService<CampaignOfferService>>();
+builder.Services.AddTransient<GenericDbService<UserService>, GenericDbService<UserService>>();
+builder.Services.AddTransient<GenericDbService<SandwichService>, GenericDbService<SandwichService>>();
+builder.Services.AddTransient<GenericDbService<WarmMealService>, GenericDbService<WarmMealService>>();
+
+/*builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Server=(localdb)\\mssqllocaldb;Database=MyAppDb;Trusted_Connection=True;")));
+*/
+
 builder.Services.Configure<CookiePolicyOptions>(options => {
     // This lambda determines whether user consent for non-essential cookies is needed for a given request. options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
@@ -33,14 +49,13 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();
-
-app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapRazorPages();

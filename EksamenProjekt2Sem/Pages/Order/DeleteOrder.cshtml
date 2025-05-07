@@ -9,7 +9,8 @@
         <strong>Order Id:</strong> @Model.Order.Id
     </p>
     <form method="post">
-        <input type="hidden" asp-for="Order.Id" />
+        @{//<input type="hidden" asp-for="Order.Id" />
+        }
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

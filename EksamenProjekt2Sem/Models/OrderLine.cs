@@ -11,8 +11,8 @@ namespace EksamenProjekt2Sem.Models
         [Display(Name = "Antal")]
         public int Quantity { get; set; }
         [Display(Name = "Total Pris")]
-        
-        public double Price { get; set; }
+
+        public double Price => Food.Price * Quantity;
         public Food Food { get; set; }
         public CampaignOffer CampaignOffer { get; set; }
         
