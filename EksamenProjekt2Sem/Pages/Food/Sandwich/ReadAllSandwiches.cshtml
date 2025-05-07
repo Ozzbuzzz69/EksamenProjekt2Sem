@@ -2,27 +2,109 @@
 @model EksamenProjekt2Sem.Pages.Food.Sandwich.ReadAllSandwichesModel
 @{
 }
+<html>
+    <body>
+    <style>
+        .food {
+            background-color: whitesmoke;
+            color: black;
+            border: 2px solid black;
+            margin: 20px;
+            padding: 20px;
+            width: 580px;
+            float: left;
+        }
 
-<h1>Smørrebrød</h1>
+        .filterbox {
+            background-color: lightgrey;
+            border: 1px solid black;
+            padding: 10px;
+            width: 280px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Ingredienser</th>
-            <th>I sæson</th>
-            <th>Kødtype</th>
-            <th>Pris</th>
-        </tr>
-    </thead>
-    <tbody>
+        .filterbox div {
+            display: flex;
+        }
+
+        .button {
+            float: right;
+        }
+
+        .body{
+            background-image: url("/wwwroot/images/sandwich.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+    </style>
+    </body>
+</html>
+
+<h1>Smørrebrødsudvalg</h1>
+
+<h4>Vælg ingredienser</h4>
+<div class="filterbox">
+        <div>
+            <input type="checkbox" id="meat1" />
+            <label for="meat1">Fjerkræ</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat2" />
+            <label for="meat2">Okse</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat3" />
+            <label for="meat3">Fisk</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat4" />
+            <label for="meat4">Gris</label><br />
+        </div>
+</div>
+
+    <div class="food">
+        <h3>Diverse</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <tr>
-                <td>@sandwich.Ingredients</td>
-                <td>@sandwich.InSeason</td>
-                <td>@sandwich.MeatType</td>
-                <td>@sandwich.Price</td>
-            </tr>
+            <p>@sandwich.Ingredients, @sandwich.Price</p>
         }
-    </tbody>
-</table>
+        <p>Ingredienser, Pris</p>
+    </div>
+
+
+
+<div class="food">
+    <h3>Luksussmørrebrød</h3>
+    @foreach (var sandwich in Model.Sandwiches)
+    {
+        <p>@sandwich.Ingredients</p>
+    }
+    <p>Test, Test</p>
+</div>
+
+    <div class="food">
+        <h3>Almindelig smørrebrød</h3>
+        @foreach (var sandwich in Model.Sandwiches)
+        {
+            <p>@sandwich.Ingredients, Pris: @sandwich.Price</p>
+        }
+        <p>Test, Pris: Pris</p>
+    </div>
+
+    <div class="food">
+        <h3>Signatur</h3>
+        @foreach (var sandwich in Model.Sandwiches)
+        {
+            <p>@sandwich.Ingredients</p>
+        }
+        <p>Test, Test</p>
+    </div>
+
+
+    <div class="button">
+    <input type="submit" value="Bekræft valg" class="btn btn-danger" />
+    </div>
