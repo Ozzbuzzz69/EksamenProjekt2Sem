@@ -1,11 +1,14 @@
 ﻿using EksamenProjekt2Sem.Models;
+using EksamenProjektTest.EFDbContext;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        public List<User> _users; // Overskud fra domain model
+        public List<Order> Orders { get; }
+        public List<User> Users { get; }// Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
 
         public UserService(UserService userService)
@@ -23,7 +26,7 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="user"></param>
         public void CreateUser(User user)
         {
-            _users.Add(user);
+            Users.Add(user);
             _dbService.AddObjectAsync(user);
         }
 
@@ -32,9 +35,9 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User ReadUser(int id)
+        public User GetUserByEmail(string email)
         {
-            return _users.Find(user => user.Id == id);
+            return Users.Find(user => user.Email == email);
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<User> ReadAllUsers()
         {
-            return _users;
+            return Users;
         }
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace EksamenProjekt2Sem.Services
         {
             if (user != null)
             { 
-                 foreach (User u in _users)
+                 foreach (User u in Users)
                  {
                     if (u.Id == id)
                     {
@@ -66,7 +69,7 @@ namespace EksamenProjekt2Sem.Services
                     }
                  }
             }
-            _dbService.SaveObjects(_users);
+            _dbService.SaveObjects(Users);
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace EksamenProjekt2Sem.Services
         public User DeleteUser(int id)
         {
             User userToBeDeleted = null;
-            foreach (User u in _users)
+            foreach (User u in Users)
             {
                 if (u.Id == id)
                 {
@@ -86,7 +89,7 @@ namespace EksamenProjekt2Sem.Services
             }
             if (userToBeDeleted != null)
             {
-                _users.Remove(userToBeDeleted);
+                Users.Remove(userToBeDeleted);
                 _dbService.DeleteObjectAsync(userToBeDeleted);
             }
             return userToBeDeleted;
@@ -97,5 +100,14 @@ namespace EksamenProjekt2Sem.Services
         //    // Create order from orderlines
         //    return new Order(); // Placeholder return
         //}
+        //public User GetUserOrders(User user)
+        //{
+        //    return (User)(from o in Orders
+        //                   where o.User.Id == GetObjectByIdAsync(user.Id).Result.Id
+        //                   select o);
+
+        //}
+
+     
     }
 }
