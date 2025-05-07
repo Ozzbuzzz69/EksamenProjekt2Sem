@@ -1,5 +1,6 @@
-using EksamenProjekt2Sem.AppDbContext;
+using EksamenProjekt2Sem.Models;
 using EksamenProjekt2Sem.Services;
+using EksamenProjektTest.EFDbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ builder.Services.AddSingleton<SandwichService, SandwichService>();
 builder.Services.AddSingleton<WarmMealService, WarmMealService>();
 
 // Add DB context
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddDbContext<FoodContext>();
 builder.Services.AddTransient<GenericDbService<OrderService>, GenericDbService<OrderService>>();
 builder.Services.AddTransient<GenericDbService<CampaignOfferService>, GenericDbService<CampaignOfferService>>();
 builder.Services.AddTransient<GenericDbService<UserService>, GenericDbService<UserService>>();
