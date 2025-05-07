@@ -1,3 +1,4 @@
+using EksamenProjekt2Sem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,10 +7,12 @@ namespace EksamenProjekt2Sem.Pages.Order
     using EksamenProjekt2Sem.Models;
     public class ReadAllOrdersModel : PageModel
     {
-        private Services.OrderService _orderService;
-        public ReadAllOrdersModel(Services.OrderService orderService)
+        public UserService UserService { get; set; }
+        private OrderService _orderService;
+        public ReadAllOrdersModel(OrderService orderService, UserService userService)
         {
             _orderService = orderService;
+            UserService = userService;
         }
         public List<Order> Orders { get; set; }
         [BindProperty]

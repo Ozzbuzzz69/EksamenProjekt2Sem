@@ -5,7 +5,8 @@ namespace EksamenProjekt2Sem.Models
 {
     public class Order
     {
-      private DateTime pickupTime;
+        private DateTime pickupTime;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -21,13 +22,13 @@ namespace EksamenProjekt2Sem.Models
         {
             get => pickupTime; set
             {
-                
-                    if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
-                    {
-                        throw new ArgumentNullException("Ugyldig dato");
-                    }
-                       
-            }             
+
+                if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
+                {
+                    throw new ArgumentNullException("Ugyldig dato");
+                }
+
+            }
         }
 
         // public double TotalPrice { get { return GetTotalPrice(); } }
