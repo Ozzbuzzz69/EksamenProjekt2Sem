@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -12,6 +13,7 @@ namespace EksamenProjekt2Sem.Services
         {
             _dbService = dbService;
             //_warmMeals = _dbService.GetObjectsAsync().Result.ToList();
+            _warmMeals = MockFood.GetWarmMeals();
         }
 
         /// <summary>
