@@ -225,7 +225,6 @@ namespace EksamenProjekt2Sem.Services
                 if (ol.Id == orderLineId)
                 {
                     ol.Quantity = orderLine.Quantity;
-                    ol.Price = orderLine.Price;
                     ol.Food = orderLine.Food;
                     ol.CampaignOffer = orderLine.CampaignOffer;
                     _dbService.UpdateObjectAsync(order);
