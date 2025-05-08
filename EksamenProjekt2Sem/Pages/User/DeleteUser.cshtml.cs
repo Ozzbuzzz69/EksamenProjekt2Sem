@@ -31,7 +31,7 @@ namespace EksamenProjekt2Sem.Pages.User
                 // Handle invalid model state
                 RedirectToPage("./Index");
             }
-            
+
             return RedirectToPage("./Index");
         }
     }
