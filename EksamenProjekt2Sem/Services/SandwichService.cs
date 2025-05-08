@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -12,7 +13,9 @@ namespace EksamenProjekt2Sem.Services
         {
             _dbService = dbService;
             //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+            _sandwiches = MockFood.GetSandwiches();
         }
+
 
         /// <summary>
         /// Creates the sandwich from the argument.
