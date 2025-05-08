@@ -11,8 +11,7 @@ namespace EksamenProjekt2Sem.Services
         public WarmMealService(GenericDbService<WarmMeal> dbService)
         {
             _dbService = dbService;
-            _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
-            _dbService.SaveObjects(_warmMeals);
+            //_warmMeals = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>
