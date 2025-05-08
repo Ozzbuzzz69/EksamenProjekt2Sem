@@ -1,9 +1,4 @@
-﻿@using EksamenProjekt2Sem.Pages.LogInAndOut;
-@using EksamenProjekt2Sem.Pages.Food.Sandwich;
-@using EksamenProjekt2Sem.Pages.Food.WarmMeal;
-@using EksamenProjekt2Sem.Pages.CampaignOffer;
-@using EksamenProjekt2Sem.Pages.Order;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,23 +19,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Sandwiches</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/User/CreateUser">Sandwiches</a>
-                        </li>
                         @{
-                           // if (Context.User.Identity != null && Context.User.Identity.Name == "admin")
+                            if (Context.User.Identity != null && Context.User.Identity.Name == "admin")
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/CreateWarmMeal">Opret Warm Meal</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/WarmMeal">Opret Warm Meal</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/CampaignOffer/CreateCampaignOffer">Opret Kampange Tilbud</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/CreateCampaignOffer">Opret Kampange Tilbud</a>
                                 </li>
                             }
                         }
@@ -50,25 +39,25 @@
                             if (Context.User.Identity.Name == null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/LogInAndOut/LogIn">Login</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogIn">Login</a>
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Order/ReadAllOrders">My Orders</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Order/ReadAllOrders">My Orders</a>
                                 </li>
-                                <li class="nav-item nav-link text-black me-3">
+                                <li class="nav-item nav-link text-white me-3">
                                     User: @Context.User.Identity.Name
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/LogInAndOut/LogOut">Logout</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogOut">Logout</a>
                                 </li>
                             }
                         }
                     </ul>
-                   
+                    </ul>
                 </div>
             </div>
         </nav>

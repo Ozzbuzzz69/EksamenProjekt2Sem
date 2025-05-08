@@ -11,13 +11,14 @@ namespace EksamenProjekt2Sem.Services
         public List<User> Users { get; }// Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
 
-       
-        public UserService(GenericDbService<User> genericDbService)
+        public UserService(UserService userService)
         {
-            _dbService = genericDbService;
-
+            _dbService = userService;
         }
-       
+        public UserService()
+        {
+            _dbService = new GenericDbService<User>();
+        }
 
         /// <summary>
         /// Creates a new user.

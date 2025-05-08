@@ -12,10 +12,10 @@ namespace EksamenProjekt2Sem.Pages.User
         }
         [BindProperty]
         public Models.User User { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
             // Get the user by id
-            User = _userService.GetUserByEmail(HttpContext.User.Identity.Name);
+            User = _userService.ReadUser(id);
             if (User == null)
             {
                 // Handle not found case
