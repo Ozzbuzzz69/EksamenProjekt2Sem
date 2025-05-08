@@ -10,11 +10,12 @@ namespace EksamenProjekt2Sem.Services
         public OrderService(GenericDbService<Order> dbService)
         {
             _dbService = dbService;
-            //_orders = _dbService.GetObjectsAsync().Result.ToList();
+            _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
         public OrderService()
         {
             _orders = new List<Order>();
+            _dbService = new GenericDbService<Order>();
         }
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
