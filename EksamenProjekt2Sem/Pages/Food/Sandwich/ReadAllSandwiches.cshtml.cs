@@ -13,7 +13,10 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             _sandwichService = sandwichService;
         }
 
+        public List<Models.Sandwich> Sandwiches { get; private set; }
+=======
         public List<Models.Sandwich>? Sandwiches { get; set; }
+
 
         public void OnGet()
         {
