@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.Food.Sandwich
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
 
     public class CreateSandwichModel : PageModel
     {
