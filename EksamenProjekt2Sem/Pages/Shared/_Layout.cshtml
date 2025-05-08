@@ -8,16 +8,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EksamenProjekt2SeM</title>
+    <title>@ViewData["Title"] - SPAR</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EksamenProjekt2Sem.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">EksamenProjekt2Sem</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="/images/HeaderLogo.png" alt="billede" width="600" height="100" />
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,10 +31,10 @@
                             <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Sandwiches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/User/CreateUser">Sandwiches</a>
+                            <a class="nav-link text-black" asp-area="" asp-page="/User/CreateUser">Opret bruger</a>
                         </li>
                         @{
-                           // if (Context.User.Identity != null && Context.User.Identity.Name == "admin")
+                            // if (Context.User.Identity != null && Context.User.Identity.Name == "admin")
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
@@ -68,7 +71,7 @@
                             }
                         }
                     </ul>
-                   
+
                 </div>
             </div>
         </nav>
@@ -79,8 +82,61 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <style>
+        .row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            flex: 1;
+            text-align: center;
+            margin: 10px;
+        }
+
+        html, body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+        }
+    </style>
+
+    <footer class="border-top footer text-muted" style="position: relative; bottom: 0; width: 100%;">
+
         <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-md-3">
+                    <h3 style="color: black;">Om SPAR</h3>
+                    <p style="color: black;">Læs om SPAR</p>
+                    <p style="color: black;">Job og karriere</p>
+                    <p style="color: black;">Privatlivs Politik</p>
+                </div>
+
+                <div class="col-sm-4 col-md-3">
+                    <h3 style="color: black;">Åbningstider</h3>
+                    <p style="color: black;">
+                    <p style="color: black;">Åbent alle dage kl. 8.00 - 20</p>
+                </div>
+
+                <div class="col-sm-4 col-md-3">
+                    <h3 style="color: black;">Kundeservice</h3>
+                    <p style="color: black;">konkurrencer og vilkår</p>
+                    <p style="color: black;">Gavekort</p>
+                    <p style="color: black;">Kundeinformation</p>
+                    <p style="color: black;">Anmodning om indsigt</p>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <h3 style="color: black;">Kontakt os</h3>
+                    <p style="color: black;">Telefon: +45 88 20 68 13</p>
+                    <p style="color: black;">Privatlivs Kundeservice@spar.dk</p>
+                    <p style="color: black;">Privatlivs Adresse: Ellevej 34, Frederiksværk</p>
+                </div>
+            </div>
             &copy; 2025 - EksamenProjekt2Sem - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
