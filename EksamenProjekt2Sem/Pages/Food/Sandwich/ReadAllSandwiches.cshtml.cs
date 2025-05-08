@@ -14,8 +14,6 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         }
 
         public List<Models.Sandwich> Sandwiches { get; private set; }
-=======
-        public List<Models.Sandwich>? Sandwiches { get; set; }
 
 
         public void OnGet()
