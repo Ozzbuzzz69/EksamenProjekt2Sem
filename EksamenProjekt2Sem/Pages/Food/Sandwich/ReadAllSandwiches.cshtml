@@ -2,10 +2,9 @@
 @model EksamenProjekt2Sem.Pages.Food.Sandwich.ReadAllSandwichesModel
 @{
 }
-<html>
-<body>
-    <style>
-        .food {
+
+<style>
+    .food {
         background-color: whitesmoke;
         color: black;
         border: 2px solid black;
@@ -13,9 +12,9 @@
         padding: 20px;
         width: 580px;
         float: left;
-        }
+    }
 
-        .filterbox {
+    .filterbox {
         background-color: lightgrey;
         border: 1px solid black;
         padding: 10px;
@@ -23,101 +22,97 @@
         display: flex;
         flex-wrap: wrap;
         gap: 15px;
-        }
+    }
 
         .filterbox div {
-        display: flex;
+            display: flex;
         }
 
-        .button {
+    .button {
         float: right;
-        }
+    }
 
-        .body{
-        background-image: url("/wwwroot/images/sandwich.jpg");
+    body {
+        background-image: url("/images/sandwich.png");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        }
+    }
 
-    </style>
-</body>
-</html>
+    footer {
+        height: 0px;
+        background-color: white;
+    }
+
+    .inputsize {
+        width: 50px;
+    }
+</style>
 
 <h1>Smørrebrødsudvalg</h1>
+    <h4>Vælg ingredienser</h4>
+    <div class="filterbox">
+        <div>
+            <input type="checkbox" id="meat1" />
+            <label for="meat1">Fjerkræ</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat2" />
+            <label for="meat2">Okse</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat3" />
+            <label for="meat3">Fisk</label><br />
+        </div>
+        <div>
+            <input type="checkbox" id="meat4" />
+            <label for="meat4">Gris</label><br />
+        </div>
+    </div>
 
-<h4>Vælg ingredienser</h4>
-<div class="filterbox">
-    <div>
-        <input type="checkbox" id="meat1" />
-        <label for="meat1">Fjerkræ</label><br />
-    </div>
-    <div>
-        <input type="checkbox" id="meat2" />
-        <label for="meat2">Okse</label><br />
-    </div>
-    <div>
-        <input type="checkbox" id="meat3" />
-        <label for="meat3">Fisk</label><br />
-    </div>
-    <div>
-        <input type="checkbox" id="meat4" />
-        <label for="meat4">Gris</label><br />
-    </div>
-</div>
-
-<div class="food">
-    <h3>Diverse</h3>
-    @if (Model.Sandwiches != null)
-    {
+    <div class="food">
+        <h3>Diverse</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients, @sandwich.Price</p>
+            <p>
+                @sandwich.Ingredients, Pris: @sandwich.Price
+            <input class="inputsize" type="number" value="0" id="input" />
+            </p>
         }
-        <p>Ingredienser, Pris</p>
-    }
-    else
-    {
-        <p>Ingen smørrebrød</p>
-    }
-</div>
+    </div>
 
-
-
-<div class="food">
-    <h3>Luksussmørrebrød</h3>
-    @foreach (var sandwich in Model.Sandwiches)
-    {
-        <p>@sandwich.Ingredients</p>
-    }
-    <p>Test, Test</p>
-</div>
+    <div class="food">
+        <h3>Luksussmørrebrød</h3>
+        @foreach (var sandwich in Model.Sandwiches)
+        {
+            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+            <input class="inputsize" type="number" value="0" id="input" />
+            </p>
+        }
+    </div>
 
     <div class="food">
         <h3>Almindelig smørrebrød</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients, Pris: @sandwich.Price</p>
+            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+            <input class="inputsize" type="number" value="0" id="input" />
+            </p>
         }
-        <p>Test, Pris: Pris</p>
     </div>
 
     <div class="food">
         <h3>Signatur</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients</p>
+            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+            <input class="inputsize" type="number" value="0" id="input" />
+            </p>
         }
-        <p>Test, Test</p>
     </div>
-
 
     <div class="button">
-    <input type="submit" value="Bekræft valg" class="btn btn-danger" />
+        <input type="submit" value="Bekræft valg" class="btn btn-danger" />
     </div>
-@* d *@
 
-
- <div>
-     <img src="/images/sandwich.png" alt="billede" width="500" height="333" />
- </div>
+@* df *@
