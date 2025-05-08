@@ -12,10 +12,10 @@ namespace EksamenProjekt2Sem.Pages.User
         }
         [BindProperty]
         public Models.User User { get; set; }
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet()
         {
             // Get the user by id
-            User = _userService.ReadUser(id);
+            User = _userService.GetUserByEmail(HttpContext.User.Identity.Name);
             if (User == null)
             {
                 // Handle not found case
@@ -31,7 +31,7 @@ namespace EksamenProjekt2Sem.Pages.User
                 // Handle invalid model state
                 RedirectToPage("./Index");
             }
-            
+
             return RedirectToPage("./Index");
         }
     }
