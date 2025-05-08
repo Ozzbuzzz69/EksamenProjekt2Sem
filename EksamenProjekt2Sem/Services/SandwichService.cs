@@ -16,7 +16,6 @@ namespace EksamenProjekt2Sem.Services
             _sandwiches = MockFood.GetSandwiches();
         }
 
-
         /// <summary>
         /// Creates the sandwich from the argument.
         /// </summary>
