@@ -16,16 +16,12 @@ namespace EksamenProjekt2Sem.Pages.Order
         // Other search criteria properties can be added here:
         //
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
-            //Find the userid of the logged in user
-
-
-            // Temporary hardcoded id
-            int userId = 1;
+            // Remember to have the orderid to access this page
 
             // Get the order from the id of the user
-            order = _orderService.ReadOrderByUserId(userId);
+            order = _orderService.ReadOrder(id);
             
             if (order == null)
             {
