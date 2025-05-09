@@ -16,6 +16,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         public List<Models.Sandwich> Sandwiches { get; private set; }
 
 
+
         public void OnGet()
         {
             Sandwiches = _sandwichService.ReadAllSandwiches();
