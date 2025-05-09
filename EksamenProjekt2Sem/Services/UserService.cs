@@ -8,15 +8,14 @@ namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        public List<Order> Orders { get; }
-        public List<User> Users { get; }// Overskud fra domain model
+        private List<User> _users { get; }// Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
 
        
         public UserService(GenericDbService<User> genericDbService)
         {
             _dbService = genericDbService;
-            Users = MockUser.GetUsers();
+            _users = MockUser.GetUsers();
         }
        
 
@@ -26,18 +25,27 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="user"></param>
         public void CreateUser(User user)
         {
-            Users.Add(user);
+            _users.Add(user);
             _dbService.AddObjectAsync(user);
         }
 
+        /// <summary>
+        /// Finds user with given email.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public User? GetUserByEmail(string email)
+        {
+            return _users.Find(user => user.Email == email);
+        }
         /// <summary>
         /// Finds user with given id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User GetUserByEmail(string email)
+        public User? GetUserById(int id)
         {
-            return Users.Find(user => user.Email == email);
+            return _users.Find(user => user.Id == id);
         }
 
         /// <summary>
@@ -46,7 +54,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<User> ReadAllUsers()
         {
-            return Users;
+            return _users;
         }
 
         /// <summary>
@@ -58,7 +66,7 @@ namespace EksamenProjekt2Sem.Services
         {
             if (user != null)
             { 
-                 foreach (User u in Users)
+                 foreach (User u in _users)
                  {
                     if (u.Id == id)
                     {
@@ -69,7 +77,7 @@ namespace EksamenProjekt2Sem.Services
                     }
                  }
             }
-            _dbService.SaveObjects(Users);
+            _dbService.SaveObjects(_users);
         }
 
         /// <summary>
@@ -80,7 +88,7 @@ namespace EksamenProjekt2Sem.Services
         public User DeleteUser(int id)
         {
             User userToBeDeleted = null;
-            foreach (User u in Users)
+            foreach (User u in _users)
             {
                 if (u.Id == id)
                 {
@@ -89,7 +97,7 @@ namespace EksamenProjekt2Sem.Services
             }
             if (userToBeDeleted != null)
             {
-                Users.Remove(userToBeDeleted);
+                _users.Remove(userToBeDeleted);
                 _dbService.DeleteObjectAsync(userToBeDeleted);
             }
             return userToBeDeleted;

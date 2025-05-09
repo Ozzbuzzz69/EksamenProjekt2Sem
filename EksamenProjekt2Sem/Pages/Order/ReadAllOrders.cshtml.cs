@@ -14,16 +14,17 @@ namespace EksamenProjekt2Sem.Pages.Order
             _orderService = orderService;
             UserService = userService;
         }
+        [BindProperty]
         public List<Order> Orders { get; set; }
         [BindProperty]
         public string SearchString { get; set; }
         // Other search criteria properties can be added here:
         //
 
-        public void OnGet()
+        public void OnGet(int id)
         {
             // Get all orders
-            Orders = _orderService.ReadAllOrders();
+            Orders = _orderService.ReadAllOrdersByUser();
             if (Orders == null)
             {
                 // Handle not found case
