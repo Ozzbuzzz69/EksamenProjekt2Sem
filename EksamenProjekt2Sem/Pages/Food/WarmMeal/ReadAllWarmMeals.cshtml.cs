@@ -7,6 +7,8 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
     public class ReadAllWarmMealsModel : PageModel
     {
         private WarmMealService _warmMealService;
+        [BindProperty]
+        public int Count { get; set; } = 0;
 
         public ReadAllWarmMealsModel(WarmMealService warmMealService)
         {
