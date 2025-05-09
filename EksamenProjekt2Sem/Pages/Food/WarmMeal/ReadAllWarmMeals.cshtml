@@ -13,6 +13,8 @@
             <th>Kødtype</th>
             <th>Pris</th>
             <th>Minimum person amount</th>
+            <th>Opdater Varm Ret</th>
+            <th>Føj til kurv</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,14 @@
                         <td>@warmMeal.MeatType</td>
                         <td>@warmMeal.Price</td>
                         <td>@warmMeal.MinPersonAmount</td>
+
+                        <td>
+                            <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Opdater</i></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" type="button" title="Føj til kurv" asp-page="CreateOrder" asp-route-id="@warmMeal.Id"><i class="fa">Føj til kurv</i></a>
+                        </td>
+
                     </tr>
                 }
         }
