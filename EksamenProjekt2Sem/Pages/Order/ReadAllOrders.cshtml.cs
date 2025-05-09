@@ -7,24 +7,24 @@ namespace EksamenProjekt2Sem.Pages.Order
     using EksamenProjekt2Sem.Models;
     public class ReadAllOrdersModel : PageModel
     {
-        public UserService UserService { get; set; }
+        private UserService _userService { get; set; }
         private OrderService _orderService;
         public ReadAllOrdersModel(OrderService orderService, UserService userService)
         {
             _orderService = orderService;
-            UserService = userService;
+            _userService = userService;
         }
         [BindProperty]
-        public List<Order> Orders { get; set; }
+        public List<Order>? Orders { get; set; }
         [BindProperty]
-        public string SearchString { get; set; }
+        public string? SearchString { get; set; }
         // Other search criteria properties can be added here:
         //
 
         public void OnGet(int id)
         {
             // Get all orders
-            Orders = _orderService.ReadAllOrdersByUser();
+            Orders = _orderService.ReadAllOrdersByUser(_userService.GetUserById(id));
             if (Orders == null)
             {
                 // Handle not found case

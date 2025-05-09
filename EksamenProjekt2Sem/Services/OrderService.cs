@@ -54,8 +54,12 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="user"></param>
         /// <returns>List<Order>?</returns>
-        public List<Order>? ReadAllOrdersByUser(User user)
+        public List<Order>? ReadAllOrdersByUser(User? user)
         {
+            if (user == null)
+            {
+                return null;
+            }
             List<Order> temp = new();
             foreach (Order o in _orders)
             {
