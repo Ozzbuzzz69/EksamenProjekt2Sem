@@ -25,6 +25,11 @@ namespace EksamenProjekt2Sem.Services
             _orders.Add(order);
             _dbService.AddObjectAsync(order);
         }
+        /// <summary>
+        /// Reads an order from the database by its id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Order?</returns>
         public Order? ReadOrder(int id)
         {
             foreach (Order order in _orders)
@@ -39,10 +44,31 @@ namespace EksamenProjekt2Sem.Services
         /// <summary>
         /// Reads all order objects from the database.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<Order></returns>
         public List<Order> ReadAllOrders()
         {
             return _orders;
+        }
+        /// <summary>
+        /// Reads a list of orders which belongs to the user in argument.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>List<Order>?</returns>
+        public List<Order>? ReadAllOrdersByUser(User user)
+        {
+            List<Order> temp = new();
+            foreach (Order o in _orders)
+            {
+                if (o.User.Id == user.Id)
+                {
+                    temp.Add(o);
+                }
+            }
+            if (temp.Count > 0)
+            {
+                return temp;
+            }
+            return null;
         }
         /// <summary>
         /// Updates the order object from argument to the database, and the _orders list.
