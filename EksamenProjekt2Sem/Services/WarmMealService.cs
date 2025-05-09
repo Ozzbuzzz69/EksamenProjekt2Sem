@@ -97,28 +97,114 @@ namespace EksamenProjekt2Sem.Services
             return warmMealToBeDeleted;
         }
 
+        #region Sorting/Filtering functions
+        #region Filtering functions
+
         /// <summary>
-        /// Filters warm meals by criteria given in argument.
+        /// Filters warm meals by specified minimum person amount.
         /// </summary>
         /// <param name="criteria"></param>
-        /// <returns>
-        /// Returns all matching warm meals.
-        /// </returns>
-        public List<WarmMeal> FilterWarmMealByCriteria(string criteria)
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByMinPersonLower(int criteria)
         {
-            return _warmMeals.FindAll(w => w.Ingredients.Contains(criteria));
+            return _warmMeals.FindAll(w => w.MinPersonAmount >= criteria);
         }
 
         /// <summary>
-        /// // mangler
+        /// Filters warm meals by specified maximum person amount.
         /// </summary>
-        /// <param name = "warmMeal" ></ param >
-        /// < param name="offerPrice"></param>
-        /// <param name = "dateFrom" ></ param >
-        /// < param name="dateTo"></param>
-        //public void WarmMealSpecialOffer(WarmMeal warmMeal, double offerPrice, DateTime dateFrom, DateTime dateTo)
-        //{
-        //    // mangler
-        //}
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByMinPersonUpper(int criteria)
+        {
+            return _warmMeals.FindAll(w => w.MinPersonAmount <= criteria);
+        }
+
+        /// <summary>
+        /// Filters warm meals by specified person amount range (including upper/lower).
+        /// </summary>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByMinPersonRange(int lower, int upper)
+        {
+            return _warmMeals.FindAll(w => w.MinPersonAmount >= lower && w.MinPersonAmount <= upper);
+        }
+
+        /// <summary>
+        /// Filters food by specified ingredients.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns>
+        /// Returns a list of warm meals that matches the criteria.
+        /// </returns>
+        public List<WarmMeal> FilterWarmMealByIngredient(string criteria)
+        {
+            return _warmMeals.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
+        }
+
+        /// <summary>
+        /// Filters warm meals by specified meat type.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByMeatType(string criteria)
+        {
+            return _warmMeals
+                .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
+        }
+
+
+        /// <summary>
+        /// Finds all warm meals that cost more than the criteria.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByPriceLower(double criteria)
+        {
+            return _warmMeals.FindAll(s => s.Price >= criteria);
+        }
+
+        /// <summary>
+        /// Finds all warm meals that cost less than the criteria.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByPriceUpper(double criteria)
+        {
+            return _warmMeals.FindAll(s => s.Price <= criteria);
+        }
+
+        /// <summary>
+        /// Finds all Warm Meals that cost between the two criteria (including the criteria).
+        /// </summary>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public List<WarmMeal> FilterWarmMealByPriceRange(double lower, double upper)
+        {
+            return _warmMeals.FindAll(s => s.Price >= lower && s.Price <= upper);
+        }
+        #endregion
+        #region Sorting functions
+        /// <summary>
+        /// Gets all warm meals sorted by id.
+        /// </summary>
+        /// <returns></returns>
+        public List<WarmMeal> GetWarmMealsSortedById()
+        {
+            return SortById(_warmMeals);
+        }
+
+        /// <summary>
+        /// Gets all warm meals sorted by price.
+        /// </summary>
+        /// <returns></returns>
+        public List<WarmMeal> GetWarmMealsSortedByPrice()
+        {
+            return SortByCriteria(_warmMeals, "Price");
+        }
+        #endregion
+        #endregion
     }
 }

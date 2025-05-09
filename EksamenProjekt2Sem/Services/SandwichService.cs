@@ -99,6 +99,9 @@ namespace EksamenProjekt2Sem.Services
             return sandwichToBeDeleted;
         }
 
+        #region Sorting/Filtering functions
+        #region Filtering functions
+
         /// <summary>
         /// Filters sandwiches by specified category.
         /// </summary>
@@ -106,40 +109,86 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns a list of sandwiches with the category as given in argument.
         /// </returns>
-        public List<Sandwich> FilterSandwichByCategory(string category)
+        public List<Sandwich> FilterSandwichByCategory(string criteria)
         {
-            return _sandwiches.FindAll(s => s.Category == category);
+            return _sandwiches.FindAll(s => s.Category.ToLower().Contains(criteria.ToLower()));
         }
 
         /// <summary>
-        /// Filters food by given criteria.
+        /// Filters food by specified ingredients.
         /// </summary>
         /// <param name="criteria"></param>
         /// <returns>
         /// Returns a list of sandwiches that matches the criteria.
         /// </returns>
-        public List<Sandwich> FilterSandwichByCriteria(string criteria)
+        public List<Sandwich> FilterSandwichByIngredient(string criteria)
         {
-            return _sandwiches.FindAll(s => s.Ingredients.Contains(criteria));
+            return _sandwiches.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
         }
 
         /// <summary>
-        /// 
+        /// Filters sandwiches by specified meat type.
         /// </summary>
-        /// <param name="sandwich"></param>
-        /// <param name="offerPrice"></param>
-        /// <param name="dateFrom"></param>
-        /// <param name="dateTo"></param>
-        //public void SpecialSandwichOffer(Sandwich sandwich, double offerPrice, DateTime dateFrom, DateTime dateTo)
-        //{
-        //    var findSandwich = _sandwiches.FindAll(s => s.Category == sandwich.Category);
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<Sandwich> FilterSandwichByMeatType(string criteria)
+        {
+            return _sandwiches
+                .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
+        }
 
-        //    double normalPrice = sandwich.Price;
 
-        //    foreach (Sandwich sa in findSandwich)
-        //    {
-        //        sa.Price == offerPrice;
-        //    }
-        //}
+        /// <summary>
+        /// Finds all sandwiches that cost more than the criteria.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<Sandwich> FilterSandwichByPriceLower(double criteria)
+        {
+            return _sandwiches.FindAll(s => s.Price >= criteria);
+        }
+
+        /// <summary>
+        /// Finds all sandwiches that cost less than the criteria.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<Sandwich> FilterSandwichByPriceUpper(double criteria)
+        {
+            return _sandwiches.FindAll(s => s.Price <= criteria);
+        }
+
+        /// <summary>
+        /// Finds all sandwiches that cost between the two criteria (including the criteria).
+        /// </summary>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public List<Sandwich> FilterSandwichByPriceRange(double lower, double upper)
+        {
+            return _sandwiches.FindAll(s => s.Price >= lower && s.Price <= upper);
+        }
+        #endregion
+
+        #region Sorting functions
+        /// <summary>
+        /// Gets all sandwiches sorted by id.
+        /// </summary>
+        /// <returns></returns>
+        public List<Sandwich> GetSandwichesSortedById()
+        {
+            return SortById(_sandwiches);
+        }
+
+        /// <summary>
+        /// Gets all sandwiches sorted by price.
+        /// </summary>
+        /// <returns></returns>
+        public List<Sandwich> GetSandwichesSortedByPrice()
+        {
+            return SortByCriteria(_sandwiches, "Price");
+        }
+        #endregion
+        #endregion
     }
 }

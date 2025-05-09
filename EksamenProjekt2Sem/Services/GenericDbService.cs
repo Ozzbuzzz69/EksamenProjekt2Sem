@@ -1,4 +1,5 @@
-﻿using EksamenProjektTest.EFDbContext;
+﻿using EksamenProjekt2Sem.Models;
+using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 namespace EksamenProjekt2Sem.Services
 {
@@ -56,6 +57,35 @@ namespace EksamenProjekt2Sem.Services
             }
         }
 
+        #region Sorting functions
+        /// <summary>
+        /// Given a list, it sorts the objects by their Id property.
+        /// Any null values are ignored.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public List<T> SortById(List<T> list)
+        {
+            return list
+                .Where(l => l?.GetType().GetProperty("Id")?.GetValue(l, null) != null)
+                .OrderBy(l => l.GetType().GetProperty("Id")?.GetValue(l, null))
+                .ToList();
+        }
 
+        /// <summary>
+        /// Given a list, it sorts the objects by the given criteria.
+        /// Criteria is a string which is the name of the property to sort by (remember caps).
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<T> SortByCriteria(List<T> list, string criteria)
+        {
+            return list
+                .Where(l => l?.GetType().GetProperty(criteria)?.GetValue(l, null) != null)
+                .OrderBy(l => l.GetType().GetProperty(criteria)?.GetValue(l, null))
+                .ToList();
+        }
+        #endregion
     }
 }

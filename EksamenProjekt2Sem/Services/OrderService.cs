@@ -150,8 +150,123 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
+        #region Sorting/Filtering functions
+        #region Filtering functions
+
+        /// <summary>
+        /// Gets all orders with the same pickup time as the one given in argument.
+        /// </summary>
+        /// <param name="pickTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersPickupTime(DateTime pickTime)
+        {
+            return _orders.FindAll(o => o.PickupTime == pickTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with a pickup time higher than the one given in argument.
+        /// </summary>
+        /// <param name="pickTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersPickupTimeLower(DateTime pickTime)
+        {
+            return _orders.FindAll(o => o.PickupTime >= pickTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with a pickup time lower than the one given in argument.
+        /// </summary>
+        /// <param name="pickTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersPickupTimeUpper(DateTime pickTime)
+        {
+            return _orders.FindAll(o => o.PickupTime <= pickTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with a pickup time in the range given in arguments (including lower and upper).
+        /// </summary>
+        /// <param name="lowerTime"></param>
+        /// <param name="upperTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersPickupTimeRange(DateTime lowerTime, DateTime upperTime)
+        {
+            return _orders.FindAll(o => o.PickupTime >= lowerTime && o.PickupTime <= upperTime).ToList();
+        }
+
+
+        /// <summary>
+        /// Gets all orders with the same order time as the one given in argument.
+        /// </summary>
+        /// <param name="orderTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersOrderTime(DateTime orderTime)
+        {
+            return _orders.FindAll(o => o.OrderTime == orderTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with an order time higher than the one given in argument.
+        /// </summary>
+        /// <param name="orderTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersOrderTimeLower(DateTime orderTime)
+        {
+            return _orders.FindAll(o => o.OrderTime >= orderTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with an order time lower than the one given in argument.
+        /// </summary>
+        /// <param name="orderTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersOrderTimeUpper(DateTime orderTime)
+        {
+            return _orders.FindAll(o => o.OrderTime <= orderTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets all orders with an order time in the range given in arguments (including lower and upper).
+        /// </summary>
+        /// <param name="lowerTime"></param>
+        /// <param name="upperTime"></param>
+        /// <returns></returns>
+        public List<Order> FilterOrdersOrderTimeRange(DateTime lowerTime, DateTime upperTime)
+        {
+            return _orders.FindAll(o => o.OrderTime >= lowerTime && o.OrderTime <= upperTime).ToList();
+        }
+        #endregion
 
         #region Sorting functions
+        /// <summary>
+        /// Gets all orders sorted by id.
+        /// </summary>
+        /// <returns></returns>
+        public List<Order> GetOrdersSortedById()
+        {
+            return SortById(_orders);
+        }
+
+        /// <summary>
+        /// Gets all orders sorted by pickuptime.
+        /// </summary>
+        /// <returns></returns>
+        public List<Order> GetOrdersSortedByPickupTime()
+        {
+            return SortByCriteria(_orders, "PickupTime");
+        }
+
+        /// <summary>
+        /// Gets all orders sorted by ordertime.
+        /// </summary>
+        /// <returns></returns>
+        public List<Order> GetOrdersSortedByOrderTime()
+        {
+            return SortByCriteria(_orders, "OrderTime");
+        }
+        #endregion
+        
+        #region Sorting Orderline functions
         /// <summary>
         /// Sorts the orderlines in a given order by price in ascending order.
         /// </summary>
@@ -200,6 +315,7 @@ namespace EksamenProjekt2Sem.Services
         {
             order.OrderLines = order.OrderLines.OrderByDescending(ol => ol.Id).ToList();
         }
+        #endregion
         #endregion
 
         #region Orderline manipulation
