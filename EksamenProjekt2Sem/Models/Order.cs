@@ -11,14 +11,14 @@ namespace EksamenProjekt2Sem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; } = DateTime.Now;
 
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
-        public DateTime PickupTime
+        public DateTime? PickupTime
         {
             get => pickupTime; set
             {
@@ -39,7 +39,7 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Order(User user, DateTime pickupTime)
+        public Order(User? user, DateTime? pickupTime)
         {
             User = user;
             PickupTime = pickupTime;
