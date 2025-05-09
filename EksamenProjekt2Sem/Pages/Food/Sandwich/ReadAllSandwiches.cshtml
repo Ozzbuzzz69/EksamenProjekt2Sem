@@ -4,6 +4,90 @@
 }
 
 <style>
+    .inputsize {
+        width: 50px;
+    }
+
+    body {
+        background-image: url("/images/sandwich.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .button {
+        float: right;
+    }
+</style>
+
+<h1>Smørrebrød</h1>
+
+
+<div class="row">
+    <div class="col-7"><h5>Søg kød</h5></div>
+    <div class="col-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <form method="post" class="form-inline">
+            <div class="input-group mb-3">
+                <input asp-for="SearchMeatType" class="form-control mr-1" placeholder="Søg" />
+                <input type="submit" asp-page-handler="SearchMeatType" value="Søg" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-3"></div>
+    <div>
+        <div class="col-7"><h5>Søg Kategori</h5></div>
+        <form method="post">
+            <div>
+                <input asp-for="SearchCategory" placeholder="Søg" />
+                <input type="submit" asp-page-handler="SearchCategory" value="Søg" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover table-light">
+    <thead>
+        <tr>
+            <th>Ingredienser</th>>
+            <th>Kødtype</th>
+            <th>Kategori</th>
+            <th>Kun i sæson *</th>
+            <th>Pris (DKK)</th>
+            <th>Vælg antal</th>
+        </tr>
+    </thead> 
+    <tbody>
+        @{
+            if (Model.Sandwiches != null)
+            {
+                int i = 0;
+                foreach (var sandwich in Model.Sandwiches)
+                {
+                    <tr>
+                        <td>@sandwich.Ingredients</td>
+                        <td>@sandwich.MeatType</td>
+                        <td>@sandwich.Category</td>
+                        <td>@sandwich.InSeason</td>
+                        <td>@sandwich.Price</td>
+                        <td><input class="inputsize" type="number" value="@Model.AmountSandwich[i]" name="AmountSandwich[@i]" min="0" /></td>
+                    </tr>
+                    i++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="button">
+    <input type="submit" value="Bekræft valg" class="btn btn-danger" />
+</div>
+
+
+@* <style>
     .food {
         background-color: whitesmoke;
         color: black;
@@ -24,19 +108,12 @@
         gap: 15px;
     }
 
-        .filterbox div {
-            display: flex;
-        }
+    .filterbox div {
+        display: flex;
+    }
 
     .button {
         float: right;
-    }
-
-    body {
-        background-image: url("/images/sandwich.png");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
     }
 
     footer {
@@ -70,12 +147,13 @@
         </div>
     </div>
 
+
     <div class="food">
         <h3>Diverse</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
             <p>
-                @sandwich.Ingredients, Pris: @sandwich.Price
+                @sandwich.Ingredients, Pris: @sandwich.Price DKK.
             <input class="inputsize" type="number" value="0" id="input" />
             </p>
         }
@@ -85,7 +163,8 @@
         <h3>Luksussmørrebrød</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+        <p>
+            @sandwich.Ingredients, Pris: @sandwich.Price DKK.
             <input class="inputsize" type="number" value="0" id="input" />
             </p>
         }
@@ -95,7 +174,8 @@
         <h3>Almindelig smørrebrød</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+        <p>
+            @sandwich.Ingredients, Pris: @sandwich.Price DKK.
             <input class="inputsize" type="number" value="0" id="input" />
             </p>
         }
@@ -105,7 +185,8 @@
         <h3>Signatur</h3>
         @foreach (var sandwich in Model.Sandwiches)
         {
-            <p>@sandwich.Ingredients, Pris: @sandwich.Price
+        <p>
+            @sandwich.Ingredients, Pris: @sandwich.Price DKK.
             <input class="inputsize" type="number" value="0" id="input" />
             </p>
         }
@@ -115,4 +196,4 @@
         <input type="submit" value="Bekræft valg" class="btn btn-danger" />
     </div>
 
-@* df *@
+ *@
