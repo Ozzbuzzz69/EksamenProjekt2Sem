@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -11,14 +12,13 @@ namespace EksamenProjekt2Sem.Services
         public List<User> Users { get; }// Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
 
-        public UserService(UserService userService)
+       
+        public UserService(GenericDbService<User> genericDbService)
         {
-            _dbService = userService;
+            _dbService = genericDbService;
+            Users = MockUser.GetUsers();
         }
-        public UserService()
-        {
-            _dbService = new GenericDbService<User>();
-        }
+       
 
         /// <summary>
         /// Creates a new user.

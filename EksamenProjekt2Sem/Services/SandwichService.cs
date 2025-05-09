@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -11,15 +12,16 @@ namespace EksamenProjekt2Sem.Services
         public SandwichService(GenericDbService<Sandwich> dbService)
         {
             _dbService = dbService;
-            _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-            _dbService.SaveObjects(_sandwiches);
+
+            //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+            _sandwiches = MockFood.GetSandwiches();
         }
 
         /// <summary>
         /// Creates the sandwich from the argument.
         /// </summary>
         /// <param name="sandwich"></param>
-        public void CreateFood(Sandwich sandwich)
+        public void CreateSandwich(Sandwich sandwich)
         {
             _sandwiches.Add(sandwich);
             _dbService.AddObjectAsync(sandwich);

@@ -9,19 +9,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<OrderService, OrderService>();
-builder.Services.AddSingleton<CampaignOfferService, CampaignOfferService>();
-builder.Services.AddSingleton<UserService, UserService>();
-builder.Services.AddSingleton<SandwichService, SandwichService>();
-builder.Services.AddSingleton<WarmMealService, WarmMealService>();
+builder.Services.AddTransient<OrderService>();
+builder.Services.AddSingleton<CampaignOfferService>();
+builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<SandwichService>();
+builder.Services.AddSingleton<WarmMealService>();
+builder.Services.AddTransient<GenericDbService<User>>();
+builder.Services.AddTransient<GenericDbService<Sandwich>>();
+builder.Services.AddTransient<GenericDbService<WarmMeal>>();
+builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
+builder.Services.AddTransient<GenericDbService<Order>>();
+
 
 // Add DB context
 builder.Services.AddDbContext<FoodContext>();
-builder.Services.AddTransient<GenericDbService<OrderService>, GenericDbService<OrderService>>();
-builder.Services.AddTransient<GenericDbService<CampaignOfferService>, GenericDbService<CampaignOfferService>>();
-builder.Services.AddTransient<GenericDbService<UserService>, GenericDbService<UserService>>();
-builder.Services.AddTransient<GenericDbService<SandwichService>, GenericDbService<SandwichService>>();
-builder.Services.AddTransient<GenericDbService<WarmMealService>, GenericDbService<WarmMealService>>();
+//builder.Services.AddTransient<GenericDbService<OrderService>, GenericDbService<OrderService>>();
+//builder.Services.AddTransient<GenericDbService<CampaignOfferService>, GenericDbService<CampaignOfferService>>();
+//builder.Services.AddTransient<GenericDbService<UserService>, GenericDbService<UserService>>();
+//builder.Services.AddTransient<GenericDbService<SandwichService>, GenericDbService<SandwichService>>();
+//builder.Services.AddTransient<GenericDbService<WarmMealService>, GenericDbService<WarmMealService>>();
 
 /*builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Server=(localdb)\\mssqllocaldb;Database=MyAppDb;Trusted_Connection=True;")));
