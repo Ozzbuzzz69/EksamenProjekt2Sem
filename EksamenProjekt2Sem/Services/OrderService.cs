@@ -342,6 +342,19 @@ namespace EksamenProjekt2Sem.Services
                 _dbService.UpdateObjectAsync(order);
             }
         }
+
+        /// <summary>
+        /// Adds the orderline object from argument to the order object given by Id
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="orderLine"></param>
+        public void AddOrderLineToOrder(Order order, OrderLine orderLine)
+        {
+            if (order != null)
+            {
+                order.OrderLines.Add(orderLine);
+            }
+        }
         /// <summary>
         /// Gets the orderlines for an Order object from the id in argument
         /// </summary>
