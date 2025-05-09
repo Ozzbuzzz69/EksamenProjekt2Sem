@@ -14,8 +14,8 @@ namespace EksamenProjekt2Sem.Models
         [Required(ErrorMessage = "Der skal angives ingredienser")]
         [StringLength(100, ErrorMessage = "Maks 100 tegn")]
         public string Ingredients { get; set; }
-        public bool? InSeason { get; set; }
-        public string? MeatType { get; set; }
+        public string? InSeason { get; set; }
+        public string MeatType { get; set; }
 
         [Display(Name = "Pris")]
         [Required(ErrorMessage = "Der skal angives en pris")]
@@ -26,7 +26,7 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Food(int id,string ingredients, bool? inSeason, string? meatType, double price)
+        public Food(int id,string ingredients, string? inSeason, string meatType, double price)
         {
             Id = id;
             Ingredients = ingredients;

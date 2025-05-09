@@ -9,15 +9,15 @@ namespace EksamenProjekt2Sem.MockData
         {
             new(1, "Ham and Cheese", null, "Ham", 19.95,"Standard"),
             new(2, "Chicken Salad", null, "Chicken", 29.95,"Standard"),
-            new(3, "Gold Flakes", null, null, 59.95,"Luxury"),
-            new(4, "Potato", true, null, 15, "Standard")
+            new(3, "Gold Flakes", null, "Chicken", 59.95,"Luxury"),
+            new(4, "Potato", "*", "Chicken, Ham", 15, "Standard")
         };
 
         private static List<WarmMeal> _warmMeals = new List<WarmMeal>()
         {
             new(1, "Spaghetti Bolognese", null, "Beef", 49.95, 2),
             new(2, "Sweet Chicken Curry", null, "Chicken", 39.95, 1),
-            new(3, "Vegetable Stir Fry", null, null, 29.95, 1),
+            new(3, "Vegetable Stir Fry", null, "Chicken", 29.95, 1),
             new(4, "Monster Burger", null, "Beef", 199.95, 6)
         };
 

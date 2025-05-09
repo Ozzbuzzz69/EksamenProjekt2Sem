@@ -1,5 +1,6 @@
 ﻿using EksamenProjekt2Sem.MockData;
 using EksamenProjekt2Sem.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -106,24 +107,25 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns a list of sandwiches with the category as given in argument.
         /// </returns>
-        public List<Sandwich> FilterSandwichByCategory(string category)
+        public List<Sandwich> SearchSandwichByCategory(string category)
         {
-            return _sandwiches.FindAll(s => s.Category == category);
+            return _sandwiches.FindAll(s => string.IsNullOrEmpty(category) || s.Category.ToLower().Contains(category.ToLower()));
         }
 
+
         /// <summary>
-        /// Filters food by given criteria.
+        /// Searches for sandwiches by meat type.
         /// </summary>
-        /// <param name="criteria"></param>
+        /// <param name="meatType"></param>
         /// <returns>
-        /// Returns a list of sandwiches that matches the criteria.
+        /// Returns a list of matching sandwiches.
         /// </returns>
-        public List<Sandwich> FilterSandwichByCriteria(string criteria)
+        public List<Sandwich> SearchSandwichByMeatType(string meatType)
         {
-            return _sandwiches.FindAll(s => s.Ingredients.Contains(criteria));
+            return _sandwiches.FindAll(m => string.IsNullOrEmpty(meatType) || m.MeatType.ToLower().Contains(meatType.ToLower()));
         }
 
-        /// <summary>
+        /// <summary> 
         /// 
         /// </summary>
         /// <param name="sandwich"></param>
