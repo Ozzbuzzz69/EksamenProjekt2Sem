@@ -110,9 +110,20 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns a list of sandwiches with the category as given in argument.
         /// </returns>
-        public List<Sandwich> FilterSandwichByCategory(string criteria)
+        public List<Sandwich> SearchSandwichByCategory(string criteria)
         {
             return _sandwiches.FindAll(s => s.Category.ToLower().Contains(criteria.ToLower()));
+        }
+
+        /// <summary>
+        /// Filters sandwiches by specified meat type.
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public List<Sandwich> SearchSandwichByMeatType(string criteria)
+        {
+            return _sandwiches
+                .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
         }
 
 
@@ -126,17 +137,6 @@ namespace EksamenProjekt2Sem.Services
         public List<Sandwich> FilterSandwichByIngredient(string criteria)
         {
             return _sandwiches.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
-        }
-
-        /// <summary>
-        /// Filters sandwiches by specified meat type.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public List<Sandwich> FilterSandwichByMeatType(string criteria)
-        {
-            return _sandwiches
-                .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
         }
 
 
