@@ -148,7 +148,7 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        public List<WarmMeal> FilterWarmMealByMeatType(string criteria)
+        public List<WarmMeal> SearchWarmMealByMeatType(string criteria)
         {
             return _warmMeals
                 .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
