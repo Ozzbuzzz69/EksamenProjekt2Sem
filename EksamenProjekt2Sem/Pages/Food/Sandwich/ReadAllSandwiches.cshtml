@@ -58,13 +58,14 @@
             <th>Kun i sæson *</th>
             <th>Pris (DKK)</th>
             <th>Vælg antal</th>
+            <th></th>
         </tr>
     </thead> 
     <tbody>
         @{
             if (Model.Sandwiches != null)
             {
-                int i = 0;
+                // int i = 0;
                 foreach (var sandwich in Model.Sandwiches)
                 {
                     <tr>
@@ -73,19 +74,24 @@
                         <td>@sandwich.Category</td>
                         <td>@sandwich.InSeason</td>
                         <td>@sandwich.Price</td>
-                        <td><input class="inputsize" type="number" value="@Model.AmountSandwich[i]" name="AmountSandwich[@i]" min="0" /></td>
+                        <td><input class="inputsize" type="number" value="0" min="0" /></td>
+                        <td>
+                            <div class="button" style="float: left">
+                                <input type="submit" value="Tilføj" class="btn btn-outline-dark" />
+                            </div>
+                        </td>
                     </tr>
-                    i++;
+                    // i++;
                 }
             }
         }
+@*     <td><input class="inputsize" type="number" value="@Model.AmountSandwich[i]" name="AmountSandwich[@i]" min="0" /></td> *@
     </tbody>
 </table>
 
-<div class="button">
-    <input type="submit" value="Bekræft valg" class="btn btn-danger" />
+<div class="button" style="margin-bottom: 10px;">
+    <input type="submit" value="Gå til kurv" class="btn btn-danger" />
 </div>
-
 
 @* <style>
     .food {

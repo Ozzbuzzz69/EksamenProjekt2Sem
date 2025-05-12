@@ -24,37 +24,9 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public string SearchCategory { get; set; }
 
-        [BindProperty]
-        public List<int> AmountSandwich { get; set; }
-
-        public void OnGet()
-        {
-            Sandwiches = _sandwichService.ReadAllSandwiches();
-            AmountSandwich = new List<int>();
-            for (int i = 0; i < Sandwiches.Count; i++)
-            {
-                AmountSandwich.Add(0);
-            }
-        }
-
-        public IActionResult OnPostSelectAmountSandwich()
-        {
-            Models.Order order = new Models.Order();
-            int j = 0;
-            foreach (int i in AmountSandwich)
-            {
-                // tilføj orderline med disse values:
-                order.OrderLines[j].Quantity = i;
-                order.OrderLines[j].Food = Sandwiches[j];
-                j++;
-            }
-            // send til create order page 
-            return Page();
-        }
-
         public IActionResult OnPostSearchMeatType()
         {
-           Sandwiches = _sandwichService.SearchSandwichByMeatType(SearchMeatType).ToList();
+            Sandwiches = _sandwichService.SearchSandwichByMeatType(SearchMeatType).ToList();
             return Page();
         }
 
@@ -63,5 +35,35 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Sandwiches = _sandwichService.SearchSandwichByCategory(SearchCategory).ToList();
             return Page();
         }
+
+
+
+        //[BindProperty]
+        //public List<int> AmountSandwich { get; set; }
+
+        //public void OnGet()
+        //{
+        //    Sandwiches = _sandwichService.ReadAllSandwiches();
+        //    AmountSandwich = new List<int>();
+        //    for (int i = 0; i < Sandwiches.Count; i++)
+        //    {
+        //        AmountSandwich.Add(0);
+        //    }
+        //}
+
+        //public IActionResult OnPostSelectAmountSandwich()
+        //{
+        //    Models.Order order = new Models.Order();
+        //    int j = 0;
+        //    foreach (int i in AmountSandwich)
+        //    {
+        //        // tilføj orderline med disse values:
+        //        order.OrderLines[j].Quantity = i;
+        //        order.OrderLines[j].Food = Sandwiches[j];
+        //        j++;
+        //    }
+        //    // send til create order page 
+        //    return Page();
+        //}
     }
 }
