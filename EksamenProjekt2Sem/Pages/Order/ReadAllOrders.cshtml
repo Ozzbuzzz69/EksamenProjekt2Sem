@@ -18,7 +18,7 @@
             <li>
                 <strong>Order ID:</strong> @order.Id<br />
                 <strong>Customer:</strong> @order.User.Name<br />
-                <strong>Date:</strong> @order.PickupTime.ToShortDateString()
+                <strong>Date:</strong> @order.PickupTime<br />
                 <ul>
                     @foreach (var line in order.OrderLines)
                     {
