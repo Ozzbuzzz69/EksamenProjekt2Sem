@@ -57,7 +57,7 @@ namespace EksamenProjekt2Sem.Services
             }
         }
 
-        #region Sorting functions
+#region Sorting functions
         /// <summary>
         /// Given a list, it sorts the objects by their Id property.
         /// Any null values are ignored.
@@ -86,6 +86,6 @@ namespace EksamenProjekt2Sem.Services
                 .OrderBy(l => l.GetType().GetProperty(criteria)?.GetValue(l, null))
                 .ToList();
         }
-        #endregion
+#endregion
     }
 }

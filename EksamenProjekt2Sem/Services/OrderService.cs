@@ -150,8 +150,9 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
-        #region Sorting/Filtering functions
-        #region Filtering functions
+#region Sorting/Filtering functions
+    #region Filtering functions
+
 
         /// <summary>
         /// Gets all orders with the same pickup time as the one given in argument.
@@ -235,9 +236,10 @@ namespace EksamenProjekt2Sem.Services
         {
             return _orders.FindAll(o => o.OrderTime >= lowerTime && o.OrderTime <= upperTime).ToList();
         }
-        #endregion
+    #endregion
 
-        #region Sorting functions
+    #region Sorting functions
+
         /// <summary>
         /// Gets all orders sorted by id.
         /// </summary>
@@ -264,9 +266,10 @@ namespace EksamenProjekt2Sem.Services
         {
             return SortByCriteria(_orders, "OrderTime");
         }
-        #endregion
+    #endregion
         
-        #region Sorting Orderline functions
+    #region Sorting Orderline functions
+
         /// <summary>
         /// Sorts the orderlines in a given order by price in ascending order.
         /// </summary>
@@ -315,10 +318,10 @@ namespace EksamenProjekt2Sem.Services
         {
             order.OrderLines = order.OrderLines.OrderByDescending(ol => ol.Id).ToList();
         }
-        #endregion
-        #endregion
+    #endregion
+#endregion
 
-        #region Orderline manipulation
+#region Orderline manipulation
         /// <summary>
         /// Calculates the total price of a given orderline.
         /// </summary>
@@ -403,9 +406,9 @@ namespace EksamenProjekt2Sem.Services
                 _dbService.UpdateObjectAsync(order);
             }
         }
-        #endregion
+#endregion
 
-        #region Former model:
+#region Former model:
         /// <summary>
         /// Calculates the total price based on the order lines.
         /// </summary>
@@ -435,7 +438,7 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
-        #endregion
+#endregion
 
     }
 }

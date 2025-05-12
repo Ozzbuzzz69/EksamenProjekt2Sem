@@ -97,8 +97,8 @@ namespace EksamenProjekt2Sem.Services
             return warmMealToBeDeleted;
         }
 
-        #region Sorting/Filtering functions
-        #region Filtering functions
+#region Sorting/Filtering functions
+    #region Filtering functions
 
         /// <summary>
         /// Filters warm meals by specified minimum person amount.
@@ -185,8 +185,8 @@ namespace EksamenProjekt2Sem.Services
         {
             return _warmMeals.FindAll(s => s.Price >= lower && s.Price <= upper);
         }
-        #endregion
-        #region Sorting functions
+    #endregion
+    #region Sorting functions
         /// <summary>
         /// Gets all warm meals sorted by id.
         /// </summary>
@@ -204,7 +204,7 @@ namespace EksamenProjekt2Sem.Services
         {
             return SortByCriteria(_warmMeals, "Price");
         }
-        #endregion
-        #endregion
+    #endregion
+#endregion
     }
 }

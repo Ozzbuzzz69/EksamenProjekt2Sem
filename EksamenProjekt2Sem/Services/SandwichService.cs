@@ -100,8 +100,8 @@ namespace EksamenProjekt2Sem.Services
             return sandwichToBeDeleted;
         }
 
-        #region Sorting/Filtering functions
-        #region Filtering functions
+#region Sorting/Filtering functions
+    #region Filtering functions
 
         /// <summary>
         /// Filters sandwiches by specified category.
@@ -170,9 +170,9 @@ namespace EksamenProjekt2Sem.Services
         {
             return _sandwiches.FindAll(s => s.Price >= lower && s.Price <= upper);
         }
-        #endregion
+    #endregion
 
-        #region Sorting functions
+    #region Sorting functions
         /// <summary>
         /// Gets all sandwiches sorted by id.
         /// </summary>
@@ -190,7 +190,7 @@ namespace EksamenProjekt2Sem.Services
         {
             return SortByCriteria(_sandwiches, "Price");
         }
-        #endregion
-        #endregion
+    #endregion
+#endregion
     }
 }
