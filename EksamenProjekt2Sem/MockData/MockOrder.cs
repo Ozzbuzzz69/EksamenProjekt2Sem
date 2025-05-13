@@ -26,19 +26,19 @@
         };
         private static List<Order> _orders = new List<Order>()
         {
-            new(MockUser.GetUsers()[0], DateTime.Now.AddDays(1))
+            new(MockUser.GetMockUsers()[0], DateTime.Now.AddDays(1))
             {
                 OrderLines = _orderLines
             },
-            new(MockUser.GetUsers()[1], DateTime.Now.AddDays(2))
+            new(MockUser.GetMockUsers()[1], DateTime.Now.AddDays(2))
             {
                 OrderLines = _orderLines1
             },
-            new(MockUser.GetUsers()[2], DateTime.Now.AddDays(3))
+            new(MockUser.GetMockUsers()[2], DateTime.Now.AddDays(3))
             {
                 OrderLines = _orderLines2
             },
-            new(MockUser.GetUsers()[3], DateTime.Now.AddDays(4))
+            new(MockUser.GetMockUsers()[3], DateTime.Now.AddDays(4))
             {
                 OrderLines = _orderLines
             }

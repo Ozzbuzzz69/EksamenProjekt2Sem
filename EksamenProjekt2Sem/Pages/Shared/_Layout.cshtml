@@ -36,7 +36,7 @@
                             <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Warm Meals</a>
                         </li>
                         @{
-                            // if (Context.User.Identity != null && Context.User.Identity.Name == "admin")
+                             if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
@@ -64,7 +64,7 @@
                                     <a class="nav-link text-black" asp-area="" asp-page="/Order/ReadAllOrders">My Orders</a>
                                 </li>
                                 <li class="nav-item nav-link text-black me-3">
-                                    User: @Context.User.Identity.Name
+                                    Bruger: @Context.User.Identity.Name
                                 </li>
 
                                 <li class="nav-item">

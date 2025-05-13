@@ -15,7 +15,7 @@ namespace EksamenProjekt2Sem.Services
         public UserService(GenericDbService<User> genericDbService)
         {
             _dbService = genericDbService;
-            _users = MockUser.GetUsers();
+            _users = MockUser.GetMockUsers();
         }
        
 
