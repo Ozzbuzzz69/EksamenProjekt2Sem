@@ -38,7 +38,6 @@ namespace EksamenProjekt2Sem.Models
         public Order()
         { }
 
-        
         public Order(User? user, DateTime? pickupTime)
         {
             User = user;

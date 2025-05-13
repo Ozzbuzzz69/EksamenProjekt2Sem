@@ -30,9 +30,6 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public Models.Sandwich Sandwich { get; set; }
 
-        [BindProperty]
-        public int SandwichQuantity { get; set; }
-
         public void OnGet()
         {
             Sandwiches = _sandwichService.ReadAllSandwiches();
@@ -50,16 +47,18 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             return Page();
         }
 
-        public IActionResult OnPostAddSandwichToCart()
+        public IActionResult OnPostAddSandwichToCart(int quantity, int id)
         {
-            Sandwich = _sandwichService.ReadSandwich(Sandwich.Id);
+            Sandwich = _sandwichService.ReadSandwich(id);
 
             OrderLine orderLine = new OrderLine();
 
-            orderLine.Quantity = SandwichQuantity;
+            orderLine.Quantity = quantity;
             orderLine.Food = Sandwich;
 
             Order.OrderLines.Add(orderLine);
+
+            Sandwiches = _sandwichService.ReadAllSandwiches();
 
             return Page();
         }
