@@ -24,13 +24,8 @@ namespace EksamenProjekt2Sem.Services
         {
             using (var context = new FoodContext())
             {
-                foreach (T obj in objs)
-                {
-                    context.Set<T>().Add(obj);
-                    context.SaveChanges();
-                }
-
-                context.SaveChanges();
+                context.Set<T>().AddRange(objs);
+                await context.SaveChangesAsync();
             }
         }
         public async Task DeleteObjectAsync(T obj)

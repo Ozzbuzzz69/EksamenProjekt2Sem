@@ -63,10 +63,38 @@ namespace EksamenProjekt2Sem.Services.Tests
         }
 
         [TestMethod]
+        public async Task GetObjectsAsync_ReturnsAllItems()
+        {
+            // Arrange: Tilføj 2 sandwich-objekter til InMemory-databasen
+            using (var context = new FoodContext(_options))
+            {
+                context.Sandwiches.Add(new Sandwich { Id = 1, Ingredients = "Beef", MeatType = "Beef", Price = 24.95, Category = "Standard" });
+                context.Sandwiches.Add(new Sandwich { Id = 2, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard" });
+                await context.SaveChangesAsync();
+            }
+
+            IEnumerable<Sandwich> result;
+
+            // Act: Brug GenericDbService til at hente dem
+            using (var context = new FoodContext(_options))
+            {
+                var service = new GenericDbService<Sandwich>();
+                result = await service.GetObjectsAsync();
+            }
+
+            // Assert: Kontroller, at der returneres 2 sandwiches
+            Assert.IsNotNull(result);
+            var list = result.ToList();
+            Assert.AreEqual(2, list.Count);
+            Assert.IsTrue(list.Any(s => s.Ingredients == "Beef"));
+            Assert.IsTrue(list.Any(s => s.Ingredients == "Ham & Cheese"));
+        }
+
+        [TestMethod]
         public async Task AddObjectAsync_AddsItemToDatabase()
         {
             // Arrange
-            var service = new GenericDbService<Food>();
+            var service = new GenericDbService<Sandwich>();
             var item = new Sandwich { Id = 1, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard"};
 
             // Act
@@ -84,6 +112,34 @@ namespace EksamenProjekt2Sem.Services.Tests
                 Assert.AreEqual("Ham & Cheese", result.Ingredients);
             }
         }
+        [TestMethod]
+        public async Task SaveObjects_SavesAllItemsToDatabase()
+        {
+            // Arrange
+            var sandwiches = new List<Sandwich>
+            {
+                new Sandwich { Id = 1, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard"},
+                new Sandwich { Id = 2, Ingredients = "Pork", MeatType = "Pork", Price = 14.95, Category = "Standard"}
+            };
+
+            // Act
+            using (var context = new FoodContext(_options))
+            {
+                var service = new GenericDbService<Sandwich>();
+                await service.SaveObjects(sandwiches);
+            }
+
+            // Assert
+            using (var context = new FoodContext(_options))
+            {
+                var saved = await context.Sandwiches.ToListAsync();
+
+                Assert.AreEqual(2, saved.Count, "Der blev ikke gemt det forventede antal sandwiches.");
+                Assert.IsTrue(saved.Any(s => s.Ingredients == "Ham & Cheese"), "Sandwich 'Ham & Cheese' blev ikke fundet.");
+                Assert.IsTrue(saved.Any(s => s.Ingredients == "Pork"), "Sandwich 'Pork' blev ikke fundet.");
+            }
+        }
+
     }
-#endregion
+    #endregion
 }
