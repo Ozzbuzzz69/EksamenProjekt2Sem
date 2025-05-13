@@ -139,6 +139,88 @@ namespace EksamenProjekt2Sem.Services.Tests
                 Assert.IsTrue(saved.Any(s => s.Ingredients == "Pork"), "Sandwich 'Pork' blev ikke fundet.");
             }
         }
+        [TestMethod]
+        public async Task DeleteObjectAsync_RemovesItemFromDatabase()
+        {
+            // Arrange: Tilføj én sandwich til databasen
+            var sandwichToDelete = new Sandwich { Id = 1, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard" };
+
+            using (var context = new FoodContext(_options))
+            {
+                context.Sandwiches.Add(sandwichToDelete);
+                await context.SaveChangesAsync();
+            }
+
+            // Act: Slet sandwich med DeleteObjectAsync
+            using (var context = new FoodContext(_options))
+            {
+                var service = new GenericDbService<Sandwich>();
+                await service.DeleteObjectAsync(sandwichToDelete);
+            }
+
+            // Assert: Sørg for at databasen nu er tom
+            using (var context = new FoodContext(_options))
+            {
+                var remaining = await context.Sandwiches.ToListAsync();
+                Assert.AreEqual(0, remaining.Count, "Sandwich blev ikke slettet som forventet.");
+            }
+        }
+        [TestMethod]
+        public async Task UpdateObjectAsync_UpdatesItemInDatabase()
+        {
+            // Arrange: Tilføj én sandwich til databasen
+            var sandwichToUpdate = new Sandwich { Id = 1, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard" };
+
+            using (var context = new FoodContext(_options))
+            {
+                context.Sandwiches.Add(sandwichToUpdate);
+                await context.SaveChangesAsync();
+            }
+
+            // Act: Ændre sandwichens ingredienser
+            sandwichToUpdate.Ingredients = "Turkey & Cheese";
+
+            // Act: Update sandwich med UpdateObjectAsync
+            using (var context = new FoodContext(_options))
+            {
+                var service = new GenericDbService<Sandwich>();
+                await service.UpdateObjectAsync(sandwichToUpdate);
+            }
+
+            // Assert: Sørg for at databasen ikke indeholder den gamle sandwich, men den opdaterede
+            using (var context = new FoodContext(_options))
+            {
+                var saved = await context.Sandwiches.ToListAsync();
+                Assert.IsFalse(saved.Any(s => s.Ingredients == "Ham & Cheese"), "Den gamle Sandwich blev ikke opdateret som forventet.");
+                Assert.IsTrue(saved.Any(s => s.Ingredients == "Turkey & Cheese"), "Den nye Sandwich fremkom ikke som forventet.");
+            }
+        }
+        [TestMethod]
+        public async Task GetObjectByIdAsync_GetsItemByIdInDatabase()
+        {
+            // Arrange: Tilføj to sandwiches til databasen
+            var sandwichToGet = new Sandwich { Id = 1, Ingredients = "Ham & Cheese", MeatType = "Ham", Price = 19.95, Category = "Standard" };
+            var sandwichToIgnore = new Sandwich { Id = 2, Ingredients = "Pork", MeatType = "Pork", Price = 14.95, Category = "Standard" };
+
+            using (var context = new FoodContext(_options))
+            {
+                context.Sandwiches.Add(sandwichToGet);
+                await context.SaveChangesAsync();
+            }
+
+            // Act: Hent sandwich med GetObjectByIdAsync
+            Sandwich result;
+            using (var context = new FoodContext(_options))
+            {
+                var service = new GenericDbService<Sandwich>();
+                result = await service.GetObjectByIdAsync(1);
+            }
+
+            // Assert: Sørg for at den hentede sandwich er den samme som den der blev ledt efter
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Ham & Cheese", result.Ingredients, "Den hentede sandwich er ikke den forventede.");
+        }
+
 
     }
     #endregion

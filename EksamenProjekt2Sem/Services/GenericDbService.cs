@@ -48,7 +48,12 @@ namespace EksamenProjekt2Sem.Services
         {
             using (var context = new FoodContext())
             {
-                return await context.Set<T>().FindAsync(id);
+                var result = await context.Set<T>().FindAsync(id);
+                if (result == null)
+                {
+                    throw new Exception($"Object with id {id} not found.");
+                }
+                return result;
             }
         }
 
