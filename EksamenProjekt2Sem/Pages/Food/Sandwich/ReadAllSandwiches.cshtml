@@ -65,7 +65,6 @@
         @{
             if (Model.Sandwiches != null)
             {
-                // int i = 0;
                 foreach (var sandwich in Model.Sandwiches)
                 {
                     <tr>
@@ -74,18 +73,18 @@
                         <td>@sandwich.Category</td>
                         <td>@sandwich.InSeason</td>
                         <td>@sandwich.Price</td>
-                        <td><input class="inputsize" type="number" value="0" min="0" /></td>
+                        <td>
+
+                        </td>
                         <td>
                             <div class="button" style="float: left">
                                 <input type="submit" value="Tilføj" class="btn btn-outline-dark" />
                             </div>
                         </td>
                     </tr>
-                    // i++;
                 }
             }
         }
-@*     <td><input class="inputsize" type="number" value="@Model.AmountSandwich[i]" name="AmountSandwich[@i]" min="0" /></td> *@
     </tbody>
 </table>
 

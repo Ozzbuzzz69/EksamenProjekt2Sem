@@ -24,6 +24,20 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public string SearchCategory { get; set; }
 
+        [BindProperty]
+        public Models.Order Order { get; set; }
+
+        [BindProperty]
+        public Models.Sandwich Sandwich { get; set; }
+
+        [BindProperty]
+        public int SandwichQuantity { get; set; }
+
+        public void OnGet()
+        {
+            Sandwiches = _sandwichService.ReadAllSandwiches();
+        }
+
         public IActionResult OnPostSearchMeatType()
         {
             Sandwiches = _sandwichService.SearchSandwichByMeatType(SearchMeatType).ToList();
@@ -33,6 +47,20 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         public IActionResult OnPostSearchCategory()
         {
             Sandwiches = _sandwichService.SearchSandwichByCategory(SearchCategory).ToList();
+            return Page();
+        }
+
+        public IActionResult OnPostAddSandwichToCart()
+        {
+            Sandwich = _sandwichService.ReadSandwich(Sandwich.Id);
+
+            OrderLine orderLine = new OrderLine();
+
+            orderLine.Quantity = SandwichQuantity;
+            orderLine.Food = Sandwich;
+
+            Order.OrderLines.Add(orderLine);
+
             return Page();
         }
 

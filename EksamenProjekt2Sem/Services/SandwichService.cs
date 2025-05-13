@@ -112,7 +112,7 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public List<Sandwich> SearchSandwichByCategory(string criteria)
         {
-            return _sandwiches.FindAll(s => s.Category.ToLower().Contains(criteria.ToLower()));
+            return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.Category.ToLower().Contains(criteria.ToLower()));
         }
 
         /// <summary>
@@ -122,8 +122,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Sandwich> SearchSandwichByMeatType(string criteria)
         {
-            return _sandwiches
-                .FindAll(s => s.MeatType != null && s.MeatType.ToLower().Contains(criteria.ToLower()));
+            return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()));
         }
 
 
