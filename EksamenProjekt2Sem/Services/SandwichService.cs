@@ -22,11 +22,12 @@ namespace EksamenProjekt2Sem.Services
         /// Creates the sandwich from the argument.
         /// </summary>
         /// <param name="sandwich"></param>
-        public void CreateSandwich(Sandwich sandwich)
+        public async Task CreateSandwich(Sandwich sandwich)
         {
             _sandwiches.Add(sandwich);
-            _dbService.AddObjectAsync(sandwich);
+            await _dbService.AddObjectAsync(sandwich);
         }
+
 
         /// <summary>
         /// Finds the sandwich with same id as in argument.
@@ -37,7 +38,12 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public Sandwich ReadSandwich(int id)
         {
-            return _sandwiches.Find(s => s.Id == id);
+            var result = _sandwiches.Find(s => s.Id == id);
+            if (result == null)
+            {
+                throw new Exception($"Sandwich with id {id} not found.");
+            }
+            return result;
         }
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public Sandwich DeleteSandwich(int? id)
         {
-            Sandwich sandwichToBeDeleted = null;
+            Sandwich? sandwichToBeDeleted = null;
             foreach (Sandwich sandwich in _sandwiches)
             {
                 if (sandwich.Id == id)
@@ -91,12 +97,12 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 }
             }
-
-            if (sandwichToBeDeleted != null)
+            if (sandwichToBeDeleted == null)
             {
-                _sandwiches.Remove(sandwichToBeDeleted);
-                _dbService.SaveObjects(_sandwiches);
+                throw new Exception($"Sandwich with id {id} not found.");
             }
+            _sandwiches.Remove(sandwichToBeDeleted);
+            _dbService.SaveObjects(_sandwiches);
             return sandwichToBeDeleted;
         }
 

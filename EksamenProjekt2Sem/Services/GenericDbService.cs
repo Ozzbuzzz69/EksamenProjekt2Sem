@@ -5,16 +5,32 @@ namespace EksamenProjekt2Sem.Services
 {
     public class GenericDbService<T> where T : class
     {
+        private readonly DbContextOptions<FoodContext> _options;
+
+        public GenericDbService(DbContextOptions<FoodContext> options)
+        {
+            _options = options;
+        }
+        public GenericDbService() 
+        {
+            _options = new DbContextOptionsBuilder<FoodContext>()
+                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False")
+                .Options;
+            // Har indsat en default konstruktør som fungere ligsom FoodContext, men jeg kunne ikke bruge
+            // FoodContext i GenericDbService, da den jeg skulle bruge en non-generic konstruktør til tests.
+        }
+
+
         public async Task<IEnumerable<T>> GetObjectsAsync()
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 return await context.Set<T>().AsNoTracking().ToListAsync();
             }
         }
         public async Task AddObjectAsync(T obj)
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 context.Set<T>().Add(obj);
                 await context.SaveChangesAsync();
@@ -22,7 +38,7 @@ namespace EksamenProjekt2Sem.Services
         }
         public async Task SaveObjects(List<T> objs)
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 context.Set<T>().AddRange(objs);
                 await context.SaveChangesAsync();
@@ -30,7 +46,7 @@ namespace EksamenProjekt2Sem.Services
         }
         public async Task DeleteObjectAsync(T obj)
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 context.Set<T>().Remove(obj);
                 await context.SaveChangesAsync();
@@ -38,7 +54,7 @@ namespace EksamenProjekt2Sem.Services
         }
         public async Task UpdateObjectAsync(T obj)
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 context.Set<T>().Update(obj);
                 await context.SaveChangesAsync();
@@ -46,7 +62,7 @@ namespace EksamenProjekt2Sem.Services
         }
         public async Task<T> GetObjectByIdAsync(int id)
         {
-            using (var context = new FoodContext())
+            using (var context = new FoodContext(_options))
             {
                 var result = await context.Set<T>().FindAsync(id);
                 if (result == null)
