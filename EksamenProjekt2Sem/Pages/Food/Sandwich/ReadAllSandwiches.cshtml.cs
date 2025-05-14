@@ -2,6 +2,7 @@ using EksamenProjekt2Sem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EksamenProjekt2Sem.Models;
+using EksamenProjektTest.EFDbContext;
 
 namespace EksamenProjekt2Sem.Pages.Food.Sandwich
 {
@@ -26,6 +27,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
 
         public static Models.Order Cart = new Models.Order(); //{ OrderLines = new List<OrderLine>() };
 
+        [BindProperty]
         public Models.Order Order => Cart;
  
         [BindProperty]
@@ -70,6 +72,16 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Sandwiches = _sandwichService.ReadAllSandwiches();
 
             return Page();
+        }
+
+        public IActionResult OnPostGoToPayment()
+        {
+            if (Cart.OrderLines == null)
+            {
+                Sandwiches = _sandwichService.ReadAllSandwiches();
+            }
+
+            return RedirectToPage("/Order/CreateOrder", Cart.OrderLines);
         }
     }
 }
