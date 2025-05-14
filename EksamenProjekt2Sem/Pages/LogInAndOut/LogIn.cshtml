@@ -12,14 +12,22 @@
 					<input asp-for="Email" />
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<label asp-for="Password" class="col-form-label"></label>
 				<div>
 					<input asp-for="Password" />
 				</div>
 			</div>
+			<br />
 			<div class="form-group">
 				<button class="btn btn-outline-dark">Log in</button>
+			</div>
+			<br />
+			<br />
+			<br />
+			<div class="form-group">
+				<p>Har du ikke en bruger endnu? <a asp-page="/User/CreateUser">Opret dig her!</a></p>
 			</div>
 		</form>
 	</div>

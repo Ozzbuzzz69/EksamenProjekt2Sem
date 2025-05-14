@@ -30,14 +30,10 @@ namespace EksamenProjekt2Sem.Models
         [Required(ErrorMessage = "Kodeord må ikke være tomt")]
         [MinLength(8, ErrorMessage = "Koden skal minimum indeholde 8 tegn")]
         [MaxLength(20, ErrorMessage = "Koden må max være 20 tegn langt")]
-        //[RegularExpression(@"^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "Koden skal indeholde mindst 1 stort bogstav, 1 lille bogstav og 1 tal")] // "\d" konverter tal til en string
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$",
+        ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-
-
-        public User()
-        { }
 
         public User(string name, string email, string phoneNumber, string password)
         { 
@@ -45,6 +41,13 @@ namespace EksamenProjekt2Sem.Models
             Email = email;
             PhoneNumber = phoneNumber;
             Password = password;
+        }
+        public User()
+        {
+            Name = "";
+            Email = "";
+            PhoneNumber = "";
+            Password = "";
         }
 
     }

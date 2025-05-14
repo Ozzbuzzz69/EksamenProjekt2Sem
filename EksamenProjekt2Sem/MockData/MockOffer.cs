@@ -5,9 +5,7 @@
     {
         private static List<CampaignOffer> _campaignOffers = new List<CampaignOffer>()
         {
-            new(1, "Buy potato, get potato", "https://rb.gy/ejmnqi", 15),
-            new(2, "Half price Monster Burger", "https://rb.gy/ejmnqi", 99.95),
-            new(3, "9-Gold Flakes, 10th free", "https://rb.gy/ejmnqi", 539.55)
+            new(1, "Buy potato, get potato", "https://n3dp.dk/wp-content/uploads/2024/09/Tilbud.png.webp", 15),
         };
         /// <summary>
         /// Returns a list of mock campaign offers.

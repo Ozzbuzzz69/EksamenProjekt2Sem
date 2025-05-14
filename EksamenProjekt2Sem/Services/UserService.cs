@@ -8,14 +8,15 @@ namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        private List<User> _users { get; }// Overskud fra domain model
+        public List<User> _users;// Overskud fra domain model
         private GenericDbService<User> _dbService; // Overskud fra domain model
 
        
         public UserService(GenericDbService<User> genericDbService)
         {
             _dbService = genericDbService;
-            _users = MockUser.GetMockUsers();
+            _users = _dbService.GetObjectsAsync().Result.ToList();
+             
         }
        
 
@@ -23,10 +24,10 @@ namespace EksamenProjekt2Sem.Services
         /// Creates a new user.
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
             _users.Add(user);
-            _dbService.AddObjectAsync(user);
+            await _dbService.AddObjectAsync(user);
         }
 
         /// <summary>
@@ -103,6 +104,17 @@ namespace EksamenProjekt2Sem.Services
             return userToBeDeleted;
         }
 
+
+
+        //public async Task SeedMockUsersAsync()
+        //{
+        //    _users = new List<User>();
+        //    var users = MockUser.GetMockUsers();
+        //    await _dbService.SaveObjects(users);
+        //}
+
+
+
         //public Order Order(List<OrderLine> orderlines)
         //{
         //    // Create order from orderlines
@@ -116,6 +128,6 @@ namespace EksamenProjekt2Sem.Services
 
         //}
 
-     
+
     }
 }
