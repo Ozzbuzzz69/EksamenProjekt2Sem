@@ -31,8 +31,6 @@ namespace EksamenProjekt2Sem.Models
             }
         }
 
-        // public double TotalPrice { get { return GetTotalPrice(); } }
-
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         public Order()
