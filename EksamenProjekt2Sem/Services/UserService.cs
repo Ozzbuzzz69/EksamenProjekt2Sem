@@ -17,7 +17,7 @@ namespace EksamenProjekt2Sem.Services
             _dbService = genericDbService;
             _users = MockUser.GetUsers();
         }
-       
+        
 
         /// <summary>
         /// Creates a new user.
