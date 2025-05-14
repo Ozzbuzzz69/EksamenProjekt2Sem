@@ -4,18 +4,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace EksamenProjekt2Sem.Pages.Order
 {
     using EksamenProjekt2Sem.Models;
+    using EksamenProjekt2Sem.Services;
+
     public class CreateOrderModel : PageModel
     {
         private Services.OrderService _orderService;
+
         public CreateOrderModel(Services.OrderService orderService)
         {
             _orderService = orderService;
         }
         [BindProperty]
         public Order Order { get; set; }
-        public IActionResult OnGet()
+        public void OnGet()
         {
-            return Page();
         }
         public IActionResult OnPost()
         {

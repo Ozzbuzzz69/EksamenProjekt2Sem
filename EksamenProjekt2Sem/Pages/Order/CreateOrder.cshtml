@@ -10,6 +10,21 @@
         <span asp-validation-for="@Model.Order.PickupTime" class="text-danger"></span>
     </div>
 
+    @{
+        double totalPrice = 0;
+    }
+
+    @if (Model.Order != null)
+    {
+            @foreach (var orderLine in Model.Order.OrderLines)
+            {
+                <p>@orderLine.Food.Ingredients, @orderLine.Quantity, @orderLine.Food.Price</p>
+
+                totalPrice += orderLine.Food.Price * orderLine.Quantity;
+            }
+        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+    }
+
     <p>
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />

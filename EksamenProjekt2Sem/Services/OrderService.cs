@@ -1,4 +1,6 @@
 ﻿using EksamenProjekt2Sem.Models;
+using EksamenProjektTest.EFDbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -16,6 +18,7 @@ namespace EksamenProjekt2Sem.Services
         {
             _orders = new List<Order>();
         }
+
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
@@ -41,6 +44,7 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
+
         /// <summary>
         /// Reads all order objects from the database.
         /// </summary>
