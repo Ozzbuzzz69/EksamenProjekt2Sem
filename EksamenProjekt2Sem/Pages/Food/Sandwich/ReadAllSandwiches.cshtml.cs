@@ -54,8 +54,6 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             return Page();
         }
 
-
-
         public IActionResult OnPostAddSandwichToCart()
         {
             Sandwich = _sandwichService.ReadSandwich(Id);
