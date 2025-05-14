@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EksamenSem2.Migrations
+namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    [Migration("20250507082608_EksamenV2")]
-    partial class EksamenV2
+    [Migration("20250514114548_EksamenData")]
+    partial class EksamenData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,8 +63,8 @@ namespace EksamenSem2.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<bool?>("InSeason")
-                        .HasColumnType("bit");
+                    b.Property<string>("InSeason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ingredients")
                         .IsRequired()
@@ -72,6 +72,7 @@ namespace EksamenSem2.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MeatType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -97,10 +98,7 @@ namespace EksamenSem2.Migrations
                     b.Property<DateTime>("PickupTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -126,9 +124,6 @@ namespace EksamenSem2.Migrations
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -202,9 +197,7 @@ namespace EksamenSem2.Migrations
                 {
                     b.HasOne("EksamenProjekt2Sem.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

@@ -1,4 +1,5 @@
-﻿@page
+﻿
+@page
 @model EksamenProjekt2Sem.Pages.Food.WarmMeal.ReadAllWarmMealsModel
 @{
 }
@@ -13,7 +14,13 @@
             <th>Kødtype</th>
             <th>Pris</th>
             <th>Minimum person amount</th>
-            <th>Opdater Varm Ret</th>
+            @{
+                if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                {
+                    <th>Opdater Varm Ret</th>
+                }
+            }
+
             <th>Føj til kurv</th>
         </tr>
     </thead>
@@ -30,13 +37,18 @@
                         <td>@warmMeal.Price</td>
                         <td>@warmMeal.MinPersonAmount</td>
 
-                        <td>
-                            <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Opdater</i></a>
-                        </td>
+                        
                         <td>
                             <a class="btn btn-primary btn-sm" type="button" title="Føj til kurv" asp-page="CreateOrder" asp-route-id="@warmMeal.Id"><i class="fa">Føj til kurv</i></a>
                         </td>
-
+                        @{
+                            if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                            {
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Opdater</i></a>
+                                </td>
+                            }
+                        }
                     </tr>
                 }
         }

@@ -16,6 +16,7 @@ namespace EksamenProjekt2Sem.Services
 
             //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
             _sandwiches = MockFood.GetSandwiches();
+            _dbService.SaveObjects(_sandwiches);
         }
 
         /// <summary>

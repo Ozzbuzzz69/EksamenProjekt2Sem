@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EksamenSem2.Migrations
+namespace EksamenProjekt2Sem.Migrations
 {
     /// <inheritdoc />
-    public partial class EksamenV2 : Migration
+    public partial class EksamenData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,8 +33,8 @@ namespace EksamenSem2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ingredients = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    InSeason = table.Column<bool>(type: "bit", nullable: true),
-                    MeatType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InSeason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MeatType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -67,9 +67,8 @@ namespace EksamenSem2.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalPrice = table.Column<double>(type: "float", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,8 +77,7 @@ namespace EksamenSem2.Migrations
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +87,6 @@ namespace EksamenSem2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
                     FoodId = table.Column<int>(type: "int", nullable: false),
                     CampaignOfferId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)

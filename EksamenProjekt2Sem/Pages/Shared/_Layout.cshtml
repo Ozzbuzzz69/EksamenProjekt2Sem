@@ -30,10 +30,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Sandwiches</a>
+                            <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Warm Meals</a>
+                            <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampange Tilbud</a>
                         </li>
                         @{
                              if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
