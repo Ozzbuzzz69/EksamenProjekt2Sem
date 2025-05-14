@@ -100,6 +100,18 @@ namespace EksamenProjekt2Sem.Services
             return sandwichToBeDeleted;
         }
 
+        //public void AddSandwichToCart(int quantity, int id)
+        //{
+        //    OrderLine orderLine = new OrderLine();
+
+        //    orderLine.Quantity = quantity;
+        //    orderLine.Food = Sandwich;
+
+        //    Order.OrderLines.Add(orderLine);
+        //}
+
+
+
         #region Sorting/Filtering functions
         #region Filtering functions
 
