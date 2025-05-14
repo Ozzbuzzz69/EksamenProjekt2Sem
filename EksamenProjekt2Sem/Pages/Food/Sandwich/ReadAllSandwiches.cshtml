@@ -73,7 +73,7 @@
                         <td>@sandwich.InSeason</td>
                         <td>@sandwich.Price</td>
                         <td>
-                           <form method="post">
+                            <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
                                     name="quantity" min="0" />
@@ -89,19 +89,28 @@
     </tbody>
 </table>
 
+@{
+    double totalPrice = 0;
+}
 
-    @if (Model.Order != null && Model.Order.OrderLines != null)
-    {
-        foreach (var orderLine in Model.Order.OrderLines)
+@if (Model.Order != null && Model.Order.OrderLines != null)
+{
+    <div style="background-color: white;">
+        @foreach (var orderLine in Model.Order.OrderLines)
         {
-            <p style="background-color: white;">
-                @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity styks
+            <p>
+                @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
             </p>
+
+            totalPrice += orderLine.Food.Price * orderLine.Quantity;
         }
-    }
+
+        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+    </div>
+}
 
 <div class="button" style="margin-bottom: 10px;">
-    <input type="submit" value="Gå til kurv" class="btn btn-danger" />
+    <input type="submit" value="Gå til betaling" class="btn btn-danger" />
 </div>
 
 @* <style>

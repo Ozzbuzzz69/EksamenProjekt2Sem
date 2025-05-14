@@ -24,11 +24,18 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public string SearchCategory { get; set; }
 
-        [BindProperty]
-        public Models.Order Order { get; set; }
+        public static Models.Order Cart = new Models.Order(); //{ OrderLines = new List<OrderLine>() };
 
+        public Models.Order Order => Cart;
+ 
         [BindProperty]
         public Models.Sandwich Sandwich { get; set; }
+
+        [BindProperty]
+        public int Quantity { get; set; }
+
+        [BindProperty]
+        public int Id { get; set; }
 
         public void OnGet()
         {
@@ -49,50 +56,22 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
 
 
 
-        public IActionResult OnPostAddSandwichToCart(int quantity, int id)
+        public IActionResult OnPostAddSandwichToCart()
         {
-            Sandwich = _sandwichService.ReadSandwich(id);
-
-            OrderLine orderLine = new OrderLine();
-
-            orderLine.Quantity = quantity;
-            orderLine.Food = Sandwich;
-
-            Order.OrderLines.Add(orderLine);
-
+            Sandwich = _sandwichService.ReadSandwich(Id);
+            
+            if (Sandwich != null && Quantity > 0 && Quantity <= 50)
+            {
+                Cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = Quantity,
+                    Food = Sandwich
+                });
+            }
+            
             Sandwiches = _sandwichService.ReadAllSandwiches();
 
             return Page();
         }
-
-
-
-        //[BindProperty]
-        //public List<int> AmountSandwich { get; set; }
-
-        //public void OnGet()
-        //{
-        //    Sandwiches = _sandwichService.ReadAllSandwiches();
-        //    AmountSandwich = new List<int>();
-        //    for (int i = 0; i < Sandwiches.Count; i++)
-        //    {
-        //        AmountSandwich.Add(0);
-        //    }
-        //}
-
-        //public IActionResult OnPostSelectAmountSandwich()
-        //{
-        //    Models.Order order = new Models.Order();
-        //    int j = 0;
-        //    foreach (int i in AmountSandwich)
-        //    {
-        //        // tilføj orderline med disse values:
-        //        order.OrderLines[j].Quantity = i;
-        //        order.OrderLines[j].Food = Sandwiches[j];
-        //        j++;
-        //    }
-        //    // send til create order page 
-        //    return Page();
-        //}
     }
 }
