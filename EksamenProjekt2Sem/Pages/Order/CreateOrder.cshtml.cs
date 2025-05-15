@@ -5,6 +5,8 @@ namespace EksamenProjekt2Sem.Pages.Order
 {
     using EksamenProjekt2Sem.Models;
     using EksamenProjekt2Sem.Services;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.IdentityModel.Tokens;
 
     public class CreateOrderModel : PageModel
     {
@@ -35,7 +37,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             }
 
             // Temporary hardcoded user
-            User user = new("name", "email", "phoneNumber", "password");
+            User user = new("Carl", "test@example.com", "12345678", "1234");
 
             Cart.User = user;
 
@@ -43,6 +45,8 @@ namespace EksamenProjekt2Sem.Pages.Order
             order.OrderLines.AddRange(Cart.OrderLines);
 
             _orderService.CreateOrder(order);
+
+            _orderService.ClearCart(Cart);
 
             return RedirectToPage("/Food/Sandwich/ReadAllSandwiches");
         }
