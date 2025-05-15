@@ -30,10 +30,11 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
 
         public void OnGet()
         {
+
         }
         public async Task<IActionResult> OnPost()
         {
-          
+
             List<Models.User> users = _userService.ReadAllUsers();
             foreach (Models.User user in users)
             {
@@ -48,18 +49,17 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Email) };
 
                         if (Email == "admin@admin.com") claims.Add(new Claim(ClaimTypes.Role, "admin"));
-                        
-                        var claimsIdentity = new ClaimsIdentity(claims, "MyCookieAuth");
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                        await HttpContext.SignInAsync("MyCookieAuth", new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/Index");
+
+                        
                     }
                 }
 
             }
+            return RedirectToPage("/Index");
 
-            Message = "Invalid attempt";
-            return Page();
         }
     }
 }

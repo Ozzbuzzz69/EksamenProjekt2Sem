@@ -35,21 +35,15 @@ builder.Services.Configure<CookiePolicyOptions>(options => {
 });
 
 
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
-//    cookieOptions.LoginPath = "/LogInAndOut/LogIn";
-//    cookieOptions.AccessDeniedPath = "/LogInAndOut/AccessDenied";
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
+{
+    cookieOptions.LoginPath = "/LogInAndOut/LogIn";
+    cookieOptions.AccessDeniedPath = "/LogInAndOut/AccessDenied";
 
-//});
-builder.Services.AddAuthentication("MyCookieAuth")
-    .AddCookie("MyCookieAuth", options =>
-    {
-        options.LoginPath = "/LogInAndOut/LogIn";
-        options.AccessDeniedPath = "/LogInAndOut/AccessDenied";
-    });
-builder.Services.AddMvc().AddRazorPagesOptions(options => {
-    options.Conventions.AuthorizeFolder("/Order");
+});
 
-}).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+
 
 var app = builder.Build();
 

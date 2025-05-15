@@ -1,4 +1,6 @@
+using EksamenProjekt2Sem.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,7 +25,35 @@ namespace EksamenProjekt2Sem.Pages.User
         {
             return Page();
         }
-        
+
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+
+        //    // Hash the password before saving (if not already done)
+        //    var passwordHasher = new PasswordHasher<string>();
+        //    User.Password = passwordHasher.HashPassword(null, User.Password);
+
+        //    await _userService.CreateUser(User);
+
+        //    // Build claims
+        //    var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Email) };
+        //    if (User.Email == "admin@admin.com")
+        //        claims.Add(new Claim(ClaimTypes.Role, "admin"));
+
+        //    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        //    // Sign in
+        //    await HttpContext.SignInAsync(
+        //        CookieAuthenticationDefaults.AuthenticationScheme,
+        //        new ClaimsPrincipal(claimsIdentity)
+        //    );
+
+        //    return RedirectToPage("/Index");
+        //}
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -31,17 +61,29 @@ namespace EksamenProjekt2Sem.Pages.User
                 return Page();
             }
 
-            // Create the user
-            await _userService.CreateUser(new Models.User(User.Name, User.Email, User.PhoneNumber, passwordHasher.HashPassword(null, User.Password)));
+            // Prevent registration as admin
+            if (User.Email == "admin@admin.com")
+            {
+                ModelState.AddModelError(string.Empty, "You cannot register as the admin user.");
+                return Page();
+            }
 
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, User.Email),
-        };
+            // Hash the password before saving
+            var passwordHasher = new PasswordHasher<string>();
+            User.Password = passwordHasher.HashPassword(null, User.Password);
 
-            var claimsIdentity = new ClaimsIdentity(claims, "MyCookieAuth");
+            await _userService.CreateUser(User);
 
-            await HttpContext.SignInAsync("MyCookieAuth", new ClaimsPrincipal(claimsIdentity));
+            // Build claims
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Email) };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Sign in
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity)
+            );
 
             return RedirectToPage("/Index");
         }

@@ -11,10 +11,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         public async Task<IActionResult> OnGet()
         {
 
-           var claims = new List<Claim>();
-           var claimsIdentity = new ClaimsIdentity(claims, "MyCookieAuth");
-
-            await HttpContext.SignOutAsync("MyCookieAuth");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToPage("/index");
         }
 
