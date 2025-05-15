@@ -12,8 +12,12 @@ namespace EksamenProjekt2Sem.Services
         public WarmMealService(GenericDbService<WarmMeal> dbService)
         {
             _dbService = dbService;
-            //_warmMeals = _dbService.GetObjectsAsync().Result.ToList();
-            _warmMeals = MockFood.GetWarmMeals();
+            if (_warmMeals == null)
+            {
+                _warmMeals = MockFood.GetWarmMeals();
+            }
+            else
+                _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>

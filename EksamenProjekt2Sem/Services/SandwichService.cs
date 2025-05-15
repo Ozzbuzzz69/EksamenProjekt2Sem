@@ -13,10 +13,12 @@ namespace EksamenProjekt2Sem.Services
         public SandwichService(GenericDbService<Sandwich> dbService)
         {
             _dbService = dbService;
-
-            //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-            _sandwiches = MockFood.GetSandwiches();
-            _dbService.SaveObjects(_sandwiches);
+            if (_sandwiches == null)
+            {
+                _sandwiches = MockFood.GetSandwiches();
+            }
+            else
+                _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>

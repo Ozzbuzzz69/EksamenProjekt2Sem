@@ -7,16 +7,24 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
-        private List<Order> _orders; // Overskud fra domain model
+        private List<Order>? _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
         private Order _cart = new Order();
 
         public OrderService(GenericDbService<Order> dbService)
         {
             _dbService = dbService;
+
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
             _orders = MockOrder.GetOrders();
             _dbService.SaveObjects(_orders);
+
+            if (_orders == null)
+            {
+                _orders = MockOrder.GetOrders();
+            }
+            else
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>
