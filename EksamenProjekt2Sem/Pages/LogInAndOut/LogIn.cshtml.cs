@@ -48,8 +48,10 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Email) };
 
                         if (Email == "admin@admin.com") claims.Add(new Claim(ClaimTypes.Role, "admin"));
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        
+                        var claimsIdentity = new ClaimsIdentity(claims, "MyCookieAuth");
+
+                        await HttpContext.SignInAsync("MyCookieAuth", new ClaimsPrincipal(claimsIdentity));
                         return RedirectToPage("/Index");
                     }
                 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace EksamenProjekt2Sem.Pages.LogInAndOut
 {
@@ -10,8 +11,10 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         public async Task<IActionResult> OnGet()
         {
 
+           var claims = new List<Claim>();
+           var claimsIdentity = new ClaimsIdentity(claims, "MyCookieAuth");
 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync("MyCookieAuth");
             return RedirectToPage("/index");
         }
 

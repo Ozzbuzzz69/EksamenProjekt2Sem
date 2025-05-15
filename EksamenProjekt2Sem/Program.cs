@@ -4,6 +4,7 @@ using EksamenProjektTest.EFDbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,10 +35,17 @@ builder.Services.Configure<CookiePolicyOptions>(options => {
 });
 
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
-    cookieOptions.LoginPath = "/LogInAndOut/LogIn";
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
+//    cookieOptions.LoginPath = "/LogInAndOut/LogIn";
+//    cookieOptions.AccessDeniedPath = "/LogInAndOut/AccessDenied";
 
-});
+//});
+builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.LoginPath = "/LogInAndOut/LogIn";
+        options.AccessDeniedPath = "/LogInAndOut/AccessDenied";
+    });
 builder.Services.AddMvc().AddRazorPagesOptions(options => {
     options.Conventions.AuthorizeFolder("/Order");
 
