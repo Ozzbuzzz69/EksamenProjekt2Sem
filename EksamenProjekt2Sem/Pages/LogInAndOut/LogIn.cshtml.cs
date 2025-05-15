@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using EksamenProjekt2Sem.Models;
 using EksamenProjekt2Sem.Services;
+using EksamenProjekt2Sem.MockData;
 
 namespace EksamenProjekt2Sem.Pages.LogInAndOut
 {
@@ -32,7 +33,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         }
         public async Task<IActionResult> OnPost()
         {
-
+          
             List<Models.User> users = _userService.ReadAllUsers();
             foreach (Models.User user in users)
             {
