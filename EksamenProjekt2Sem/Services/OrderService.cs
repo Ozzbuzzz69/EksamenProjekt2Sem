@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,8 @@ namespace EksamenProjekt2Sem.Services
         {
             _dbService = dbService;
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
-        }
-        public OrderService()
-        {
-            _orders = new List<Order>();
+            _orders = MockOrder.GetOrders();
+            _dbService.SaveObjects(_orders);
         }
 
         /// <summary>
