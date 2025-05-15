@@ -19,12 +19,12 @@ namespace EksamenProjekt2Sem.Services
             _orders = MockOrder.GetOrders();
             _dbService.SaveObjects(_orders);
 
-            if (_orders == null)
-            {
-                _orders = MockOrder.GetOrders();
-            }
-            else
-                _orders = _dbService.GetObjectsAsync().Result.ToList();
+            //if (_orders == null)
+            //{
+            //    _orders = MockOrder.GetOrders();
+            //}
+            //else
+            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>
@@ -167,6 +167,12 @@ namespace EksamenProjekt2Sem.Services
         public Order ReadCart()
         {
             return _cart;
+        }
+
+        public void ClearCart(Order cart)
+        {
+            cart.User = null;
+            cart.OrderLines.Clear();
         }
 
         public Order? ReadOrderByUserId(int userId)
