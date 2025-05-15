@@ -25,11 +25,9 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public string SearchCategory { get; set; }
 
-        public static Models.Order Cart = new Models.Order(); //{ OrderLines = new List<OrderLine>() };
-
         [BindProperty]
-        public Models.Order Order => Cart;
- 
+        public Models.Order Cart => _orderService.ReadCart();
+
         [BindProperty]
         public Models.Sandwich Sandwich { get; set; }
 
@@ -59,29 +57,12 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         public IActionResult OnPostAddSandwichToCart()
         {
             Sandwich = _sandwichService.ReadSandwich(Id);
-            
-            if (Sandwich != null && Quantity > 0 && Quantity <= 50)
-            {
-                Cart.OrderLines.Add(new OrderLine
-                {
-                    Quantity = Quantity,
-                    Food = Sandwich
-                });
-            }
-            
+
+            _orderService.AddSandwichToCart(Sandwich, Quantity);
+
             Sandwiches = _sandwichService.ReadAllSandwiches();
 
             return Page();
-        }
-
-        public IActionResult OnPostGoToPayment()
-        {
-            if (Cart.OrderLines == null)
-            {
-                Sandwiches = _sandwichService.ReadAllSandwiches();
-            }
-
-            return RedirectToPage("/Order/CreateOrder", Cart.OrderLines);
         }
     }
 }

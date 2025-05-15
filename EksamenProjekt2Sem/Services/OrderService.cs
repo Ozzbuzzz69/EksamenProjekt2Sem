@@ -9,6 +9,7 @@ namespace EksamenProjekt2Sem.Services
     {
         private List<Order>? _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
+        private Order _cart = new Order();
 
         public OrderService(GenericDbService<Order> dbService)
         {
@@ -147,6 +148,24 @@ namespace EksamenProjekt2Sem.Services
             }
 
 
+        }
+
+
+        public void AddSandwichToCart(Sandwich sandwich, int quantity)
+        {
+            if (sandwich != null && quantity > 0 && quantity <= 50)
+            {
+                _cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = quantity,
+                    Food = sandwich
+                });
+            }
+        }
+
+        public Order ReadCart()
+        {
+            return _cart;
         }
 
         public Order? ReadOrderByUserId(int userId)
