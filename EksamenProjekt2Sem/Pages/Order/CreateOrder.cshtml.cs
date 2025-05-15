@@ -22,12 +22,10 @@ namespace EksamenProjekt2Sem.Pages.Order
         }
 
         [BindProperty]
-        public DateTime PickupTime { get; set; }
+        public DateTime PickupTime { get; set; } = DateTime.Now.Date;
 
-        [BindProperty]
         public Order Cart { get; set; }
 
-        [BindProperty]
         public User User { get; set; }
 
         public void OnGet()
@@ -39,14 +37,15 @@ namespace EksamenProjekt2Sem.Pages.Order
 
         public IActionResult OnPost()
         {
+            Cart = _orderService.ReadCart();
+            User = _userService.GetUserByEmail(HttpContext.User.Identity.Name);
+            Cart.User = User;
+
             // Validate the input
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            // Temporary hardcoded user
-            //User user = new("Carl", "test@example.com", "12345678", "1234");
 
             Order order = new Order(User, PickupTime);
 
