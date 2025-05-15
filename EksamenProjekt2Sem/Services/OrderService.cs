@@ -7,7 +7,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
-        private List<Order>? _orders; // Overskud fra domain model
+        private List<Order> _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
         private Order _cart = new Order();
 
@@ -16,7 +16,7 @@ namespace EksamenProjekt2Sem.Services
             _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            //_orders = MockOrder.GetOrders();
+            _orders = MockOrder.GetOrders();
             //_dbService.SaveObjects(_orders);
 
             //if (_orders == null)
@@ -68,6 +68,23 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>List<Order>?</returns>
         public List<Order>? ReadAllOrdersByUser(User? user)
         {
+            //if (user == null)
+            //{
+            //    return null;
+            //}
+            //List<Order> temp = new();
+            //foreach (Order o in _orders)
+            //{
+            //    if (o.User.Id == user.Id)
+            //    {
+            //        temp.Add(o);
+            //    }
+            //}
+            //if (temp.Count > 0)
+            //{
+            //    return temp;
+            //}
+            //return null;
             if (user == null)
             {
                 return null;
@@ -75,7 +92,7 @@ namespace EksamenProjekt2Sem.Services
             List<Order> temp = new();
             foreach (Order o in _orders)
             {
-                if (o.User.Id == user.Id)
+                if (o.User.Email == user.Email)
                 {
                     temp.Add(o);
                 }

@@ -6,47 +6,57 @@ namespace EksamenProjekt2Sem.Pages.Order
     using EksamenProjekt2Sem.Models;
     using EksamenProjekt2Sem.Services;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.IdentityModel.Tokens;
+    using System.ComponentModel.DataAnnotations;
 
     public class CreateOrderModel : PageModel
     {
         private OrderService _orderService;
+        private UserService _userService;
 
-        public CreateOrderModel(OrderService orderService)
+        public CreateOrderModel(OrderService orderService, UserService userService)
         {
             _orderService = orderService;
+            _userService = userService;
         }
 
         [BindProperty]
-        public DateTime PickupTime { get; set; }
+        public DateTime PickupTime { get; set; } = DateTime.Now.Date;
 
-        [BindProperty]
-        public Order Cart => _orderService.ReadCart();
+        public Order Cart { get; set; }
+
+        public User User { get; set; }
 
         public void OnGet()
         {
-            
+            Cart = _orderService.ReadCart();
+            User = _userService.GetUserByEmail(HttpContext.User.Identity.Name);
+            Cart.User = User;
         }
 
         public IActionResult OnPost()
         {
+            Cart = _orderService.ReadCart();
+            User = _userService.GetUserByEmail(HttpContext.User.Identity.Name);
+            Cart.User = User;
+
             // Validate the input
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            // Temporary hardcoded user
-            User user = new("Carl", "test@example.com", "12345678", "1234");
+            Order order = new Order(User, PickupTime);
 
-            Cart.User = user;
-
-            Order order = new Order(user, PickupTime);
-            order.OrderLines.AddRange(Cart.OrderLines);
+            foreach (var orderline in Cart.OrderLines)
+            {
+                order.OrderLines.Add(orderline);
+            }
 
             _orderService.CreateOrder(order);
 
-            _orderService.ClearCart(Cart);
+            //   _orderService.ClearCart(Cart);
 
             return RedirectToPage("/Food/Sandwich/ReadAllSandwiches");
         }
