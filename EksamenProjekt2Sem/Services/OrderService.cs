@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,13 +7,18 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
-        private List<Order> _orders; // Overskud fra domain model
+        private List<Order>? _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
 
         public OrderService(GenericDbService<Order> dbService)
         {
             _dbService = dbService;
-            //_orders = _dbService.GetObjectsAsync().Result.ToList();
+            if (_orders == null)
+            {
+                _orders = MockOrder.GetOrders();
+            }
+            else
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
         public OrderService()
         {

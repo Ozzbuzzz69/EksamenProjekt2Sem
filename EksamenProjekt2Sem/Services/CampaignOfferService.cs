@@ -1,4 +1,5 @@
-﻿using EksamenProjekt2Sem.Models;
+﻿using EksamenProjekt2Sem.MockData;
+using EksamenProjekt2Sem.Models;
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -10,6 +11,12 @@ namespace EksamenProjekt2Sem.Services
         public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
             _dbService = dbService;
+            if (_campaignOffers == null)
+            {
+                _campaignOffers = MockOffer.GetCampaignOffers();
+            }
+            else
+                _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
         }
         public void CreateCampaignOffer(CampaignOffer campaignOffer)
         {

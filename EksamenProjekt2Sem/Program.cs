@@ -24,7 +24,6 @@ builder.Services.AddSingleton<UserService>();
 //builder.Services.AddScoped<GenericDbService<User>>();
 //builder.Services.AddScoped<UserService>();
 
-
 // Add DB context
 builder.Services.AddDbContext<FoodContext>();
 
