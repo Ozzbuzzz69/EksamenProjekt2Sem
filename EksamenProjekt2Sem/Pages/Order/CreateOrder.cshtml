@@ -5,16 +5,17 @@
 
 <h1>Opret bestilling</h1>
 
-@if (Model.Cart.User != null)
-{
-    <h3>Bruger</h3>
-    <p>Navn: @Model.Cart.User.Name</p>
-    <p>Email: @Model.Cart.User.Email</p>
-    <p>Telefonnummer: @Model.Cart.User.PhoneNumber</p>
-}
 
 
 <form method="post">
+    @if (Model.Cart.User != null)
+    {
+        <h3>Bruger</h3>
+        <p>Navn: @Model.Cart.User.Name</p>
+        <p>Email: @Model.Cart.User.Email</p>
+        <p>Telefonnummer: @Model.Cart.User.PhoneNumber</p>
+    }
+
     <div class="form-group">
         <label asp-for="PickupTime" class="control-label"></label>
         <input asp-for="PickupTime" class="form-control" />
@@ -42,7 +43,7 @@
 
     <p>
         <div class="form-group">
-            <input type="submit" class="btn btn-danger" value="Bekræft" asp-page="/Food/Sandwich/ReadAllSandwiches"/>
+            <input type="submit" class="btn btn-danger" value="Bekræft" />
         </div>
     </p>
 </form>
