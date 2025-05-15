@@ -20,7 +20,6 @@ namespace EksamenProjekt2Sem.Pages.Order
         {
             // Remember to have the orderid to access this page
 
-            // Get the order from the id of the user
             order = _orderService.ReadOrder(id);
             
             if (order == null)
