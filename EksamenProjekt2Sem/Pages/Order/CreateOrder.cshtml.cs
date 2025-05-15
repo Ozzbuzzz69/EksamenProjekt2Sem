@@ -8,17 +8,24 @@ namespace EksamenProjekt2Sem.Pages.Order
 
     public class CreateOrderModel : PageModel
     {
-        private Services.OrderService _orderService;
+        private OrderService _orderService;
 
-        public CreateOrderModel(Services.OrderService orderService)
+        public CreateOrderModel(OrderService orderService)
         {
             _orderService = orderService;
         }
+
         [BindProperty]
-        public Order Order { get; set; }
+        public DateTime PickupTime { get; set; }
+
+        [BindProperty]
+        public Order Cart => _orderService.ReadCart();
+
         public void OnGet()
         {
+            
         }
+
         public IActionResult OnPost()
         {
             // Validate the input
@@ -27,19 +34,15 @@ namespace EksamenProjekt2Sem.Pages.Order
                 return Page();
             }
 
-            // Find the user by logged in user
-
             // Temporary hardcoded user
             User user = new("name", "email", "phoneNumber", "password");
 
-            // Create the order if the user is found
-            if (user == null)
-            {
-                return Page();
-            }
-            Order = new Order(user, Order.PickupTime);
-            _orderService.CreateOrder(Order);
+            Cart.User = user;
 
+            Order order = new Order(user, PickupTime);
+            order.OrderLines.AddRange(Cart.OrderLines);
+
+            _orderService.CreateOrder(order);
 
             return RedirectToPage("./Index");
         }

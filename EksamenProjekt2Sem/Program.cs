@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<OrderService>();
+builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<CampaignOfferService>();
 builder.Services.AddSingleton<SandwichService>();
 builder.Services.AddSingleton<WarmMealService>();

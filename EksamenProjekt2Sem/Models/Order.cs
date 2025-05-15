@@ -18,16 +18,18 @@ namespace EksamenProjekt2Sem.Models
 
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
-        public DateTime? PickupTime
+        public DateTime PickupTime
         {
-            get => pickupTime; set
+            get => pickupTime; 
+            
+            set
             {
 
-                if (PickupTime < DateTime.Now || PickupTime == DateTime.Now.AddDays(1))
+                if (value < DateTime.Now || value == DateTime.Now.AddDays(1))
                 {
                     throw new ArgumentNullException("Ugyldig dato");
                 }
-
+                pickupTime = value;
             }
         }
 
@@ -36,7 +38,7 @@ namespace EksamenProjekt2Sem.Models
         public Order()
         { }
 
-        public Order(User? user, DateTime? pickupTime)
+        public Order(User? user, DateTime pickupTime)
         {
             User = user;
             PickupTime = pickupTime;

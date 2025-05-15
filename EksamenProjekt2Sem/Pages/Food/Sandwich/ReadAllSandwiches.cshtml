@@ -93,10 +93,10 @@
     double totalPrice = 0;
 }
 
-@if (Model.Order != null && Model.Order.OrderLines != null)
+@if (Model.Cart != null && Model.Cart.OrderLines != null)
 {
     <div style="background-color: white;">
-        @foreach (var orderLine in Model.Order.OrderLines)
+        @foreach (var orderLine in Model.Cart.OrderLines)
         {
             <p>
                 @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
@@ -109,8 +109,7 @@
     </div>
 }
 
-<form method="post" asp-page-handler="GoToPayment" asp-route-id="@Model.Order.Id">
+
     <div class="button" style="margin-bottom: 10px;">
-        <input type="submit" value="Gå til betaling" class="btn btn-danger" />
+        <a class="btn btn-danger" asp-page="/Order/CreateOrder">Gå til betaling</a>
     </div>
-</form>
