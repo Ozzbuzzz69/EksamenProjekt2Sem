@@ -14,16 +14,17 @@ namespace EksamenProjekt2Sem.Services
         public OrderService(GenericDbService<Order> dbService)
         {
             _dbService = dbService;
+
+            //_orders = _dbService.GetObjectsAsync().Result.ToList();
+            _orders = MockOrder.GetOrders();
+            _dbService.SaveObjects(_orders);
+
             if (_orders == null)
             {
                 _orders = MockOrder.GetOrders();
             }
             else
                 _orders = _dbService.GetObjectsAsync().Result.ToList();
-        }
-        public OrderService()
-        {
-            _orders = new List<Order>();
         }
 
         /// <summary>

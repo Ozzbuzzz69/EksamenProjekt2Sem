@@ -44,7 +44,7 @@ namespace EksamenProjekt2Sem.Pages.Order
 
             _orderService.CreateOrder(order);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Food/Sandwich/ReadAllSandwiches");
         }
     }
 }

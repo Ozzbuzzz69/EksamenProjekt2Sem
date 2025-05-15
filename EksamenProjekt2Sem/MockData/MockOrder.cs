@@ -1,6 +1,8 @@
 ﻿namespace EksamenProjekt2Sem.MockData
 {
     using EksamenProjekt2Sem.Models;
+    using Microsoft.AspNetCore.Identity;
+
     public class MockOrder
     {
         
