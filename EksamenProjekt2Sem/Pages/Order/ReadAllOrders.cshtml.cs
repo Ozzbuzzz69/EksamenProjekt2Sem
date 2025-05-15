@@ -24,7 +24,7 @@ namespace EksamenProjekt2Sem.Pages.Order
         public void OnGet(int id)
         {
             // Get all orders
-            Orders = _orderService.ReadAllOrdersByUser(_userService.GetUserById(id));
+            Orders = _orderService.ReadAllOrdersByUser(_userService.GetUserByEmail(HttpContext.User.Identity.Name));
             if (Orders == null)
             {
                 // Handle not found case
