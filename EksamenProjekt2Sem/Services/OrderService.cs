@@ -16,8 +16,8 @@ namespace EksamenProjekt2Sem.Services
             _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            _orders = MockOrder.GetOrders();
-            _dbService.SaveObjects(_orders);
+            //_orders = MockOrder.GetOrders();
+            //_dbService.SaveObjects(_orders);
 
             if (_orders == null)
             {
