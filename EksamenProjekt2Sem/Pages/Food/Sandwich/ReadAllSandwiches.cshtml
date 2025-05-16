@@ -58,6 +58,13 @@
             <th>Kun i sæson *</th>
             <th>Pris (DKK)</th>
             <th>Vælg antal og tilføj</th>
+            @{
+                if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                {
+                    <th>Opdater Sandwich</th>
+                    <th>Fjern Sandwich</th>
+                }
+            }
         </tr>
     </thead> 
     <tbody>
@@ -82,6 +89,17 @@
                                 </div>
                             </form>
                         </td>
+                        @{
+                            if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                            {
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateSandwich" asp-route-id="@sandwich.Id"><i class="fa">Opdater</i></a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="DeleteSandwich" asp-route-id="@sandwich.Id"><i class="fa">Fjern</i></a>
+                                </td>
+                            }
+                        }
                     </tr>
                 }
             }
