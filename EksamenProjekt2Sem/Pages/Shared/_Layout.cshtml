@@ -18,135 +18,157 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
- <a class="Logo" asp-area="" asp-page="/Index"/>
+                <a class="Logo" asp-area="" asp-page="/Index" />
 
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
                     <img src="/images/HeaderLogo.png" alt="billede" width="600" height="100" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampange Tilbud</a>
-                        </li>
                         @{
-                             if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
+                            if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Food/WarmMeal/CreateWarmMeal">Opret Warm Meal</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/CampaignOffer/CreateCampaignOffer">Opret Kampange Tilbud</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <ul class="navbar-nav">
-                        @{
-                            if (Context.User.Identity.Name == null)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/LogInAndOut/LogIn">Login</a>
-                                </li>
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" style="color: black" href="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a></button>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop2" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                                            <a class="dropdown-item" style="color: black" href="/Food/WarmMeal/CreateWarmMeal">Opret Varm Ret</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampagne Tilbud</a></button>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop3" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                                            <a class="dropdown-item" style="color: black" href="/CampaignOffer/CreateCampaignOffer">Opret Kampagne</a>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/Order/ReadAllOrders">My Orders</a>
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                 </li>
-                                <li class="nav-item nav-link text-black me-3">
-                                    Bruger: @Context.User.Identity.Name
-                                </li>
-
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" asp-area="" asp-page="/LogInAndOut/LogOut">Logout</a>
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampange Tilbud</a></button>
                                 </li>
                             }
+                            
                         }
-                    </ul>
+                            </ul>
+                            <ul class="navbar-nav">
+                                    @{
+                                        if (Context.User.Identity.Name == null)
+                                        {
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogIn">Login</a></button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Order/ReadAllOrders">Mine ordre</a></button>
+                                        </li>
 
-                </div>
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogOut">Logout</a></button>
+
+                                        </li>
+                                           <div>@Context.User.Identity.Name</div>
+                                        }
+
+                                    }
+                            </ul>
+
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container">
+                <main role="main" class="pb-3">
+                                        @RenderBody()
+                </main>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <style>
-        .row {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+            <style>
+                .row {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
 
-        .item {
-            flex: 1;
-            text-align: center;
-            margin: 10px;
-        }
+                .item {
+                    flex: 1;
+                    text-align: center;
+                    margin: 10px;
+                }
 
-        html, body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+                html, body {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                }
 
-        .container {
-            flex: 1;
-        }
-    </style>
+                .container {
+                    flex: 1;
+                }
+            </style>
 
-    <footer class="border-top footer text-muted" style="position: relative; bottom: 0; width: 100%; background-color: white">
+            <footer class="border-top footer text-muted" style="position: relative; bottom: 0; width: 100%; background-color: white">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Om SPAR</h3>
-                    <p style="color: black;">Læs om SPAR</p>
-                    <p style="color: black;">Job og karriere</p>
-                    <p style="color: black;">Privatlivs Politik</p>
-                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Om SPAR</h3>
+                            <p style="color: black;">Læs om SPAR</p>
+                            <p style="color: black;">Job og karriere</p>
+                            <p style="color: black;">Privatlivs Politik</p>
+                        </div>
 
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Åbningstider</h3>
-                    <p style="color: black;">Åbent alle dage kl. 8.00 - 20.00</p>
-                </div>
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Åbningstider</h3>
+                            <p style="color: black;">Åbent alle dage kl. 8.00 - 20.00</p>
+                        </div>
 
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Kundeservice</h3>
-                    <p style="color: black;">konkurrencer og vilkår</p>
-                    <p style="color: black;">Gavekort</p>
-                    <p style="color: black;">Kundeinformation</p>
-                    <p style="color: black;">Anmodning om indsigt</p>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Kontakt os</h3>
-                    <p style="color: black;">Telefon: +45 88 20 68 13</p>
-                    <p style="color: black;">Email Kundeservice@spar.dk</p>
-                    <p style="color: black;">Adresse: Ellevej 34, Frederiksværk</p>
-                </div>
-        
-    </footer>
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Kundeservice</h3>
+                            <p style="color: black;">konkurrencer og vilkår</p>
+                            <p style="color: black;">Gavekort</p>
+                            <p style="color: black;">Kundeinformation</p>
+                            <p style="color: black;">Anmodning om indsigt</p>
+                        </div>
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Kontakt os</h3>
+                            <p style="color: black;">Telefon: +45 88 20 68 13</p>
+                            <p style="color: black;">Email Kundeservice@spar.dk</p>
+                            <p style="color: black;">Adresse: Ellevej 34, Frederiksværk</p>
+                        </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+            </footer>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+
+                                @await RenderSectionAsync("Scripts", required: false)
+        </body>
+        </html>
