@@ -22,7 +22,7 @@ builder.Services.AddScoped<WarmMealService>();
 builder.Services.AddTransient<GenericDbService<WarmMeal>>();
 
 //used for OrderService - Eksperimental
-//builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor();
 
 
 
@@ -60,7 +60,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 //used for OrderService - Eksperimental
 
-//builder.Services.AddSession();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -91,7 +91,7 @@ app.UseStaticFiles();
 app.UseRouting();
 //used for OrderService - Eksperimental
 
-//app.UseSession();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
