@@ -23,7 +23,7 @@ namespace EksamenProjekt2Sem.Services
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
         }
-       
+        
 
         /// <summary>
         /// Creates a new user.
