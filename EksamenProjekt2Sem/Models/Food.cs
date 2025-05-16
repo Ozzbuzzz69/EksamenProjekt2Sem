@@ -1,8 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace EksamenProjekt2Sem.Models
 {
+
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
+    [JsonDerivedType(typeof(Sandwich), "sandwich")]
+    [JsonDerivedType(typeof(WarmMeal), "warmmeal")]
     public abstract class Food
     {
 

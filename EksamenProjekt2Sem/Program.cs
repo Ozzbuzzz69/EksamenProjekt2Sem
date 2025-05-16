@@ -10,18 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<OrderService>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddTransient<GenericDbService<Order>>();
 builder.Services.AddTransient<GenericDbService<User>>();
-builder.Services.AddSingleton<UserService>();
-builder.Services.AddSingleton<CampaignOfferService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CampaignOfferService>();
 builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
-builder.Services.AddSingleton<SandwichService>();
+builder.Services.AddScoped<SandwichService>();
 builder.Services.AddTransient<GenericDbService<Sandwich>>();
-builder.Services.AddSingleton<WarmMealService>();
+builder.Services.AddScoped<WarmMealService>();
 builder.Services.AddTransient<GenericDbService<WarmMeal>>();
 
-
+//used for OrderService - Eksperimental
+//builder.Services.AddHttpContextAccessor();
 
 
 
@@ -57,7 +58,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 
+//used for OrderService - Eksperimental
 
+//builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -86,6 +89,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+//used for OrderService - Eksperimental
+
+//app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
