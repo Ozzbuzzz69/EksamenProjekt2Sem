@@ -181,6 +181,18 @@ namespace EksamenProjekt2Sem.Services
             }
         }
 
+        public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
+        {
+            if (warmmeal != null && quantity > 0 && quantity <= 50)
+            {
+                _cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = quantity,
+                    Food = warmmeal
+                });
+            }
+        }
+
         public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
         {
             OrderLine tempOrderLine;

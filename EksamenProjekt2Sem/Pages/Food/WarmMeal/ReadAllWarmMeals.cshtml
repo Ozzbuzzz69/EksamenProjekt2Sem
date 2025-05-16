@@ -6,57 +6,126 @@
 
 <h1>Varme retter</h1>
 
-<table class="table">
+<style>
+    .inputsize {
+    width: 50px;
+    }
+
+    body {
+    background-image: url("/images/sandwich.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    }
+
+    .button {
+    float: right;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-7"><h5>Søg kød</h5></div>
+    <div class="col-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <form method="post" class="form-inline">
+            <div class="input-group mb-3">
+                <input asp-for="SearchMeatType" class="form-control mr-1" placeholder="Søg" />
+                <input type="submit" asp-page-handler="SearchMeatType" value="Søg" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Ingredienser</th>
-            <th>I sæson</th>
+            <th>Ingredienser</th>>
             <th>Kødtype</th>
-            <th>Pris</th>
-            <th>Minimum person amount</th>
-            <th>Føj til kurv</th>
+            <th>MinPersonAmount</th>
+            <th>Kun i sæson *</th>
+            <th>Pris (DKK)</th>
+            <th>Vælg antal og tilføj</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
                 {
-                    <th>Opdater Varm Ret</th>
-                    <th>Fjern Varm Ret</th>
+                    <th>Opdater Varm ret</th>
+                    <th>Fjern Varm ret</th>
                 }
             }
-
-            
         </tr>
     </thead>
     <tbody>
         @{
-        if (Model.WarmMeals != null)
-        {
-                foreach (var warmMeal in Model.WarmMeals)
+            if (Model.WarmMeal != null)
+            {
+                foreach (var warmmeal in Model.WarmMeals)
                 {
                     <tr>
-                        <td>@warmMeal.Ingredients</td>
-                        <td>@warmMeal.InSeason</td>
-                        <td>@warmMeal.MeatType</td>
-                        <td>@warmMeal.Price</td>
-                        <td>@warmMeal.MinPersonAmount</td>
-
-                        
+                        <td>@warmmeal.Ingredients</td>
+                        <td>@warmmeal.MeatType</td>
+                        <td>@warmmeal.MinPersonAmount</td>
+                        <td>@warmmeal.InSeason</td>
+                        <td>@warmmeal.Price</td>
                         <td>
-                            <a class="btn btn-primary btn-sm" type="button" title="Føj til kurv" asp-page="CreateOrder" asp-route-id="@warmMeal.Id"><i class="fa">Føj til kurv</i></a>
+                            <form method="post">
+                                <div class="button" style="float: left">
+                                    <input class="inputsize" type="number"
+                                           name="quantity" min="0" />
+                                    <input type="submit" asp-page-handler="AddWarmMealToCart" asp-route-id="@warmmeal.Id"
+                                           value="Tilføj" class="btn btn-outline-dark" />
+                                </div>
+                            </form>
                         </td>
                         @{
                             if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
                             {
                                 <td>
-                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Opdater</i></a>
-                                </td> 
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmmeal.Id"><i class="fa">Opdater</i></a>
+                                </td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="DeleteWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Fjern</i></a>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="DeleteWarmMeal" asp-route-id="@warmmeal.Id"><i class="fa">Fjern</i></a>
                                 </td>
                             }
                         }
                     </tr>
                 }
-        }
+            }
         }
     </tbody>
 </table>
+
+@{
+    double totalPrice = 0;
+}
+
+@if (Model.Cart != null && Model.Cart.OrderLines != null)
+{
+    <div style="background-color: white;">
+        @foreach (var orderLine in Model.Cart.OrderLines)
+        {
+            <div>
+                <p style="display: inline;">
+                    @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
+                    <form method="post" style="display: inline; float: right;">
+                        <input type="hidden" name="orderLineFoodId" value="@orderLine.Food.Id" />
+                        <input type="hidden" name="quantity" value="@orderLine.Quantity" />
+                        <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger">X</button>
+                    </form>
+                </p>
+            </div>
+
+            totalPrice += orderLine.Food.Price * orderLine.Quantity;
+        }
+
+        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+    </div>
+}
+
+
+<div class="button" style="margin-bottom: 10px;">
+    <a class="btn btn-danger" asp-page="/Order/CreateOrder">Gå til betaling</a>
+</div>
