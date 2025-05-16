@@ -116,9 +116,16 @@
     <div style="background-color: white;">
         @foreach (var orderLine in Model.Cart.OrderLines)
         {
-            <p>
-                @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
-            </p>
+            <div>
+                <p style="display: inline;">
+                    @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
+                    <form method="post" style="display: inline; float: right;">
+                            <input type="hidden" name="orderLineFoodId" value="@orderLine.Food.Id" />
+                            <input type="hidden" name="quantity" value="@orderLine.Quantity" />
+                            <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger">X</button>
+                    </form>
+                </p>
+            </div>
 
             totalPrice += orderLine.Food.Price * orderLine.Quantity;
         }

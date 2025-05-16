@@ -20,6 +20,14 @@ namespace EksamenProjekt2Sem.Services
             else
                 _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
         }
+        //Getting mock data into the database
+
+        //public async Task SeedSandwichAsync()
+        //{
+        //    _sandwiches = new List<Sandwich>();
+        //    var sandwich = MockFood.GetSandwiches();
+        //    await _dbService.SaveObjects(sandwich);
+        //}
 
         /// <summary>
         /// Creates the sandwich from the argument.

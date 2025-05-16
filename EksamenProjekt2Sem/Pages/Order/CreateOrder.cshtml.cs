@@ -56,9 +56,7 @@ namespace EksamenProjekt2Sem.Pages.Order
 
             _orderService.CreateOrder(order);
 
-            //   _orderService.ClearCart(Cart);
-
-            return RedirectToPage("/Food/Sandwich/ReadAllSandwiches");
+            return RedirectToPage("/Order/ReadAllOrders");
         }
     }
 }

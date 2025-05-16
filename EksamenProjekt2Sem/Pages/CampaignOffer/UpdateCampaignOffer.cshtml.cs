@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EksamenProjekt2Sem.Pages.CampaignOffer
 {
+    [Authorize(Roles = "admin")]
+
     public class UpdateCampaignOfferModel : PageModel
     {
         private Services.CampaignOfferService _campaignOfferService;

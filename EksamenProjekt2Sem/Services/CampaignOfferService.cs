@@ -18,6 +18,15 @@ namespace EksamenProjekt2Sem.Services
             else
                 _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
         }
+
+        //Getting mock data into the database
+
+        //public async Task SeedCampaignAsync()
+        //{
+        //    _campaignOffers = new List<CampaignOffer>();
+        //    var campaign = MockOffer.GetCampaignOffers();
+        //    await _dbService.SaveObjects(campaign);
+        //}
         public void CreateCampaignOffer(CampaignOffer campaignOffer)
         {
             _campaignOffers.Add(campaignOffer);
