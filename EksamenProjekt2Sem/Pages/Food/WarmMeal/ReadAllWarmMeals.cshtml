@@ -14,14 +14,16 @@
             <th>Kødtype</th>
             <th>Pris</th>
             <th>Minimum person amount</th>
+            <th>Føj til kurv</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
                 {
                     <th>Opdater Varm Ret</th>
+                    <th>Fjern Varm Ret</th>
                 }
             }
 
-            <th>Føj til kurv</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -46,6 +48,9 @@
                             {
                                 <td>
                                     <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Opdater</i></a>
+                                </td> 
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="DeleteWarmMeal" asp-route-id="@warmMeal.Id"><i class="fa">Fjern</i></a>
                                 </td>
                             }
                         }
