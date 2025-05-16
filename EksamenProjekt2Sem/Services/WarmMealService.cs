@@ -6,7 +6,6 @@ namespace EksamenProjekt2Sem.Services
     public class WarmMealService : GenericDbService<WarmMeal>
     {
         private List<WarmMeal> _warmMeals;
-
         private GenericDbService<WarmMeal> _dbService;
 
         public WarmMealService(GenericDbService<WarmMeal> dbService)
@@ -32,10 +31,10 @@ namespace EksamenProjekt2Sem.Services
         /// Creates the warm meal from argument.
         /// </summary>
         /// <param name="warmMeal"></param>
-        public void CreateWarmMeal(WarmMeal warmMeal)
+        public async Task CreateWarmMeal(WarmMeal warmMeal)
         {
             _warmMeals.Add(warmMeal);
-            _dbService.AddObjectAsync(warmMeal);
+            await _dbService.AddObjectAsync(warmMeal);
         }
 
         /// <summary>
@@ -100,6 +99,11 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 } 
             }
+            if (warmMealToBeDeleted == null)
+            {
+                throw new Exception($"WarmMeal with id {id} not found.");
+            }
+
 
             if (warmMealToBeDeleted != null)
             {
@@ -109,8 +113,8 @@ namespace EksamenProjekt2Sem.Services
             return warmMealToBeDeleted;
         }
 
-        #region Sorting/Filtering functions
-        #region Filtering functions
+#region Sorting/Filtering functions
+    #region Filtering functions
 
         /// <summary>
         /// Filters warm meals by specified minimum person amount.
@@ -197,8 +201,8 @@ namespace EksamenProjekt2Sem.Services
         {
             return _warmMeals.FindAll(s => s.Price >= lower && s.Price <= upper);
         }
-        #endregion
-        #region Sorting functions
+    #endregion
+    #region Sorting functions
         /// <summary>
         /// Gets all warm meals sorted by id.
         /// </summary>
@@ -216,7 +220,7 @@ namespace EksamenProjekt2Sem.Services
         {
             return SortByCriteria(_warmMeals, "Price");
         }
-        #endregion
-        #endregion
+    #endregion
+#endregion
     }
 }

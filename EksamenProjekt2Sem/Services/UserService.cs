@@ -23,7 +23,7 @@ namespace EksamenProjekt2Sem.Services
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
         }
-        //Getting mock data into the database
+//Getting mock data into the database
 
         //public async Task SeedMockUsersAsync()
         //{
