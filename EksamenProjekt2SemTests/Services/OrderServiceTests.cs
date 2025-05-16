@@ -28,7 +28,7 @@ namespace EksamenProjekt2Sem.Services.Tests
                 context.Database.EnsureDeleted(); // ren database for hver testkørsel
                 context.Database.EnsureCreated();
 
-                // Tilføjer en række sandwiches til den midlertidige databasen
+                // Tilføjer en række Orders til den midlertidige databasen
                 context.Orders.AddRange(
                     new Order
                     {
