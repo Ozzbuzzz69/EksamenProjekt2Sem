@@ -37,6 +37,10 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public int Id { get; set; }
 
+        public OrderLine OrderLine { get; set; }
+
+
+
         public void OnGet()
         {
             Sandwiches = _sandwichService.ReadAllSandwiches();
@@ -59,6 +63,20 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Sandwich = _sandwichService.ReadSandwich(Id);
 
             _orderService.AddSandwichToCart(Sandwich, Quantity);
+
+            Sandwiches = _sandwichService.ReadAllSandwiches();
+
+            return Page();
+        }
+
+        public IActionResult OnPostDeleteOrderLine(int orderLineFoodId, int quantity)
+        {
+            OrderLine = _orderService.ReadOrderLine(orderLineFoodId, quantity);
+
+            if (OrderLine != null)
+            {
+                _orderService.DeleteOrderLine(OrderLine);
+            }
 
             Sandwiches = _sandwichService.ReadAllSandwiches();
 
