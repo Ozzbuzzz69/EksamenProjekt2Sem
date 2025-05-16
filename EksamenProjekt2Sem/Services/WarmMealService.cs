@@ -19,6 +19,14 @@ namespace EksamenProjekt2Sem.Services
             else
                 _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
         }
+        //Getting mock data into the database
+
+        //public async Task SeedWarmMealAsync()
+        //{
+        //    _warmMeals = new List<WarmMeal>();
+        //    var warmmeal = MockFood.GetWarmMeals();
+        //    await _dbService.SaveObjects(warmmeal);
+        //}
 
         /// <summary>
         /// Creates the warm meal from argument.

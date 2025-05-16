@@ -23,7 +23,14 @@ namespace EksamenProjekt2Sem.Services
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
         }
-       
+        //Getting mock data into the database
+
+        //public async Task SeedMockUsersAsync()
+        //{
+        //    _users = new List<User>();
+        //    var users = MockUser.GetMockUsers();
+        //    await _dbService.SaveObjects(users);
+        //}
 
         /// <summary>
         /// Creates a new user.
@@ -111,12 +118,7 @@ namespace EksamenProjekt2Sem.Services
 
 
 
-        //public async Task SeedMockUsersAsync()
-        //{
-        //    _users = new List<User>();
-        //    var users = MockUser.GetMockUsers();
-        //    await _dbService.SaveObjects(users);
-        //}
+        
 
 
 

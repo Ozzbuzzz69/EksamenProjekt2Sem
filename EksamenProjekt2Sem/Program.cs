@@ -11,19 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<OrderService>();
-builder.Services.AddSingleton<CampaignOfferService>();
-builder.Services.AddSingleton<SandwichService>();
-builder.Services.AddSingleton<WarmMealService>();
-builder.Services.AddTransient<GenericDbService<Sandwich>>();
-builder.Services.AddTransient<GenericDbService<WarmMeal>>();
-builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
 builder.Services.AddTransient<GenericDbService<Order>>();
-
 builder.Services.AddTransient<GenericDbService<User>>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<CampaignOfferService>();
+builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
+builder.Services.AddSingleton<SandwichService>();
+builder.Services.AddTransient<GenericDbService<Sandwich>>();
+builder.Services.AddSingleton<WarmMealService>();
+builder.Services.AddTransient<GenericDbService<WarmMeal>>();
+
+
+
+
+
+//Getting mock data into the database og så skal de andre services ud kommenteres når de er skal bruges
 
 //builder.Services.AddScoped<GenericDbService<User>>();
 //builder.Services.AddScoped<UserService>();
+
+//builder.Services.AddScoped<GenericDbService<Sandwich>>();
+//builder.Services.AddScoped<SandwichService>();
+
+//builder.Services.AddScoped<GenericDbService<WarmMeal>>();
+//builder.Services.AddScoped<WarmMealService>();
+
+//builder.Services.AddScoped<GenericDbService<CampaignOffer>>();
+//builder.Services.AddScoped<CampaignOfferService>();
 
 // Add DB context
 builder.Services.AddDbContext<FoodContext>();
@@ -47,11 +61,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
+//Getting mock data into the database
 
 //using (var scope = app.Services.CreateScope())
 //{
 //    var userService = scope.ServiceProvider.GetRequiredService<UserService>();
+//    var userService2 = scope.ServiceProvider.GetRequiredService<SandwichService>();
+//    var userService3 = scope.ServiceProvider.GetRequiredService<WarmMealService>();
+//    var userService4 = scope.ServiceProvider.GetRequiredService<CampaignOfferService>();
+
 //    await userService.SeedMockUsersAsync();
+//    await userService2.SeedSandwichAsync();
+//    await userService3.SeedWarmMealAsync();
+//    await userService4.SeedCampaignAsync();
 //}
 
 // Configure the HTTP request pipeline.

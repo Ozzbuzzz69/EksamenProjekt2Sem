@@ -7,7 +7,7 @@ namespace EksamenProjekt2Sem.MockData
 
         private static List<Sandwich> _sandwiches = new List<Sandwich>()
         {
-            new(1, "Ham and Cheese", null, "Ham", 19.95,"Standard"),
+            new(1 ,"Ham and Cheese", null, "Ham", 19.95,"Standard"),
             new(2, "Chicken Salad", null, "Chicken", 29.95,"Standard"),
             new(3, "Gold Flakes", null, "Chicken", 59.95,"Luxury"),
             new(4, "Potato", "*", "Chicken, Ham", 15, "Standard")
