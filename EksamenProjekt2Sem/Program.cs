@@ -1,4 +1,4 @@
-﻿using EksamenProjekt2Sem.Models;
+using EksamenProjekt2Sem.Models;
 using EksamenProjekt2Sem.Services;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,20 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<CampaignOfferService>();
-builder.Services.AddScoped<SandwichService>();
-builder.Services.AddScoped<WarmMealService>();
+builder.Services.AddSingleton<OrderService>();
+builder.Services.AddSingleton<CampaignOfferService>();
+builder.Services.AddSingleton<SandwichService>();
+builder.Services.AddSingleton<WarmMealService>();
 builder.Services.AddTransient<GenericDbService<Sandwich>>();
 builder.Services.AddTransient<GenericDbService<WarmMeal>>();
 builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
 builder.Services.AddTransient<GenericDbService<Order>>();
 
-//builder.Services.AddTransient<GenericDbService<User>>();
-//builder.Services.AddSingleton<UserService>();
-
 builder.Services.AddTransient<GenericDbService<User>>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddSingleton<UserService>();
+
+//builder.Services.AddScoped<GenericDbService<User>>();
+//builder.Services.AddScoped<UserService>();
 
 // Add DB context
 builder.Services.AddDbContext<FoodContext>();
