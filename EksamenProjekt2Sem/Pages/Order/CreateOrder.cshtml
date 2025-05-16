@@ -30,7 +30,7 @@
     {
         @foreach (var orderLine in Model.Cart.OrderLines)
             {
-                <p>@orderLine.Food.Ingredients, @orderLine.Quantity, @orderLine.Food.Price</p>
+                <p>@orderLine.Food.Ingredients, @orderLine.Quantity stk., @orderLine.Food.Price kr.</p>
 
                 totalPrice += orderLine.Food.Price * orderLine.Quantity;
             }

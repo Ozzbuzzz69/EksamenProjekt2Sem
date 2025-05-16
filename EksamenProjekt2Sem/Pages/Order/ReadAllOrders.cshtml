@@ -15,6 +15,8 @@
     <ul>
         @foreach (var order in Model.Orders)
         {
+            double totalPrice = 0;
+
             <li>
                 <strong>Order ID:</strong> @order.Id<br />
                 <strong>Customer:</strong> @order.User.Name<br />
@@ -23,13 +25,13 @@
                     @foreach (var line in order.OrderLines)
                     {
                         <li>
-                            <strong>Food:</strong> @line.Food.Ingredients<br />
-                            <strong>Price:</strong> @line.Food.Price<br />
-                            <strong>Quantity:</strong> @line.Quantity<br/>
-                            <strong>Total:</strong> @line.Price
+                            <p>@line.Food.Ingredients, @line.Quantity stk., @line.Food.Price kr.</p>
                         </li>
+
+                        totalPrice += line.Food.Price * line.Quantity;
                     }
                 </ul>
+                <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
             </li>
         }
     </ul>
