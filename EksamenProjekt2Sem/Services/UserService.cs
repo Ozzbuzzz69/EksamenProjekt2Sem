@@ -23,7 +23,7 @@ namespace EksamenProjekt2Sem.Services
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
         }
-//Getting mock data into the database
+        //Getting mock data into the database
 
         //public async Task SeedMockUsersAsync()
         //{
@@ -32,30 +32,24 @@ namespace EksamenProjekt2Sem.Services
         //    await _dbService.SaveObjects(users);
         //}
 
-        /// <summary>
-        /// Creates a new user.
-        /// </summary>
-        /// <param name="user"></param>
         public async Task CreateUser(User user)
         {
-            _users.Add(user);
             await _dbService.AddObjectAsync(user);
         }
 
-        /// <summary>
-        /// Finds user with given email.
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
+
+        
         public User? GetUserByEmail(string email)
         {
-            return _users.Find(user => user.Email == email);
+            return _users.Find(user => user.Email.ToLower() == email.ToLower());
         }
-        /// <summary>
-        /// Finds user with given id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var users = await _dbService.GetObjectsAsync();
+            return users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        }
+
         public User? GetUserById(int id)
         {
             return _users.Find(user => user.Id == id);
