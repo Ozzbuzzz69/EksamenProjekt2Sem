@@ -14,6 +14,23 @@ namespace EksamenProjekt2Sem.Services
         public OrderService(GenericDbService<Order> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
+                if (_orders == null || _orders.Count() < 1)
+                {
+                    SeedOrderAsync().Wait();
+                    _orders = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+
+            /*
+            _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
             _orders = MockOrder.GetOrders();
@@ -25,16 +42,23 @@ namespace EksamenProjekt2Sem.Services
             //}
             //else
             //    _orders = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
-
+        //Getting mock data into the database
+        public async Task SeedOrderAsync()
+        {
+            _orders = new List<Order>();
+            var order = MockOrder.GetOrders();
+            await _dbService.SaveObjects(order);
+        }
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
         /// <param name="order"></param>
-        public void CreateOrder(Order order)
+        public async Task CreateOrder(Order order)
         {
             _orders.Add(order);
-            _dbService.AddObjectAsync(order);
+            await _dbService.AddObjectAsync(order);
         }
         /// <summary>
         /// Reads an order from the database by its id.
@@ -108,13 +132,13 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="order"></param>
-        public void UpdateOrder(int id, Order order)
+        public void UpdateOrder(Order order)
         {
             if (order != null)
             {
                 foreach (Order o in _orders)
                 {
-                    if (o.Id == id)
+                    if (o.Id == order.Id)
                     {
                         o.User = order.User;
                         o.PickupTime = order.PickupTime;

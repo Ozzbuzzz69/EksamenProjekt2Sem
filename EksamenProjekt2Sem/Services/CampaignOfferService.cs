@@ -11,31 +11,51 @@ namespace EksamenProjekt2Sem.Services
         public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                if (_campaignOffers == null || _campaignOffers.Count() < 1)
+                {
+                    SeedCampaignAsync().Wait();
+                    _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            /*
             if (_campaignOffers == null)
             {
                 _campaignOffers = MockOffer.GetCampaignOffers();
             }
             else
                 _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
 
         //Getting mock data into the database
-
-        //public async Task SeedCampaignAsync()
-        //{
-        //    _campaignOffers = new List<CampaignOffer>();
-        //    var campaign = MockOffer.GetCampaignOffers();
-        //    await _dbService.SaveObjects(campaign);
-        //}
-        public void CreateCampaignOffer(CampaignOffer campaignOffer)
+        public async Task SeedCampaignAsync()
+        {
+            _campaignOffers = new List<CampaignOffer>();
+            var campaign = MockOffer.GetCampaignOffers();
+            await _dbService.SaveObjects(campaign);
+        }
+        public async Task CreateCampaignOffer(CampaignOffer campaignOffer)
         {
             _campaignOffers.Add(campaignOffer);
-			_dbService.AddObjectAsync(campaignOffer);
+			await _dbService.AddObjectAsync(campaignOffer);
 		}
         public CampaignOffer ReadCampaignOffer(int id)
         {
-            return _dbService.GetObjectByIdAsync(id).Result;
-		}
+            var result = _campaignOffers.Find(s => s.Id == id);
+            if (result == null)
+            {
+                throw new Exception($"CampaignOffer with id {id} not found.");
+            }
+            return result;
+        }
         public List<CampaignOffer> ReadAllCampaignOffers()
         {
             return _dbService.GetObjectsAsync().Result.ToList();

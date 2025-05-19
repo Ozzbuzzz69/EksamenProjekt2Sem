@@ -13,21 +13,37 @@ namespace EksamenProjekt2Sem.Services
         public SandwichService(GenericDbService<Sandwich> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+                if (_sandwiches == null || _sandwiches.Count() < 1)
+                {
+                    SeedSandwichAsync().Wait();
+                    _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            /*
+            _dbService = dbService;
             if (_sandwiches == null)
             {
                 _sandwiches = MockFood.GetSandwiches();
             }
             else
                 _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
         //Getting mock data into the database
-
-        //public async Task SeedSandwichAsync()
-        //{
-        //    _sandwiches = new List<Sandwich>();
-        //    var sandwich = MockFood.GetSandwiches();
-        //    await _dbService.SaveObjects(sandwich);
-        //}
+        public async Task SeedSandwichAsync()
+        {
+            _sandwiches = new List<Sandwich>();
+            var sandwich = MockFood.GetSandwiches();
+            await _dbService.SaveObjects(sandwich);
+        }
 
         /// <summary>
         /// Creates the sandwich from the argument.

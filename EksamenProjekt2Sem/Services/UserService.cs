@@ -15,6 +15,22 @@ namespace EksamenProjekt2Sem.Services
         public UserService(GenericDbService<User> genericDbService)
         {
             _dbService = genericDbService;
+            try
+            {
+                _users = _dbService.GetObjectsAsync().Result.ToList();
+                if (_users == null || _users.Count() < 1)
+                {
+                    SeedMockUsersAsync().Wait();
+                    _users = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            /*
+            _dbService = genericDbService;
             
             if (_users == null)
             {
@@ -22,15 +38,15 @@ namespace EksamenProjekt2Sem.Services
             }
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
         //Getting mock data into the database
-
-        //public async Task SeedMockUsersAsync()
-        //{
-        //    _users = new List<User>();
-        //    var users = MockUser.GetMockUsers();
-        //    await _dbService.SaveObjects(users);
-        //}
+        public async Task SeedMockUsersAsync()
+        {
+            _users = new List<User>();
+            var users = MockUser.GetMockUsers();
+            await _dbService.SaveObjects(users);
+        }
 
         public async Task CreateUser(User user)
         {
