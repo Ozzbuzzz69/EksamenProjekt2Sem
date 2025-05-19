@@ -31,13 +31,13 @@ namespace EksamenProjekt2Sem.Services
             //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
-        public void AddSandwichToCart(Sandwich sandwich, int quantity)
+        public void AddFoodToCart(Food food, int quantity)
         {
             var cart = ReadCart();
 
             // Find if the sandwich already exists in the cart
             var existingOrderLine = cart.OrderLines
-                .FirstOrDefault(ol => ol.Food.Id == sandwich.Id);
+                .FirstOrDefault(ol => ol.Food.Id == food.Id);
 
             if (existingOrderLine != null)
             {
@@ -48,7 +48,7 @@ namespace EksamenProjekt2Sem.Services
             else
             {
                 // If not, add a new order line
-                cart.OrderLines.Add(new OrderLine(quantity, sandwich));
+                cart.OrderLines.Add(new OrderLine(quantity, food));
 
             }
             SaveCart(cart);
