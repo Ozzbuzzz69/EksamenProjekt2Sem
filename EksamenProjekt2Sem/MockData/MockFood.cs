@@ -23,7 +23,7 @@ namespace EksamenProjekt2Sem.MockData
             new(1, "Frikadeller m/kartoffelsalat", null, "Gris", 39, 4),
             new(2, "Kogt skinke m/flødekartofler el. kartoffelsalat, grøn salat m/dressing og flutes", null, "Gris", 79, 6),
             new(3, "Kalveculotte m/flødekartofler eller kartoffelsalat, grøn salat m/dressing og flutes", null, "Kalv", 99, 6),
-            new(4, "Marineret kalveculotte (sous vide), marineret svinekam (sous vide), marinerede kartofler, mix salat, broccolisalat m/bacon, flødekartofler, baguette, smør, dressing", null, "Kalv, Gris", 1295, 10)
+            new(4, "Marineret kalveculotte (sous vide), marineret svinekam (sous vide), marinerede kartofler, mix salat, broccolisalat m/bacon, flødekartofler, baguette, smør, dressing", null, "Kalv, Gris", 129.5, 10)
         };
 
         private static List<Food> _foods = new List<Food>();

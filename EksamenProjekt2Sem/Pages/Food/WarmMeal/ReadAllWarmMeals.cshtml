@@ -44,9 +44,9 @@
         <tr>
             <th>Ingredienser</th>>
             <th>Kødtype</th>
-            <th>Antal portioner</th>
+            <th>Minimum købsantal</th>
             <th>Kun i sæson *</th>
-            <th>Pris (DKK)</th>
+            <th>Pris pr. stk. (DKK)</th>
             <th>Vælg antal og tilføj</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
@@ -66,14 +66,14 @@
                     <tr>
                         <td>@warmmeal.Ingredients</td>
                         <td>@warmmeal.MeatType</td>
-                        <td>@warmmeal.MinPersonAmount</td>
+                        <td>@warmmeal.MinPersonAmount <p>Portioner</p></td>
                         <td>@warmmeal.InSeason</td>
                         <td>@warmmeal.Price</td>
                         <td>
                             <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
-                                           name="quantity" min="0" />
+                                           name="quantity" min="@warmmeal.MinPersonAmount" />
                                     <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@warmmeal.Id"
                                            value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
