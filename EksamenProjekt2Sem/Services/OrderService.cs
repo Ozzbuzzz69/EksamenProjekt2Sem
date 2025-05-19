@@ -27,6 +27,84 @@ namespace EksamenProjekt2Sem.Services
             //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
+
+        public void AddFoodToCart(Food food, int quantity)
+        {
+            var cart = ReadCart();
+
+            // Find if the sandwich already exists in the cart
+            var existingOrderLine = cart.OrderLines
+                .FirstOrDefault(ol => ol.Food.Id == food.Id);
+
+            if (existingOrderLine != null)
+            {
+                // If it exists, just increase the quantity
+                existingOrderLine.Quantity = quantity;
+
+            }
+            else
+            {
+                // If not, add a new order line
+                cart.OrderLines.Add(new OrderLine(quantity, food));
+
+            }
+            SaveCart(cart);
+        }
+
+
+
+
+        public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
+        {
+            var cart = ReadCart();
+            foreach (var orderLine in cart.OrderLines)
+            {
+                if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
+                {
+                    return orderLine;
+                }
+            }
+            return null;
+        }
+
+
+
+        public void DeleteOrderLine(OrderLine orderLine)
+        {
+            var cart = ReadCart();
+            var toRemove = cart.OrderLines
+                .FirstOrDefault(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity);
+            if (toRemove != null)
+            {
+                cart.OrderLines.Remove(toRemove);
+                SaveCart(cart);
+            }
+        }
+
+
+
+        public Order ReadCart()
+        {
+            var session = _httpContextAccessor.HttpContext.Session;
+            var cartJson = session.GetString(CartSessionKey);
+            if (cartJson != null)
+            {
+                return JsonSerializer.Deserialize<Order>(cartJson);
+            }
+            return new Order();
+        }
+
+        public void SaveCart(Order cart)
+        {
+            var session = _httpContextAccessor.HttpContext.Session;
+            var cartJson = JsonSerializer.Serialize(cart);
+            session.SetString(CartSessionKey, cartJson);
+        }
+
+        //public Order ReadCart()
+        //{
+        //    return _cart;
+        //}
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
