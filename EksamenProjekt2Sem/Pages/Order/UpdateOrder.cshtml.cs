@@ -29,7 +29,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             {
                 return Page();
             }
-            _orderService.UpdateOrder(Order.Id, Order);
+            _orderService.UpdateOrder(Order);
             return RedirectToPage("./Index"); // Redirect to the index page after updating
         }
     }

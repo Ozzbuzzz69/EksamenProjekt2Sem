@@ -113,7 +113,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns the sandwich to be deleted.
         /// </returns>
-        public Sandwich DeleteSandwich(int? id)
+        public Sandwich? DeleteSandwich(int? id)
         {
             Sandwich? sandwichToBeDeleted = null;
             foreach (Sandwich sandwich in _sandwiches)
@@ -124,12 +124,11 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 }
             }
-            if (sandwichToBeDeleted == null)
+            if (sandwichToBeDeleted != null)
             {
-                throw new Exception($"Sandwich with id {id} not found.");
+                _sandwiches.Remove(sandwichToBeDeleted);
+                _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             }
-            _sandwiches.Remove(sandwichToBeDeleted);
-            _dbService.SaveObjects(_sandwiches);
             return sandwichToBeDeleted;
         }
 

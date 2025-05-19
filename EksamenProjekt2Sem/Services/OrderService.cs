@@ -153,7 +153,7 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The deleted Order/null</returns>
-        public Order? DeleteOrder(int id)
+        public Order? DeleteOrder(int? id)
         {
             Order? ToBeDeleted = null;
             foreach (Order order in _orders)
@@ -167,7 +167,7 @@ namespace EksamenProjekt2Sem.Services
             if (ToBeDeleted != null)
             {
                 _orders.Remove(ToBeDeleted);
-                _dbService.DeleteObjectAsync(ToBeDeleted);
+                _dbService.DeleteObjectAsync(ToBeDeleted).Wait();
             }
             return ToBeDeleted; // Return the deleted order
         }

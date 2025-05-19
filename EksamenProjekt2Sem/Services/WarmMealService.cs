@@ -103,10 +103,9 @@ namespace EksamenProjekt2Sem.Services
         /// Deletes the warm meal with same id as in argument.
         /// </summary>
         /// <param name="id"></param>
-        public WarmMeal DeleteWarmMeal(int? id)
+        public WarmMeal? DeleteWarmMeal(int? id)
         {
-            WarmMeal warmMealToBeDeleted = null;
-
+            WarmMeal? warmMealToBeDeleted = null;
             foreach (WarmMeal warmMeal in _warmMeals)
             {
                 if (warmMeal.Id == id)
@@ -115,16 +114,10 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 } 
             }
-            if (warmMealToBeDeleted == null)
-            {
-                throw new Exception($"WarmMeal with id {id} not found.");
-            }
-
-
             if (warmMealToBeDeleted != null)
             {
                 _warmMeals.Remove(warmMealToBeDeleted);
-                _dbService.SaveObjects(_warmMeals);
+                _dbService.DeleteObjectAsync(warmMealToBeDeleted).Wait();
             }
             return warmMealToBeDeleted;
         }

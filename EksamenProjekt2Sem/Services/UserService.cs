@@ -108,9 +108,9 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User DeleteUser(int id)
+        public User? DeleteUser(int? id)
         {
-            User userToBeDeleted = null;
+            User? userToBeDeleted = null;
             foreach (User u in _users)
             {
                 if (u.Id == id)
@@ -121,7 +121,7 @@ namespace EksamenProjekt2Sem.Services
             if (userToBeDeleted != null)
             {
                 _users.Remove(userToBeDeleted);
-                _dbService.DeleteObjectAsync(userToBeDeleted);
+                _dbService.DeleteObjectAsync(userToBeDeleted).Wait();
             }
             return userToBeDeleted;
         }
