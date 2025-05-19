@@ -28,11 +28,11 @@ namespace EksamenProjekt2Sem.Services
         //    var campaign = MockOffer.GetCampaignOffers();
         //    await _dbService.SaveObjects(campaign);
         //}
-        public void CreateCampaignOffer(CampaignOffer campaignOffer)
+        public async Task CreateCampaignOffer(CampaignOffer offer)
         {
-            _campaignOffers.Add(campaignOffer);
-			_dbService.AddObjectAsync(campaignOffer);
-		}
+            _campaignOffers.Add(offer);
+            await _dbService.AddObjectAsync(offer);
+        }
         public CampaignOffer ReadCampaignOffer(int id)
         {
             return _dbService.GetObjectByIdAsync(id).Result;

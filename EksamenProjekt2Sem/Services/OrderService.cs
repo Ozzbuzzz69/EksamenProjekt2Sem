@@ -4,6 +4,7 @@ using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
+
 namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
@@ -263,7 +264,7 @@ namespace EksamenProjekt2Sem.Services
         //    }
         //}
 
-        //public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
+ //public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
         //{
         //    if (warmmeal != null && quantity > 0 && quantity <= 50)
         //    {
@@ -274,7 +275,7 @@ namespace EksamenProjekt2Sem.Services
         //        });
         //    }
         //}
-
+        
         //public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
         //{
         //    OrderLine tempOrderLine;
