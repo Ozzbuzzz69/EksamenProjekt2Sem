@@ -100,7 +100,7 @@ namespace EksamenProjekt2Sem.Services
                     }
                  }
             }
-            _dbService.SaveObjects(_users);
+            _dbService.UpdateObjectAsync(user).Wait();
         }
 
         /// <summary>

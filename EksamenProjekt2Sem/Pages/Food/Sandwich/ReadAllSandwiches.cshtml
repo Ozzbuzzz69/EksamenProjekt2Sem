@@ -9,7 +9,7 @@
     }
 
     body {
-    background-image: url("/images/sandwich.png");
+    background-image: url("/images/Sandwich1.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -84,7 +84,7 @@
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
                                     name="quantity" min="0" />
-                                    <input type="submit" asp-page-handler="AddSandwichToCart" asp-route-id="@sandwich.Id"
+                                    <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@sandwich.Id"
                                     value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
                             </form>
@@ -136,5 +136,5 @@
 
 
     <div class="button" style="margin-bottom: 10px;">
-        <a class="btn btn-danger" asp-page="/Order/CreateOrder">Gå til betaling</a>
+        <a class="btn btn-danger" asp-page="/Order/CreateOrder">Bestil</a>
     </div>
