@@ -2,6 +2,8 @@
 using EksamenProjekt2Sem.Models;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+
 
 namespace EksamenProjekt2Sem.Services
 {
@@ -274,30 +276,30 @@ namespace EksamenProjekt2Sem.Services
             }
         }
 
-        public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
-        {
-            OrderLine tempOrderLine;
+        //public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
+        //{
+        //    OrderLine tempOrderLine;
 
-            foreach (var orderLine in _cart.OrderLines)
-            {
-                if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
-                {
-                    tempOrderLine = orderLine;
-                    return tempOrderLine;
-                }
-            }
-            return null;
-        }
+        //    foreach (var orderLine in _cart.OrderLines)
+        //    {
+        //        if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
+        //        {
+        //            tempOrderLine = orderLine;
+        //            return tempOrderLine;
+        //        }
+        //    }
+        //    return null;
+        //}
 
-        public void DeleteOrderLine(OrderLine orderLine)
-        {
-            _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
-        }
+        //public void DeleteOrderLine(OrderLine orderLine)
+        //{
+        //    _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
+        //}
 
-        public Order ReadCart()
-        {
-            return _cart;
-        }
+        //public Order ReadCart()
+        //{
+        //    return _cart;
+        //}
 
         public Order? ReadOrderByUserId(int userId)
         {
