@@ -6,6 +6,11 @@
 <h1>Opdater</h1>
 
 <form method="post">
+
+    <div class="form-group">
+        <input asp-for="@Model.Sandwich.Id" class="form-control" readonly="@(true)" hidden/>
+    </div>
+
     <div class="form-group">
         <label asp-for="@Model.Sandwich.Ingredients" class="control-label"></label>
         <input asp-for="@Model.Sandwich.Ingredients" class="form-control" />

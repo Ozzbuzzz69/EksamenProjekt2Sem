@@ -5,18 +5,21 @@ namespace EksamenProjekt2Sem.Services
 {
     public class WarmMealService : GenericDbService<WarmMeal>
     {
+
         private List<WarmMeal> _warmMeals;
         private GenericDbService<WarmMeal> _dbService;
 
         public WarmMealService(GenericDbService<WarmMeal> dbService)
         {
             _dbService = dbService;
-            if (_warmMeals == null)
-            {
-                _warmMeals = MockFood.GetWarmMeals();
-            }
-            else
-                _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
+            _warmMeals = MockFood.GetWarmMeals();
+            //if (_warmMeals == null)
+            //{
+            //    _warmMeals = MockFood.GetWarmMeals();
+            //}
+            //else
+
+            //    _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
         }
         //Getting mock data into the database
 
@@ -79,7 +82,7 @@ namespace EksamenProjekt2Sem.Services
                         w.MinPersonAmount = warmMeal.MinPersonAmount;
                     }
                 }
-                _dbService.SaveObjects(_warmMeals);
+                _dbService.UpdateObjectAsync(warmMeal).Wait();
             }
         }
 
@@ -108,7 +111,7 @@ namespace EksamenProjekt2Sem.Services
             if (warmMealToBeDeleted != null)
             {
                 _warmMeals.Remove(warmMealToBeDeleted);
-                _dbService.SaveObjects(_warmMeals);
+                _dbService.DeleteObjectAsync(warmMealToBeDeleted).Wait();
             }
             return warmMealToBeDeleted;
         }

@@ -16,6 +16,7 @@ namespace EksamenProjekt2Sem.Services
 
         public OrderService(GenericDbService<Order> dbService, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
             _httpContextAccessor = httpContextAccessor;
 
