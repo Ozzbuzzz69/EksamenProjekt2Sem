@@ -31,9 +31,9 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Food(int id,string ingredients, string? inSeason, string meatType, double price)
+        public Food(string ingredients, string? inSeason, string meatType, double price)
         {
-            Id = id;
+            
             Ingredients = ingredients;
             InSeason = inSeason;
             MeatType = meatType;

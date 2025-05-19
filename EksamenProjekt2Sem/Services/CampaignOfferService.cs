@@ -5,6 +5,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class CampaignOfferService : GenericDbService<CampaignOffer>
     {
+
         private List<CampaignOffer> _campaignOffers;
         private GenericDbService<CampaignOffer> _dbService;
 

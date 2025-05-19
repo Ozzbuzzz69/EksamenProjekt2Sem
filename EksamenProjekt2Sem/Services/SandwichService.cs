@@ -6,6 +6,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class SandwichService : GenericDbService<Sandwich>
     {
+
         private List<Sandwich> _sandwiches;
 
         private GenericDbService<Sandwich> _dbService;
@@ -86,7 +87,7 @@ namespace EksamenProjekt2Sem.Services
                         s.Price = sandwich.Price;
                     }
                 }
-                _dbService.SaveObjects(_sandwiches);
+                _dbService.UpdateObjectAsync(sandwich).Wait();
             }
         }
 
@@ -113,7 +114,7 @@ namespace EksamenProjekt2Sem.Services
                 throw new Exception($"Sandwich with id {id} not found.");
             }
             _sandwiches.Remove(sandwichToBeDeleted);
-            _dbService.SaveObjects(_sandwiches);
+            _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             return sandwichToBeDeleted;
         }
 

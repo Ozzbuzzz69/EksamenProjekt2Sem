@@ -7,12 +7,15 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string CartSessionKey = "Cart";
         private List<Order> _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
         private Order _cart = new Order();
 
-        public OrderService(GenericDbService<Order> dbService)
+        public OrderService(GenericDbService<Order> dbService, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
