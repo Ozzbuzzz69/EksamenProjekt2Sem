@@ -9,7 +9,7 @@ namespace EksamenProjekt2Sem.Models
     public class Sandwich : Food
     {
         [Display(Name = "Kategori")]
-        public string? Category { get; set; }
+        public string Category { get; set; }
 
        
         public Sandwich()

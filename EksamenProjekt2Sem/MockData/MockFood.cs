@@ -7,18 +7,23 @@ namespace EksamenProjekt2Sem.MockData
 
         private static List<Sandwich> _sandwiches = new List<Sandwich>()
         {
-            new("Ham and Cheese", null, "Ham", 19.95,"Standard"),
-            new( "Chicken Salad", null, "Chicken", 29.95,"Standard"),
-            new( "Gold Flakes", null, "Chicken", 59.95,"Luxury"),
-            new( "Potato", "*", "Chicken, Ham", 15, "Standard")
+            new(1, "Roastbeef m/remoulade", null, "Okse", 27,"Standard"),
+            new(2, "Leverpostej m/bacon og agurkesalat", null, "Gris", 27,"Standard"),
+            new(3, "Fiskefilet m/remoulade", null, "Fisk", 27,"Standard"),
+            new(4, "Kartoffelmad, purløg og bacon", "*", "Gris", 35, "Luksus"),
+            new(5, "Hønsesalat m/bacon", null, "Kylling, Gris", 35, "Luksus"),
+            new(6, "Dyrlægens natmad", null, "Okse, Gris", 35, "Luksus"),
+            new(7, "Roastbeef, hj. lavet æble-blomme relish, bernaisecreme, rodfrugtchips", null, "Okse", 49, "Signatur"),
+            new(8, "Skinkesalat, lufttørret skinke, vesterhavsost", null, "Gris", 49, "Signatur"),
+            new(9, "Hj. lavet andesylte", "*", "And", 49, "Signatur")
         };
 
         private static List<WarmMeal> _warmMeals = new List<WarmMeal>()
         {
-            new( "Spaghetti Bolognese", null, "Beef", 49.95, 2),
-            new( "Sweet Chicken Curry", null, "Chicken", 39.95, 1),
-            new( "Vegetable Stir Fry", null, "Chicken", 29.95, 1),
-            new( "Monster Burger", null, "Beef", 199.95, 6)
+            new(1, "Frikadeller m/kartoffelsalat", null, "Gris", 39, 4),
+            new(2, "Kogt skinke m/flødekartofler el. kartoffelsalat, grøn salat m/dressing og flutes", null, "Gris", 79, 6),
+            new(3, "Kalveculotte m/flødekartofler eller kartoffelsalat, grøn salat m/dressing og flutes", null, "Kalv", 99, 6),
+            new(4, "Marineret kalveculotte (sous vide), marineret svinekam (sous vide), marinerede kartofler, mix salat, broccolisalat m/bacon, flødekartofler, baguette, smør, dressing", null, "Kalv, Gris", 1295, 10)
         };
 
         private static List<Food> _foods = new List<Food>();

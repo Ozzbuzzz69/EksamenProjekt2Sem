@@ -58,11 +58,11 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             return Page();
         }
 
-        public IActionResult OnPostAddSandwichToCart()
+        public IActionResult OnPostAddFoodToCart()
         {
             Sandwich = _sandwichService.ReadSandwich(Id);
 
-            _orderService.AddSandwichToCart(Sandwich, Quantity);
+            _orderService.AddFoodToCart(Sandwich, Quantity);
 
             Sandwiches = _sandwichService.ReadAllSandwiches();
 

@@ -8,6 +8,7 @@ namespace EksamenProjekt2Sem.Models
     [JsonDerivedType(typeof(WarmMeal), "warmmeal")]
     public class WarmMeal : Food
     {
+
         public int MinPersonAmount { get; set; }
 
         public WarmMeal()
