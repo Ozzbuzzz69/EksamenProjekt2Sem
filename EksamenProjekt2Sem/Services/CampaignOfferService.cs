@@ -58,7 +58,7 @@ namespace EksamenProjekt2Sem.Services
         }
         public List<CampaignOffer> ReadAllCampaignOffers()
         {
-            return _dbService.GetObjectsAsync().Result.ToList();
+            return _campaignOffers;
 		}
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
@@ -73,12 +73,12 @@ namespace EksamenProjekt2Sem.Services
                         c.Price = campaignOffer.Price;
                     }
                 }
-                _dbService.SaveObjects(_campaignOffers);
+                _dbService.UpdateObjectAsync(campaignOffer).Wait();
             }
         }
-        public CampaignOffer DeleteCampaignOffer(int? id)
+        public CampaignOffer? DeleteCampaignOffer(int? id)
         {
-           CampaignOffer campaignOfferToBeDeleted = null;
+           CampaignOffer? campaignOfferToBeDeleted = null;
             foreach (CampaignOffer c in _campaignOffers)
             {
                 if (c.Id == id)
@@ -90,7 +90,7 @@ namespace EksamenProjekt2Sem.Services
             if (campaignOfferToBeDeleted != null)
             {
                 _campaignOffers.Remove(campaignOfferToBeDeleted);
-                _dbService.SaveObjects(_campaignOffers);
+                _dbService.DeleteObjectAsync(campaignOfferToBeDeleted).Wait();
             }
             return campaignOfferToBeDeleted;
         }
