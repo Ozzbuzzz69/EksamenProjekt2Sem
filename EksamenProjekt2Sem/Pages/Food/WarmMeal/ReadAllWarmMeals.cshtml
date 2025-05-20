@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-4">
         <form method="post" class="form-inline">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="width:250px;">
                 <input asp-for="SearchMeatType" class="form-control mr-1" placeholder="Søg" />
                 <input type="submit" asp-page-handler="SearchMeatType" value="Søg" class="btn btn-primary" />
             </div>
@@ -42,11 +42,11 @@
 <table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Ingredienser</th>>
+            <th>Ingredienser</th>
             <th>Kødtype</th>
-            <th>Minimum købsantal</th>
+            <th>Antal portioner</th>
             <th>Kun i sæson *</th>
-            <th>Pris pr. stk. (DKK)</th>
+            <th>Pris (DKK)</th>
             <th>Vælg antal og tilføj</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
@@ -66,14 +66,14 @@
                     <tr>
                         <td>@warmmeal.Ingredients</td>
                         <td>@warmmeal.MeatType</td>
-                        <td>@warmmeal.MinPersonAmount <p>Portioner</p></td>
+                        <td>@warmmeal.MinPersonAmount</td>
                         <td>@warmmeal.InSeason</td>
                         <td>@warmmeal.Price</td>
                         <td>
                             <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
-                                           name="quantity" min="@warmmeal.MinPersonAmount" />
+                                           name="quantity" min="0" />
                                     <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@warmmeal.Id"
                                            value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
@@ -120,11 +120,12 @@
             totalPrice += orderLine.Food.Price * orderLine.Quantity;
         }
 
-        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
     </div>
 }
 
 
+
 <div class="button" style="margin-bottom: 150px;">
-    <a class="btn btn-danger" asp-page="/Order/CreateOrder">Bestil</a>
+    <a class="btn btn-danger" style="background-color:#ff2d00;" asp-page="/Order/CreateOrder">Bestil</a>
 </div>
