@@ -12,31 +12,15 @@ namespace EksamenProjekt2Sem.Services
         public WarmMealService(GenericDbService<WarmMeal> dbService)
         {
             _dbService = dbService;
-            try
-            {
-                _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
-                if (_warmMeals == null || _warmMeals.Count() < 1)
-                {
-                    SeedWarmMealAsync().Wait();
-                    _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
-                }
-            }
-            catch (AggregateException ex)
-            {
-                // Handle the exception as needed
-                Console.WriteLine($"Error: {ex.InnerException?.Message}");
-            }
-            /*
-            _dbService = dbService;
             if (_warmMeals == null)
             {
                 _warmMeals = MockFood.GetWarmMeals();
             }
             else
                 _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
-            */
         }
         //Getting mock data into the database
+
         public async Task SeedWarmMealAsync()
         {
             _warmMeals = new List<WarmMeal>();
@@ -104,9 +88,10 @@ namespace EksamenProjekt2Sem.Services
         /// Deletes the warm meal with same id as in argument.
         /// </summary>
         /// <param name="id"></param>
-        public WarmMeal? DeleteWarmMeal(int? id)
+        public WarmMeal DeleteWarmMeal(int? id)
         {
-            WarmMeal? warmMealToBeDeleted = null;
+            WarmMeal warmMealToBeDeleted = null;
+
             foreach (WarmMeal warmMeal in _warmMeals)
             {
                 if (warmMeal.Id == id)
@@ -115,6 +100,12 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 } 
             }
+            if (warmMealToBeDeleted == null)
+            {
+                throw new Exception($"WarmMeal with id {id} not found.");
+            }
+
+
             if (warmMealToBeDeleted != null)
             {
                 _warmMeals.Remove(warmMealToBeDeleted);

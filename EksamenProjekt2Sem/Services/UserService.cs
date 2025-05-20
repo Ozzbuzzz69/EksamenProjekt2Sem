@@ -15,22 +15,6 @@ namespace EksamenProjekt2Sem.Services
         public UserService(GenericDbService<User> genericDbService)
         {
             _dbService = genericDbService;
-            try
-            {
-                _users = _dbService.GetObjectsAsync().Result.ToList();
-                if (_users == null || _users.Count() < 1)
-                {
-                    SeedMockUsersAsync().Wait();
-                    _users = _dbService.GetObjectsAsync().Result.ToList();
-                }
-            }
-            catch (AggregateException ex)
-            {
-                // Handle the exception as needed
-                Console.WriteLine($"Error: {ex.InnerException?.Message}");
-            }
-            /*
-            _dbService = genericDbService;
             
             if (_users == null)
             {
@@ -38,9 +22,9 @@ namespace EksamenProjekt2Sem.Services
             }
             else
                 _users = _dbService.GetObjectsAsync().Result.ToList();
-            */
         }
         //Getting mock data into the database
+
         public async Task SeedMockUsersAsync()
         {
             _users = new List<User>();
@@ -108,9 +92,9 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User? DeleteUser(int? id)
+        public User DeleteUser(int id)
         {
-            User? userToBeDeleted = null;
+            User userToBeDeleted = null;
             foreach (User u in _users)
             {
                 if (u.Id == id)
@@ -121,7 +105,7 @@ namespace EksamenProjekt2Sem.Services
             if (userToBeDeleted != null)
             {
                 _users.Remove(userToBeDeleted);
-                _dbService.DeleteObjectAsync(userToBeDeleted).Wait();
+                _dbService.DeleteObjectAsync(userToBeDeleted);
             }
             return userToBeDeleted;
         }
