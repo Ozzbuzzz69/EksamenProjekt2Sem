@@ -23,7 +23,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             if (CampaignOffer == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("ReadAllCampaignOffers");
             }
             return Page();
         }
@@ -33,10 +33,10 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             if (deletedCampaignOffer == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("ReadAllCampaignOffers");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("ReadAllCampaignOffers");
         }
     }
 }
