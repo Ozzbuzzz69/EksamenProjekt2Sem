@@ -27,6 +27,7 @@ namespace EksamenProjektTest.EFDbContext
             {
                 options.UseSqlServer(
                     @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False");
+                //@"Data Source=mssql10.unoeuro.com;User ID=koebmandenellevej_dk;Password=********;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             }
         }
         public DbSet<CampaignOffer> CampaignOffers { get; set; }
