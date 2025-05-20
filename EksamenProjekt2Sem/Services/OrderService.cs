@@ -65,6 +65,28 @@ namespace EksamenProjekt2Sem.Services
             }
             SaveCart(cart);
         }
+        public void AddOfferToCart(CampaignOffer offer, int quantity)
+        {
+            var cart = ReadCart();
+
+            // Find if the sandwich already exists in the cart
+            var existingOrderLine = cart.OrderLines
+                .FirstOrDefault(ol => ol.CampaignOffer.Id == offer.Id);
+
+            if (existingOrderLine != null)
+            {
+                // If it exists, just increase the quantity
+                existingOrderLine.Quantity = quantity;
+
+            }
+            else
+            {
+                // If not, add a new order line
+                cart.OrderLines.Add(new OrderLine(quantity, offer));
+
+            }
+            SaveCart(cart);
+        }
 
 
 

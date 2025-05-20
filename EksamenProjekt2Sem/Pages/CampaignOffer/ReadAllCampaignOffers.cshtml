@@ -2,64 +2,108 @@
 @model EksamenProjekt2Sem.Pages.CampaignOffer.ReadAllCampaignOffersModel
 @{
 }
+<style>
+    .inputsize {
+        width: 50px;
+    }
+
+    body {
+        @*background-image: url("/images/Sandwich1.png");*@
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .button {
+        float: right;
+    }
+</style>
 
 <h1>Kampagne</h1>
 
-<table class="table">
+
+<table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Navn</th>
+            <th>Navn</th>>
             <th>Billede</th>
-            <th>Pris</th>
-            <th></th>
+            <th>Kategori</th>
+            <th>Pris (DKK)</th>
+            <th>Vælg antal og tilføj</th>
+            @{
+                if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                {
+                    <th>Opdater CampaignOffer</th>
+                    <th>Fjern CampaignOffer</th>
+                }
+            }
         </tr>
-    </thead>
+    </thead> 
     <tbody>
-@{
-    if (Model.CampaignOffers != null)
-    {
-        foreach (var campaignOffer in Model.CampaignOffers)
-        {
-            <tr>
-                <td>@campaignOffer.Name</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(campaignOffer.ImageLink))
-                    {
-                        <img src="@campaignOffer.ImageLink" alt="billede" width="600" height="400" />
-                    }
-                    else
-                    {
-                        <span>No image</span>
-                    }
-                </td>
-                <td>@campaignOffer.Price</td>
-                <td>
-                    <a asp-page="./UpdateCampaignOffer" asp-route-id="@campaignOffer.Id">Rediger</a> |
-                    <a asp-page="./DeleteCampaignOffer" asp-route-id="@campaignOffer.Id">Slet</a>
-                </td>
-            </tr>
-        }
-    }
-}
-</tbody>
-@*     <tbody>
         @{
             if (Model.CampaignOffers != null)
             {
                 foreach (var campaignOffer in Model.CampaignOffers)
                 {
                     <tr>
-
-                        <td><img src="@campaignOffer.ImageLink" alt="billede" width="600" height="400" /></td>
-                      
+                        <td>@campaignOffer.Name</td>
+                        <td>@campaignOffer.ImageLink</td>
+                        <td>@campaignOffer.Price</td>
                         <td>
-                            <a asp-page="./UpdateCampaignOffer" asp-route-id="@campaignOffer.Id">Rediger</a> |
-                            <a asp-page="./DeleteCampaignOffer" asp-route-id="@campaignOffer.Id">Slet</a>
+                           <form method="post">
+                                <div class="button" style="float: left">
+                                    <input class="inputsize" type="number"
+                                    name="quantity" min="0" />
+                                    <input type="submit" asp-page-handler="AddOfferToCart" asp-route-id="@campaignOffer.Id"
+                                    value="Tilføj" class="btn btn-outline-dark" />
+                                </div>
+                            </form>
                         </td>
+                        @{
+                            if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
+                            {
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Opdater" asp-page="UpdateCampaignOffer" asp-route-id="@campaignOffer.Id"><i class="fa">Opdater</i></a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" type="button" title="Slet" asp-page="DeleteCampaignOffer" asp-route-id="@campaignOffer.Id"><i class="fa">Fjern</i></a>
+                                </td>
+                            }
+                        }
                     </tr>
                 }
             }
         }
     </tbody>
-</table> *@
+</table>
 
+@{
+    double totalPrice = 0;
+}
+
+@if (Model.Cart != null && Model.Cart.OrderLines != null)
+{
+    <div style="background-color: white;">
+        @foreach (var orderLine in Model.Cart.OrderLines)
+        {
+            if (orderLine.CampaignOffer == null)
+            {
+                continue;
+            }
+            <div>
+                <p style="display: inline;">
+                    @orderLine.CampaignOffer.Name, @orderLine.CampaignOffer.Price kr., @orderLine.Quantity stk.
+                    <form method="post" style="display: inline; float: right;">
+                        <input type="hidden" name="orderLineOfferId" value="@orderLine.CampaignOffer.Id" />
+                        <input type="hidden" name="quantity" value="@orderLine.Quantity" />
+                        <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger">X</button>
+                    </form>
+                </p>
+            </div>
+
+            totalPrice += orderLine.CampaignOffer.Price * orderLine.Quantity;
+        }
+
+        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+    </div>
+}
