@@ -7,10 +7,15 @@ namespace EksamenProjekt2Sem.MockData
 
         private static List<Sandwich> _sandwiches = new List<Sandwich>()
         {
-            new(1 ,"Ham and Cheese", null, "Ham", 19.95,"Standard"),
-            new(2, "Chicken Salad", null, "Chicken", 29.95,"Standard"),
-            new(3, "Gold Flakes", null, "Chicken", 59.95,"Luxury"),
-            new(4, "Potato", "*", "Chicken, Ham", 15, "Standard")
+            new( "Roastbeef m/remoulade", null, "Okse", 27,"Standard"),
+            new("Leverpostej m/bacon og agurkesalat", null, "Gris", 27,"Standard"),
+            new("Fiskefilet m/remoulade", null, "Fisk", 27,"Standard"),
+            new("Kartoffelmad, purløg og bacon", "*", "Gris", 35, "Luksus"),
+            new("Hønsesalat m/bacon", null, "Kylling, Gris", 35, "Luksus"),
+            new("Dyrlægens natmad", null, "Okse, Gris", 35, "Luksus"),
+            new("Roastbeef, hj. lavet æble-blomme relish, bernaisecreme, rodfrugtchips", null, "Okse", 49, "Signatur"),
+            new("Skinkesalat, lufttørret skinke, vesterhavsost", null, "Gris", 49, "Signatur"),
+            new("Hj. lavet andesylte", "*", "And", 49, "Signatur")
         };
 
         private static List<WarmMeal> _warmMeals = new List<WarmMeal>()

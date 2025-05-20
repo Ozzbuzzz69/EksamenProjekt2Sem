@@ -48,11 +48,11 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
             return Page();
         }
 
-        public IActionResult OnPostAddSandwichToCart()
+        public IActionResult OnPostAddFoodToCart()
         {
             WarmMeal = _warmMealService.ReadWarmMeal(Id);
 
-            _orderService.AddWarmMealToCart(WarmMeal, Quantity);
+            _orderService.AddFoodToCart(WarmMeal, Quantity);
 
             WarmMeals = _warmMealService.ReadAllWarmMeals();
 

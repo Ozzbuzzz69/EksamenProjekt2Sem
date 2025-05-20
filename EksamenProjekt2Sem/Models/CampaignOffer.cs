@@ -22,9 +22,9 @@ namespace EksamenProjekt2Sem.Models
         { }
         
        
-        public CampaignOffer(int id, string name, string imageLink, double price)
+        public CampaignOffer( string name, string imageLink, double price)
         {
-            Id = id;
+            
             Name = name;
             ImageLink = imageLink;
             Price = price;

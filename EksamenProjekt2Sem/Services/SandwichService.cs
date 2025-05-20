@@ -6,6 +6,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class SandwichService : GenericDbService<Sandwich>
     {
+
         private List<Sandwich> _sandwiches;
 
         private GenericDbService<Sandwich> _dbService;
@@ -102,7 +103,7 @@ namespace EksamenProjekt2Sem.Services
                         s.Price = sandwich.Price;
                     }
                 }
-                _dbService.SaveObjects(_sandwiches);
+                _dbService.UpdateObjectAsync(sandwich).Wait();
             }
         }
 

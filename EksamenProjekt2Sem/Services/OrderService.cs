@@ -2,17 +2,22 @@
 using EksamenProjekt2Sem.Models;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+
 
 namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string CartSessionKey = "Cart";
         private List<Order> _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
-        private Order _cart = new Order();
+        //private Order _cart = new Order();
 
-        public OrderService(GenericDbService<Order> dbService)
+        public OrderService(GenericDbService<Order> dbService, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
             try
             {
@@ -28,21 +33,7 @@ namespace EksamenProjekt2Sem.Services
                 // Handle the exception as needed
                 Console.WriteLine($"Error: {ex.InnerException?.Message}");
             }
-
-            /*
-            _dbService = dbService;
-
-            //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            _orders = MockOrder.GetOrders();
-            //_dbService.SaveObjects(_orders);
-
-            //if (_orders == null)
-            //{
-            //    _orders = MockOrder.GetOrders();
-            //}
-            //else
-            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
-            */
+            _httpContextAccessor = httpContextAccessor;
         }
         //Getting mock data into the database
         public async Task SeedOrderAsync()
@@ -51,6 +42,84 @@ namespace EksamenProjekt2Sem.Services
             var order = MockOrder.GetOrders();
             await _dbService.SaveObjects(order);
         }
+
+        public void AddFoodToCart(Food food, int quantity)
+        {
+            var cart = ReadCart();
+
+            // Find if the sandwich already exists in the cart
+            var existingOrderLine = cart.OrderLines
+                .FirstOrDefault(ol => ol.Food.Id == food.Id);
+
+            if (existingOrderLine != null)
+            {
+                // If it exists, just increase the quantity
+                existingOrderLine.Quantity = quantity;
+
+            }
+            else
+            {
+                // If not, add a new order line
+                cart.OrderLines.Add(new OrderLine(quantity, food));
+
+            }
+            SaveCart(cart);
+        }
+
+
+
+
+        public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
+        {
+            var cart = ReadCart();
+            foreach (var orderLine in cart.OrderLines)
+            {
+                if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
+                {
+                    return orderLine;
+                }
+            }
+            return null;
+        }
+
+
+
+        public void DeleteOrderLine(OrderLine orderLine)
+        {
+            var cart = ReadCart();
+            var toRemove = cart.OrderLines
+                .FirstOrDefault(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity);
+            if (toRemove != null)
+            {
+                cart.OrderLines.Remove(toRemove);
+                SaveCart(cart);
+            }
+        }
+
+
+
+        public Order ReadCart()
+        {
+            var session = _httpContextAccessor.HttpContext.Session;
+            var cartJson = session.GetString(CartSessionKey);
+            if (cartJson != null)
+            {
+                return JsonSerializer.Deserialize<Order>(cartJson);
+            }
+            return new Order();
+        }
+
+        public void SaveCart(Order cart)
+        {
+            var session = _httpContextAccessor.HttpContext.Session;
+            var cartJson = JsonSerializer.Serialize(cart);
+            session.SetString(CartSessionKey, cartJson);
+        }
+
+        //public Order ReadCart()
+        //{
+        //    return _cart;
+        //}
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
@@ -193,54 +262,54 @@ namespace EksamenProjekt2Sem.Services
         }
 
 
-        public void AddSandwichToCart(Sandwich sandwich, int quantity)
-        {
-            if (sandwich != null && quantity > 0 && quantity <= 50)
-            {
-                _cart.OrderLines.Add(new OrderLine
-                {
-                    Quantity = quantity,
-                    Food = sandwich
-                });
-            }
-        }
+        //public void AddSandwichToCart(Sandwich sandwich, int quantity)
+        //{
+        //    if (sandwich != null && quantity > 0 && quantity <= 50)
+        //    {
+        //        _cart.OrderLines.Add(new OrderLine
+        //        {
+        //            Quantity = quantity,
+        //            Food = sandwich
+        //        });
+        //    }
+        //}
 
-        public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
-        {
-            if (warmmeal != null && quantity > 0 && quantity <= 50)
-            {
-                _cart.OrderLines.Add(new OrderLine
-                {
-                    Quantity = quantity,
-                    Food = warmmeal
-                });
-            }
-        }
+ //public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
+        //{
+        //    if (warmmeal != null && quantity > 0 && quantity <= 50)
+        //    {
+        //        _cart.OrderLines.Add(new OrderLine
+        //        {
+        //            Quantity = quantity,
+        //            Food = warmmeal
+        //        });
+        //    }
+        //}
+        
+        //public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
+        //{
+        //    OrderLine tempOrderLine;
 
-        public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
-        {
-            OrderLine tempOrderLine;
+        //    foreach (var orderLine in _cart.OrderLines)
+        //    {
+        //        if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
+        //        {
+        //            tempOrderLine = orderLine;
+        //            return tempOrderLine;
+        //        }
+        //    }
+        //    return null;
+        //}
 
-            foreach (var orderLine in _cart.OrderLines)
-            {
-                if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
-                {
-                    tempOrderLine = orderLine;
-                    return tempOrderLine;
-                }
-            }
-            return null;
-        }
+        //public void DeleteOrderLine(OrderLine orderLine)
+        //{
+        //    _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
+        //}
 
-        public void DeleteOrderLine(OrderLine orderLine)
-        {
-            _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
-        }
-
-        public Order ReadCart()
-        {
-            return _cart;
-        }
+        //public Order ReadCart()
+        //{
+        //    return _cart;
+        //}
 
         public Order? ReadOrderByUserId(int userId)
         {

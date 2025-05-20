@@ -4,15 +4,13 @@
 @{
 }
 
-<h1>Varme retter</h1>
-
 <style>
     .inputsize {
     width: 50px;
     }
 
     body {
-    background-image: url("/images/sandwich.png");
+    background-image: url("/images/Warmmeal.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -23,6 +21,7 @@
     }
 </style>
 
+<h1>Varme retter</h1>
 
 <div class="row">
     <div class="col-7"><h5>Søg kød</h5></div>
@@ -45,9 +44,9 @@
         <tr>
             <th>Ingredienser</th>>
             <th>Kødtype</th>
-            <th>MinPersonAmount</th>
+            <th>Minimum købsantal</th>
             <th>Kun i sæson *</th>
-            <th>Pris (DKK)</th>
+            <th>Pris pr. stk. (DKK)</th>
             <th>Vælg antal og tilføj</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
@@ -60,22 +59,22 @@
     </thead>
     <tbody>
         @{
-            if (Model.WarmMeal != null)
+            if (Model.WarmMeals != null)
             {
                 foreach (var warmmeal in Model.WarmMeals)
                 {
                     <tr>
                         <td>@warmmeal.Ingredients</td>
                         <td>@warmmeal.MeatType</td>
-                        <td>@warmmeal.MinPersonAmount</td>
+                        <td>@warmmeal.MinPersonAmount <p>Portioner</p></td>
                         <td>@warmmeal.InSeason</td>
                         <td>@warmmeal.Price</td>
                         <td>
                             <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
-                                           name="quantity" min="0" />
-                                    <input type="submit" asp-page-handler="AddWarmMealToCart" asp-route-id="@warmmeal.Id"
+                                           name="quantity" min="@warmmeal.MinPersonAmount" />
+                                    <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@warmmeal.Id"
                                            value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
                             </form>
@@ -127,5 +126,5 @@
 
 
 <div class="button" style="margin-bottom: 10px;">
-    <a class="btn btn-danger" asp-page="/Order/CreateOrder">Gå til betaling</a>
+    <a class="btn btn-danger" asp-page="/Order/CreateOrder">Bestil</a>
 </div>

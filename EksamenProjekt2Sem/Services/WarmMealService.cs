@@ -5,6 +5,7 @@ namespace EksamenProjekt2Sem.Services
 {
     public class WarmMealService : GenericDbService<WarmMeal>
     {
+
         private List<WarmMeal> _warmMeals;
         private GenericDbService<WarmMeal> _dbService;
 
@@ -95,7 +96,7 @@ namespace EksamenProjekt2Sem.Services
                         w.MinPersonAmount = warmMeal.MinPersonAmount;
                     }
                 }
-                _dbService.SaveObjects(_warmMeals);
+                _dbService.UpdateObjectAsync(warmMeal).Wait();
             }
         }
 
