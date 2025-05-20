@@ -83,7 +83,7 @@
                            <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
-                                    name="quantity" min="0" />
+                                    name="Quantity" min="0" />
                                     <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@sandwich.Id"
                                     value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
@@ -121,7 +121,7 @@
                     @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
                     <form method="post" style="display: inline; float: right;">
                             <input type="hidden" name="orderLineFoodId" value="@orderLine.Food.Id" />
-                            <input type="hidden" name="quantity" value="@orderLine.Quantity" />
+                            <input type="hidden" name="Quantity" value="@orderLine.Quantity" />
                             <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger">X</button>
                     </form>
                 </p>

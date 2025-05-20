@@ -47,7 +47,10 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public WarmMeal ReadWarmMeal(int id)
         {
-            return _warmMeals.Find(w => w.Id == id);
+            var warmMeal = _dbService.GetObjectsAsync().Result.FirstOrDefault(w => w.Id == id);
+            if (warmMeal == null)
+                throw new Exception($"WarmMeal with id {id} not found.");
+            return warmMeal;
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public List<WarmMeal> ReadAllWarmMeals()
         {
-            return _warmMeals;
+            return _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>
@@ -90,27 +93,14 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="id"></param>
         public WarmMeal DeleteWarmMeal(int? id)
         {
-            WarmMeal warmMealToBeDeleted = null;
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
 
-            foreach (WarmMeal warmMeal in _warmMeals)
-            {
-                if (warmMeal.Id == id)
-                {
-                    warmMealToBeDeleted = warmMeal;
-                    break;
-                } 
-            }
+            var warmMealToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(w => w.Id == id);
             if (warmMealToBeDeleted == null)
-            {
                 throw new Exception($"WarmMeal with id {id} not found.");
-            }
 
-
-            if (warmMealToBeDeleted != null)
-            {
-                _warmMeals.Remove(warmMealToBeDeleted);
-                _dbService.DeleteObjectAsync(warmMealToBeDeleted).Wait();
-            }
+            _dbService.DeleteObjectAsync(warmMealToBeDeleted).Wait();
             return warmMealToBeDeleted;
         }
 

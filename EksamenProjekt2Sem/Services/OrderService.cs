@@ -32,26 +32,27 @@ namespace EksamenProjekt2Sem.Services
             //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
-
         public void AddFoodToCart(Food food, int quantity)
         {
             var cart = ReadCart();
 
-            // Find if the sandwich already exists in the cart
+            // Ensure OrderLines is initialized
+            if (cart.OrderLines == null)
+                cart.OrderLines = new List<OrderLine>();
+
+            // Find if the food already exists in the cart (by type and id)
             var existingOrderLine = cart.OrderLines
-                .FirstOrDefault(ol => ol.Food.Id == food.Id);
+                .FirstOrDefault(ol => ol.Food.Id == food.Id && ol.Food.GetType() == food.GetType());
 
             if (existingOrderLine != null)
             {
-                // If it exists, just increase the quantity
+                // If it exists, increase the quantity
                 existingOrderLine.Quantity = quantity;
-
             }
             else
             {
                 // If not, add a new order line
                 cart.OrderLines.Add(new OrderLine(quantity, food));
-
             }
             SaveCart(cart);
         }
@@ -106,10 +107,7 @@ namespace EksamenProjekt2Sem.Services
             session.SetString(CartSessionKey, cartJson);
         }
 
-        //public Order ReadCart()
-        //{
-        //    return _cart;
-        //}
+       
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
@@ -151,23 +149,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>List<Order>?</returns>
         public List<Order>? ReadAllOrdersByUser(User? user)
         {
-            //if (user == null)
-            //{
-            //    return null;
-            //}
-            //List<Order> temp = new();
-            //foreach (Order o in _orders)
-            //{
-            //    if (o.User.Id == user.Id)
-            //    {
-            //        temp.Add(o);
-            //    }
-            //}
-            //if (temp.Count > 0)
-            //{
-            //    return temp;
-            //}
-            //return null;
+           
             if (user == null)
             {
                 return null;
@@ -186,6 +168,7 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
+
         /// <summary>
         /// Updates the order object from argument to the database, and the _orders list.
         /// </summary>
@@ -250,56 +233,6 @@ namespace EksamenProjekt2Sem.Services
 
 
         }
-
-
-        public void AddSandwichToCart(Sandwich sandwich, int quantity)
-        {
-            if (sandwich != null && quantity > 0 && quantity <= 50)
-            {
-                _cart.OrderLines.Add(new OrderLine
-                {
-                    Quantity = quantity,
-                    Food = sandwich
-                });
-            }
-        }
-
-        public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
-        {
-            if (warmmeal != null && quantity > 0 && quantity <= 50)
-            {
-                _cart.OrderLines.Add(new OrderLine
-                {
-                    Quantity = quantity,
-                    Food = warmmeal
-                });
-            }
-        }
-
-        //public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
-        //{
-        //    OrderLine tempOrderLine;
-
-        //    foreach (var orderLine in _cart.OrderLines)
-        //    {
-        //        if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
-        //        {
-        //            tempOrderLine = orderLine;
-        //            return tempOrderLine;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-        //public void DeleteOrderLine(OrderLine orderLine)
-        //{
-        //    _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
-        //}
-
-        //public Order ReadCart()
-        //{
-        //    return _cart;
-        //}
 
         public Order? ReadOrderByUserId(int userId)
         {

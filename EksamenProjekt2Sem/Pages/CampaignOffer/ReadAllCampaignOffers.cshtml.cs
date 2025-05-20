@@ -25,7 +25,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             if (CampaignOffers == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("Index");
             }
         }
         //Other onget methods such as sorting order can be added here:

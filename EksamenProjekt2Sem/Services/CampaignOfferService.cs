@@ -24,28 +24,34 @@ namespace EksamenProjekt2Sem.Services
 
         public async Task SeedCampaignAsync()
         {
-            _campaignOffers = new List<CampaignOffer>();
             var campaign = MockOffer.GetCampaignOffers();
             await _dbService.SaveObjects(campaign);
         }
+
         public async Task CreateCampaignOffer(CampaignOffer offer)
         {
-            _campaignOffers.Add(offer);
             await _dbService.AddObjectAsync(offer);
         }
+
         public CampaignOffer ReadCampaignOffer(int id)
         {
-            return _dbService.GetObjectByIdAsync(id).Result;
-		}
+            var offer = _dbService.GetObjectsAsync().Result.FirstOrDefault(o => o.Id == id);
+            if (offer == null)
+                throw new Exception($"CampaignOffer with id {id} not found.");
+            return offer;
+        }
+
         public List<CampaignOffer> ReadAllCampaignOffers()
         {
             return _dbService.GetObjectsAsync().Result.ToList();
-		}
+        }
+
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
             if (campaignOffer != null)
             {
-                foreach (CampaignOffer c in _campaignOffers)
+                var campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                foreach (CampaignOffer c in campaignOffers)
                 {
                     if (c.Id == campaignOffer.Id)
                     {
@@ -54,26 +60,21 @@ namespace EksamenProjekt2Sem.Services
                         c.Price = campaignOffer.Price;
                     }
                 }
-                _dbService.SaveObjects(_campaignOffers);
+                _dbService.SaveObjects(campaignOffers);
             }
         }
+
         public CampaignOffer DeleteCampaignOffer(int? id)
         {
-           CampaignOffer campaignOfferToBeDeleted = null;
-            foreach (CampaignOffer c in _campaignOffers)
-            {
-                if (c.Id == id)
-                {
-                    campaignOfferToBeDeleted = c;
-                    break;
-                }
-            }
-            if (campaignOfferToBeDeleted != null)
-            {
-                _campaignOffers.Remove(campaignOfferToBeDeleted);
-                _dbService.SaveObjects(_campaignOffers);
-            }
-            return campaignOfferToBeDeleted;
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            var offerToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(o => o.Id == id);
+            if (offerToBeDeleted == null)
+                throw new Exception($"CampaignOffer with id {id} not found.");
+
+            _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
+            return offerToBeDeleted;
         }
     }
 }

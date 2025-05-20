@@ -50,12 +50,12 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public Sandwich ReadSandwich(int id)
         {
-            var result = _sandwiches.Find(s => s.Id == id);
-            if (result == null)
+            var sandwich = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
+            if (sandwich == null)
             {
                 throw new Exception($"Sandwich with id {id} not found.");
             }
-            return result;
+            return sandwich;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public List<Sandwich> ReadAllSandwiches()
         {
-            return _sandwiches;
+            return _dbService.GetObjectsAsync().Result.ToList();
         }
 
         /// <summary>
@@ -100,20 +100,11 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public Sandwich DeleteSandwich(int? id)
         {
-            Sandwich? sandwichToBeDeleted = null;
-            foreach (Sandwich sandwich in _sandwiches)
-            {
-                if (sandwich.Id == id)
-                {
-                    sandwichToBeDeleted = sandwich;
-                    break;
-                }
-            }
-            if (sandwichToBeDeleted == null)
-            {
-                throw new Exception($"Sandwich with id {id} not found.");
-            }
-            _sandwiches.Remove(sandwichToBeDeleted);
+           
+
+            var sandwichToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
+            
+
             _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             return sandwichToBeDeleted;
         }
