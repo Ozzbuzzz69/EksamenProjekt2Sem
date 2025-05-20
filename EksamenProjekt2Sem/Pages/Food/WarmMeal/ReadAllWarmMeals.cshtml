@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-4">
         <form method="post" class="form-inline">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="width:250px;">
                 <input asp-for="SearchMeatType" class="form-control mr-1" placeholder="Søg" />
                 <input type="submit" asp-page-handler="SearchMeatType" value="Søg" class="btn btn-primary" />
             </div>
@@ -42,7 +42,7 @@
 <table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Ingredienser</th>>
+            <th>Ingredienser</th>
             <th>Kødtype</th>
             <th>Antal portioner</th>
             <th>Kun i sæson *</th>
@@ -120,11 +120,11 @@
             totalPrice += orderLine.Food.Price * orderLine.Quantity;
         }
 
-        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
     </div>
 }
 
 
 <div class="button" style="margin-bottom: 10px;">
-    <a class="btn btn-danger" asp-page="/Order/CreateOrder">Bestil</a>
+    <a class="btn btn-danger" style="background-color:#ff2d00;" asp-page="/Order/CreateOrder">Bestil</a>
 </div>
