@@ -20,12 +20,10 @@ namespace EksamenProjekt2Sem.MockData
 
         private static List<WarmMeal> _warmMeals = new List<WarmMeal>()
         {
-
             new("Frikadeller m/kartoffelsalat", null, "Gris", 39, 4),
             new("Kogt skinke m/flødekartofler el. kartoffelsalat, grøn salat m/dressing og flutes", null, "Gris", 79, 6),
             new("Kalveculotte m/flødekartofler eller kartoffelsalat, grøn salat m/dressing og flutes", null, "Kalv", 99, 6),
             new("Marineret kalveculotte (sous vide), marineret svinekam (sous vide), marinerede kartofler, mix salat, broccolisalat m/bacon, flødekartofler, baguette, smør, dressing", null, "Kalv, Gris", 129.5, 10)
-
         };
 
         private static List<Food> _foods = new List<Food>();

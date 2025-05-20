@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    [Migration("20250514114548_EksamenData")]
-    partial class EksamenData
+    [Migration("20250520091033_DataV3")]
+    partial class DataV3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -68,11 +68,10 @@ namespace EksamenProjekt2Sem.Migrations
 
                     b.Property<string>("Ingredients")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("MeatType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -98,7 +97,7 @@ namespace EksamenProjekt2Sem.Migrations
                     b.Property<DateTime>("PickupTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -124,6 +123,9 @@ namespace EksamenProjekt2Sem.Migrations
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -159,8 +161,8 @@ namespace EksamenProjekt2Sem.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -197,7 +199,9 @@ namespace EksamenProjekt2Sem.Migrations
                 {
                     b.HasOne("EksamenProjekt2Sem.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
