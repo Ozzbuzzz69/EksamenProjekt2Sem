@@ -14,31 +14,15 @@ namespace EksamenProjekt2Sem.Services
         public SandwichService(GenericDbService<Sandwich> dbService)
         {
             _dbService = dbService;
-            try
-            {
-                _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-                if (_sandwiches == null || _sandwiches.Count() < 1)
-                {
-                    SeedSandwichAsync().Wait();
-                    _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-                }
-            }
-            catch (AggregateException ex)
-            {
-                // Handle the exception as needed
-                Console.WriteLine($"Error: {ex.InnerException?.Message}");
-            }
-            /*
-            _dbService = dbService;
             if (_sandwiches == null)
             {
                 _sandwiches = MockFood.GetSandwiches();
             }
             else
                 _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
-            */
         }
         //Getting mock data into the database
+
         public async Task SeedSandwichAsync()
         {
             _sandwiches = new List<Sandwich>();
@@ -114,7 +98,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns the sandwich to be deleted.
         /// </returns>
-        public Sandwich? DeleteSandwich(int? id)
+        public Sandwich DeleteSandwich(int? id)
         {
             Sandwich? sandwichToBeDeleted = null;
             foreach (Sandwich sandwich in _sandwiches)
@@ -125,11 +109,12 @@ namespace EksamenProjekt2Sem.Services
                     break;
                 }
             }
-            if (sandwichToBeDeleted != null)
+            if (sandwichToBeDeleted == null)
             {
-                _sandwiches.Remove(sandwichToBeDeleted);
-                _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
+                throw new Exception($"Sandwich with id {id} not found.");
             }
+            _sandwiches.Remove(sandwichToBeDeleted);
+            _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             return sandwichToBeDeleted;
         }
 

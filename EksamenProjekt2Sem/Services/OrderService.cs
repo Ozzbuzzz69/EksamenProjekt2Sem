@@ -13,35 +13,25 @@ namespace EksamenProjekt2Sem.Services
         private const string CartSessionKey = "Cart";
         private List<Order> _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
-        //private Order _cart = new Order();
+        private Order _cart = new Order();
 
         public OrderService(GenericDbService<Order> dbService, IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
-            try
-            {
-                _orders = _dbService.GetObjectsAsync().Result.ToList();
-                if (_orders == null || _orders.Count() < 1)
-                {
-                    SeedOrderAsync().Wait();
-                    _orders = _dbService.GetObjectsAsync().Result.ToList();
-                }
-            }
-            catch (AggregateException ex)
-            {
-                // Handle the exception as needed
-                Console.WriteLine($"Error: {ex.InnerException?.Message}");
-            }
-            _httpContextAccessor = httpContextAccessor;
+
+            //_orders = _dbService.GetObjectsAsync().Result.ToList();
+            _orders = MockOrder.GetOrders();
+            //_dbService.SaveObjects(_orders);
+
+            //if (_orders == null)
+            //{
+            //    _orders = MockOrder.GetOrders();
+            //}
+            //else
+            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
-        //Getting mock data into the database
-        public async Task SeedOrderAsync()
-        {
-            _orders = new List<Order>();
-            var order = MockOrder.GetOrders();
-            await _dbService.SaveObjects(order);
-        }
+
 
         public void AddFoodToCart(Food food, int quantity)
         {
@@ -124,10 +114,10 @@ namespace EksamenProjekt2Sem.Services
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
         /// <param name="order"></param>
-        public async Task CreateOrder(Order order)
+        public void CreateOrder(Order order)
         {
             _orders.Add(order);
-            await _dbService.AddObjectAsync(order);
+            _dbService.AddObjectAsync(order).Wait();
         }
         /// <summary>
         /// Reads an order from the database by its id.
@@ -201,20 +191,20 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="order"></param>
-        public void UpdateOrder(Order order)
+        public void UpdateOrder(int id, Order order)
         {
             if (order != null)
             {
                 foreach (Order o in _orders)
                 {
-                    if (o.Id == order.Id)
+                    if (o.Id == id)
                     {
                         o.User = order.User;
                         o.PickupTime = order.PickupTime;
                         o.OrderLines = order.OrderLines;
                     }
                 }
-                _dbService.UpdateObjectAsync(order);
+                _dbService.UpdateObjectAsync(order).Wait();
             }
         }
         /// <summary>
@@ -222,7 +212,7 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The deleted Order/null</returns>
-        public Order? DeleteOrder(int? id)
+        public Order? DeleteOrder(int id)
         {
             Order? ToBeDeleted = null;
             foreach (Order order in _orders)
@@ -262,30 +252,30 @@ namespace EksamenProjekt2Sem.Services
         }
 
 
-        //public void AddSandwichToCart(Sandwich sandwich, int quantity)
-        //{
-        //    if (sandwich != null && quantity > 0 && quantity <= 50)
-        //    {
-        //        _cart.OrderLines.Add(new OrderLine
-        //        {
-        //            Quantity = quantity,
-        //            Food = sandwich
-        //        });
-        //    }
-        //}
+        public void AddSandwichToCart(Sandwich sandwich, int quantity)
+        {
+            if (sandwich != null && quantity > 0 && quantity <= 50)
+            {
+                _cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = quantity,
+                    Food = sandwich
+                });
+            }
+        }
 
- //public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
-        //{
-        //    if (warmmeal != null && quantity > 0 && quantity <= 50)
-        //    {
-        //        _cart.OrderLines.Add(new OrderLine
-        //        {
-        //            Quantity = quantity,
-        //            Food = warmmeal
-        //        });
-        //    }
-        //}
-        
+        public void AddWarmMealToCart(WarmMeal warmmeal, int quantity)
+        {
+            if (warmmeal != null && quantity > 0 && quantity <= 50)
+            {
+                _cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = quantity,
+                    Food = warmmeal
+                });
+            }
+        }
+
         //public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
         //{
         //    OrderLine tempOrderLine;
@@ -514,7 +504,7 @@ namespace EksamenProjekt2Sem.Services
             if (order != null)
             {
                 order.OrderLines.Add(orderLine);
-                _dbService.UpdateObjectAsync(order);
+                _dbService.UpdateObjectAsync(order).Wait();
             }
         }
 
@@ -560,7 +550,7 @@ namespace EksamenProjekt2Sem.Services
                     ol.Quantity = orderLine.Quantity;
                     ol.Food = orderLine.Food;
                     ol.CampaignOffer = orderLine.CampaignOffer;
-                    _dbService.UpdateObjectAsync(order);
+                    _dbService.UpdateObjectAsync(order).Wait();
                 }
             }
         }
@@ -575,7 +565,7 @@ namespace EksamenProjekt2Sem.Services
             if (order != null)
             {
                 order.OrderLines.Remove(GetOrderLine(order, orderLineId));
-                _dbService.UpdateObjectAsync(order);
+                _dbService.UpdateObjectAsync(order).Wait();
             }
         }
 #endregion

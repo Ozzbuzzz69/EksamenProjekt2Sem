@@ -19,8 +19,7 @@ namespace EksamenProjektTest.EFDbContext
         /// Base kontruktør.
         /// Tilføjet for den optional til databasen ikke har en indflydelse på funktionalitet af databasen.
         /// </summary>
-        public FoodContext() : base() { }
-
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

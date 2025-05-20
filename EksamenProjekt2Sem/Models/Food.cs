@@ -17,7 +17,7 @@ namespace EksamenProjekt2Sem.Models
 
         [Display(Name = "Ingredienser")]
         [Required(ErrorMessage = "Der skal angives ingredienser")]
-        [StringLength(100, ErrorMessage = "Maks 100 tegn")]
+        [StringLength(500, ErrorMessage = "Maks 100 tegn")]
         public string? Ingredients { get; set; }
         public string? InSeason { get; set; }
         public string? MeatType { get; set; }
