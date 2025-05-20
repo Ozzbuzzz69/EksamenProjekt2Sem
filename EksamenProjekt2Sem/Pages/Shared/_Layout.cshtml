@@ -32,7 +32,7 @@
                         @{
                             if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
                             {
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -40,8 +40,8 @@
                                             <a class="dropdown-item" style="color: black" href="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                </li>
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop2" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -49,8 +49,8 @@
                                             <a class="dropdown-item" style="color: black" href="/Food/WarmMeal/CreateWarmMeal">Opret Varm Ret</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                </li>
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampagne Tilbud</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop3" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -58,7 +58,7 @@
                                             <a class="dropdown-item" style="color: black" href="/CampaignOffer/CreateCampaignOffer">Opret Kampagne</a>
                                         </div>
                                     </div>
-                                </div>
+                                </li>
                             }
                             else
                             {

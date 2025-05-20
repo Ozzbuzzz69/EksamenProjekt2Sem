@@ -57,7 +57,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Sandwiches = _sandwichService.SearchSandwichByCategory(SearchCategory).ToList();
             return Page();
         }
-
+        
         public IActionResult OnPostAddFoodToCart()
         {
             Sandwich = _sandwichService.ReadSandwich(Id);
