@@ -21,7 +21,6 @@ namespace EksamenProjekt2Sem.Services
         }
 
         //Getting mock data into the database
-
         public async Task SeedCampaignAsync()
         {
             var campaign = MockOffer.GetCampaignOffers();
@@ -58,6 +57,8 @@ namespace EksamenProjekt2Sem.Services
                         c.Name = campaignOffer.Name;
                         c.ImageLink = campaignOffer.ImageLink;
                         c.Price = campaignOffer.Price;
+                        c.StartTime = campaignOffer.StartTime;
+                        c.EndTime = campaignOffer.EndTime;
                     }
                 }
                 _dbService.SaveObjects(campaignOffers);
@@ -75,6 +76,37 @@ namespace EksamenProjekt2Sem.Services
 
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;
+        }
+
+        public void CheckOfferValidities()
+        {
+            foreach (CampaignOffer offer in _campaignOffers)
+            {
+                if (offer.StartTime == null || offer.StartTime < DateTime.Now)
+                {
+                    if (offer.EndTime > DateTime.Now)
+                    {
+                        offer.IsActive = true;
+                        continue;
+                    }
+                }
+                offer.IsActive = false;
+            }
+        }
+
+        public bool CheckOfferValidity(int id)
+        {
+            CampaignOffer? offer = _dbService.GetObjectsAsync().Result.FirstOrDefault(o => o.Id == id);
+            if (offer == null)
+                throw new ArgumentNullException(nameof(offer));
+            if (offer.StartTime == null || offer.StartTime < DateTime.Now)
+            {
+                if (offer.EndTime > DateTime.Now)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

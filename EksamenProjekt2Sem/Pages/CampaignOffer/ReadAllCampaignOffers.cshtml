@@ -29,6 +29,8 @@
             <th>Billede</th>
             <th>Kategori</th>
             <th>Pris (DKK)</th>
+            <th>Start Tid</th>
+            <th>Slut Tid</th>
             <th>Vælg antal og tilføj</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
@@ -45,10 +47,16 @@
             {
                 foreach (var campaignOffer in Model.CampaignOffers)
                 {
+                    if (campaignOffer.IsActive == false && !(HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com"))
+                    {
+                        continue;
+                    }
                     <tr>
                         <td>@campaignOffer.Name</td>
                         <td>@campaignOffer.ImageLink</td>
                         <td>@campaignOffer.Price</td>
+                        <td>@campaignOffer.StartTime</td>
+                        <td>@campaignOffer.EndTime</td>
                         <td>
                            <form method="post">
                                 <div class="button" style="float: left">
@@ -71,6 +79,7 @@
                             }
                         }
                     </tr>
+                    
                 }
             }
         }

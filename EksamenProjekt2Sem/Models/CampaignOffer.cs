@@ -17,7 +17,18 @@ namespace EksamenProjekt2Sem.Models
         public string ImageLink { get; set; }
         [Required]
         public double Price { get; set; }
-        
+
+        //Annotation needed
+        [DataType(DataType.DateTime)]
+        public DateTime? StartTime { get; set; }
+
+        //Annotation needed
+        [DataType(DataType.DateTime)]
+        public DateTime EndTime { get; set; }
+
+        //Annotation needed
+        public bool IsActive { get; set; }
+
         public CampaignOffer()
         { }
         
@@ -28,6 +39,22 @@ namespace EksamenProjekt2Sem.Models
             Name = name;
             ImageLink = imageLink;
             Price = price;
+        }
+        public CampaignOffer(string name, string imageLink, double price, DateTime? startTime, DateTime endTime)
+        {
+            Name = name;
+            ImageLink = imageLink;
+            Price = price;
+            StartTime = startTime;
+            EndTime = endTime;
+            if (DateTime.Now > startTime || startTime == null)
+            {
+                IsActive = true;
+            }
+            else
+            {
+                IsActive = false;
+            }
         }
     }
 }
