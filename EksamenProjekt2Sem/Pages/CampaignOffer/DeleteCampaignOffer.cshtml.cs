@@ -22,8 +22,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             CampaignOffer = _campaignOfferService.ReadCampaignOffer(id);
             if (CampaignOffer == null)
             {
-                // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("/NotFound");
             }
             return Page();
         }
@@ -32,11 +31,10 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             Models.CampaignOffer deletedCampaignOffer = _campaignOfferService.DeleteCampaignOffer(CampaignOffer.Id);
             if (deletedCampaignOffer == null)
             {
-                // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("/NotFound");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("ReadAllCampaignOffers");
         }
     }
 }

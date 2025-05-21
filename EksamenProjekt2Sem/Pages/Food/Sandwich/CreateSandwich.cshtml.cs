@@ -31,7 +31,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             {
                 return Page();
             }
-            _sandwichService.CreateSandwich(Sandwich);
+            _sandwichService.CreateSandwich(Sandwich).Wait();
             return RedirectToPage("ReadAllSandwiches");
         }
     }
