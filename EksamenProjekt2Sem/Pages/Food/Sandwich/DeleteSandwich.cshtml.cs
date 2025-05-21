@@ -24,7 +24,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Sandwich = _sandwichService.ReadSandwich(id);
             if (Sandwich == null)
             {
-                return RedirectToPage("/NotFound");
+                return RedirectToPage("Index");
             }
             return Page();
         }

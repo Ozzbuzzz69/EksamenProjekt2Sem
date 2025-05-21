@@ -31,18 +31,24 @@
 <div class="row">
     <div class="col-4">
         <form method="post" class="form-inline">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="width:250px;">
                 <input asp-for="SearchMeatType" class="form-control mr-1" placeholder="Søg" />
                 <input type="submit" asp-page-handler="SearchMeatType" value="Søg" class="btn btn-primary" />
             </div>
         </form>
     </div>
-    <div class="col-3"></div>
-    <div>
-        <div class="col-7"><h5>Søg Kategori</h5></div>
+</div>
+
+<div class="row">
+    <div class="col-7"><h5>Søg Kategori</h5></div>
+    <div class="col-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-4">
         <form method="post">
-            <div>
-                <input asp-for="SearchCategory" placeholder="Søg" />
+            <div class="input-group mb-3" style="width:250px;">
+                <input asp-for="SearchCategory" class="form-control mr-1" placeholder="Søg" />
                 <input type="submit" asp-page-handler="SearchCategory" value="Søg" class="btn btn-primary"/>
             </div>
         </form>
@@ -52,7 +58,7 @@
 <table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Ingredienser</th>>
+            <th>Ingredienser</th>
             <th>Kødtype</th>
             <th>Kategori</th>
             <th>Kun i sæson *</th>
@@ -83,7 +89,7 @@
                            <form method="post">
                                 <div class="button" style="float: left">
                                     <input class="inputsize" type="number"
-                                    name="quantity" min="0" />
+                                    name="Quantity" min="0" />
                                     <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@sandwich.Id"
                                     value="Tilføj" class="btn btn-outline-dark" />
                                 </div>
@@ -125,8 +131,8 @@
                     @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
                     <form method="post" style="display: inline; float: right;">
                             <input type="hidden" name="orderLineFoodId" value="@orderLine.Food.Id" />
-                            <input type="hidden" name="quantity" value="@orderLine.Quantity" />
-                            <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger">X</button>
+                             <input type="hidden" name="quantity" value="@orderLine.Quantity" />
+                        <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger" style="background-color:#ff2d00;">X</button>
                     </form>
                 </p>
             </div>
@@ -134,11 +140,18 @@
             totalPrice += orderLine.Food.Price * orderLine.Quantity;
         }
 
-        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
     </div>
 }
 
 
     <div class="button" style="margin-bottom: 10px;">
-        <a class="btn btn-danger" asp-page="/Order/CreateOrder">Bestil</a>
+    <a class="btn btn-danger" style="background-color:#ff2d00;" asp-page="/Order/CreateOrder">Bestil</a>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
     </div>

@@ -37,7 +37,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             if (CampaignOffers == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("Index");
             }
         }
         // Hvis der skal laves søgninger på campaignoffers, så skal services laves først til det

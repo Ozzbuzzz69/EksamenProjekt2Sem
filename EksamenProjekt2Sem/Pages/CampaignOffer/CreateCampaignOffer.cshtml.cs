@@ -28,7 +28,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
                 return Page();
             }
             _campaignOfferService.CreateCampaignOffer(CampaignOffer).Wait();
-            return RedirectToPage("/ReadAllCampaignOffers");
+            return RedirectToPage("ReadAllCampaignOffers");
         }
     }
 }

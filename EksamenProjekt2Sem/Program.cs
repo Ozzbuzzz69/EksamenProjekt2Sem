@@ -11,34 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<OrderService>();
-builder.Services.AddTransient<GenericDbService<Order>>();
-builder.Services.AddTransient<GenericDbService<User>>();
+builder.Services.AddScoped<GenericDbService<Order>>();
+builder.Services.AddScoped<GenericDbService<User>>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CampaignOfferService>();
-builder.Services.AddTransient<GenericDbService<CampaignOffer>>();
+builder.Services.AddScoped<GenericDbService<CampaignOffer>>();
 builder.Services.AddScoped<SandwichService>();
-builder.Services.AddTransient<GenericDbService<Sandwich>>();
+builder.Services.AddScoped<GenericDbService<Sandwich>>();
 builder.Services.AddScoped<WarmMealService>();
-builder.Services.AddTransient<GenericDbService<WarmMeal>>();
+builder.Services.AddScoped<GenericDbService<WarmMeal>>();
 
-//used for OrderService - Eksperimental
+//used for Sessions
 builder.Services.AddHttpContextAccessor();
 
-
-
-//Getting mock data into the database og så skal de andre services ud kommenteres når de er skal bruges
-
-//builder.Services.AddScoped<GenericDbService<User>>();
-//builder.Services.AddScoped<UserService>();
-
-//builder.Services.AddScoped<GenericDbService<Sandwich>>();
-//builder.Services.AddScoped<SandwichService>();
-
-//builder.Services.AddScoped<GenericDbService<WarmMeal>>();
-//builder.Services.AddScoped<WarmMealService>();
-
-//builder.Services.AddScoped<GenericDbService<CampaignOffer>>();
-//builder.Services.AddScoped<CampaignOfferService>();
 
 // Add DB context
 builder.Services.AddDbContext<FoodContext>();
@@ -58,7 +43,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 
-//used for OrderService - Eksperimental
+//used for Sessions
 
 builder.Services.AddSession();
 
@@ -85,11 +70,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+;
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//used for OrderService - Eksperimental
+//used for Sessions
 
 app.UseSession();
 app.UseAuthentication();

@@ -19,8 +19,7 @@ namespace EksamenProjektTest.EFDbContext
         /// Base kontruktør.
         /// Tilføjet for den optional til databasen ikke har en indflydelse på funktionalitet af databasen.
         /// </summary>
-        public FoodContext() : base() { }
-
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -28,6 +27,7 @@ namespace EksamenProjektTest.EFDbContext
             {
                 options.UseSqlServer(
                     @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False");
+                //@"Data Source=mssql10.unoeuro.com;User ID=koebmandenellevej_dk;Password=********;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             }
         }
         public DbSet<CampaignOffer> CampaignOffers { get; set; }

@@ -21,10 +21,10 @@
                 <a class="Logo" asp-area="" asp-page="/Index" />
 
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
-                    <img src="/images/HeaderLogo.png" alt="billede" width="500" height="100" />
+                    <img src="/images/HeaderLogo.png" alt="billede" width="600" height="100" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -32,7 +32,7 @@
                         @{
                             if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
                             {
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -40,17 +40,17 @@
                                             <a class="dropdown-item" style="color: black" href="/Food/Sandwich/CreateSandwich">Opret Sandwich</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Menuer</a></button>
+                                </li>
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop2" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                                            <a class="dropdown-item" style="color: black" href="/Food/WarmMeal/CreateWarmMeal">Opret Menu</a>
+                                            <a class="dropdown-item" style="color: black" href="/Food/WarmMeal/CreateWarmMeal">Opret Varm Ret</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                </li>
+                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampagne Tilbud</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop3" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -58,7 +58,7 @@
                                             <a class="dropdown-item" style="color: black" href="/CampaignOffer/CreateCampaignOffer">Opret Kampagne</a>
                                         </div>
                                     </div>
-                                </div>
+                                </li>
                             }
                             else
                             {
@@ -66,109 +66,109 @@
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Menuer</a></button>
+                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Varme Retter</a></button>
                                 </li>
                                 <li class="nav-item">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/CampaignOffer/ReadAllCampaignOffers">Kampange Tilbud</a></button>
                                 </li>
                             }
-
+                            
                         }
-                    </ul>
-                    <ul class="navbar-nav">
-                        @{
-                            if (Context.User.Identity.Name == null)
-                            {
-                                <li class="nav-item">
-                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogIn">Log ind</a></button>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Order/ReadAllOrders">Mine ordrer</a></button>
-                                </li>
+                            </ul>
+                            <ul class="navbar-nav">
+                                    @{
+                                        if (Context.User.Identity.Name == null)
+                                        {
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogIn">Login</a></button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Order/ReadAllOrders">Mine ordre</a></button>
+                                        </li>
 
-                                <li class="nav-item">
-                                    <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogOut">Log ud</a></button>
+                                        <li class="nav-item">
+                                            <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/LogInAndOut/LogOut">Logout</a></button>
 
-                                </li>
-                                <div>@Context.User.Identity.Name</div>
-                            }
+                                        </li>
+                                           <div>@Context.User.Identity.Name</div>
+                                        }
 
-                        }
-                    </ul>
+                                    }
+                            </ul>
 
-                </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container">
+                <main role="main" class="pb-3">
+                                        @RenderBody()
+                </main>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <style>
-        .row {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+            <style>
+                .row {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
 
-        .item {
-            flex: 1;
-            text-align: center;
-            margin: 10px;
-        }
+                .item {
+                    flex: 1;
+                    text-align: center;
+                    margin: 10px;
+                }
 
-        html, body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+                html, body {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                }
 
-        .container {
-            flex: 1;
-        }
-    </style>
+                .container {
+                    flex: 1;
+                }
+            </style>
 
-    <footer class="border-top footer text-muted" style="position: relative; bottom: 0; width: 100%; background-color: white">
+            <footer class="border-top footer text-muted" style="position: relative; bottom: 0; width: 100%; background-color: white">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Om SPAR</h3>
-                    <a href="https://spar.dk/butik/spar-frederiksvaerk?utm_source=google&utm_medium=cpc&utm_campaign=Search%20-%20Brand%20-%20Lokaliteter&gad_source=1&gad_campaignid=16447647721&gclid=CjwKCAjwravBBhBjEiwAIr30VBcZL4ETeTfr-TVziel-gOQOZB-WmHqy4xujHiG6KKZJxIvpT64dThoCnTEQAvD_BwE"<p style="color: black;">Læs om SPAR</p></a>
-                    <a href="https://spar.dk/job-og-karriere"<p style="color: black;">Job og karriere</p></a>
-                    <a href="https://www.dagrofa.dk/privatlivspolitik/"<p style="color: black;">Privatlivs Politik</p></a>
-                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Om SPAR</h3>
+                            <p style="color: black;">Læs om SPAR</p>
+                            <p style="color: black;">Job og karriere</p>
+                            <p style="color: black;">Privatlivs Politik</p>
+                        </div>
 
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Åbningstider</h3>
+                            <p style="color: black;">Åbent alle dage kl. 8.00 - 20.00</p>
+                        </div>
 
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Åbningstider</h3>
-                    <p style="color: black;">Åbent alle dage kl. 8.00 - 20.00</p>
-                </div>
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Kundeservice</h3>
+                            <p style="color: black;">konkurrencer og vilkår</p>
+                            <p style="color: black;">Gavekort</p>
+                            <p style="color: black;">Kundeinformation</p>
+                            <p style="color: black;">Anmodning om indsigt</p>
+                        </div>
+                        <div class="col-sm-4 col-md-3">
+                            <h3 style="color: black;">Kontakt os</h3>
+                            <p style="color: black;">Telefon: +45 88 20 68 13</p>
+                            <p style="color: black;">Email Kundeservice@spar.dk</p>
+                            <p style="color: black;">Adresse: Ellevej 34, Frederiksværk</p>
+                        </div>
 
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Kundeservice</h3>
-                    <a href="https://spar.dk/konkurrencer"<p style="color: black;">konkurrencer og vilkår</p></a>
-                    <a href="https://spar.dk/gavekort"<p style="color: black;">Gavekort</p></a>
-                    <a href="https://spar.dk/kundeinformation"<p style="color: black;">Kundeinformation</p></a>
-                    <a href="https://spar.dk/indsigt"<p style="color: black;">Anmodning om indsigt</p></a>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <h3 style="color: black;">Kontakt os</h3>
-                    <p style="color: black;">Telefon: +45 47 72 18 42</p>
-                    <p style="color: black;">Email: 0377374@spar.dk</p>
-                    <p style="color: black;">Adresse: Ellevej 34, Frederiksværk</p>
-                </div>
-    </footer>
+            </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+            @await RenderSectionAsync("Scripts", required: false)
+        </body>
+        </html>
