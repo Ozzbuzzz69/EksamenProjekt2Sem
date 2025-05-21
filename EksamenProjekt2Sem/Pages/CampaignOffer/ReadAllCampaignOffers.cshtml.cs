@@ -32,6 +32,9 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
 
         public void OnGet()
         {
+            // Update the validity of Offers
+            _campaignOfferService.SetOfferValidities();
+
             // Get all campaign offers
             CampaignOffers = _campaignOfferService.ReadAllCampaignOffers();
             if (CampaignOffers == null)

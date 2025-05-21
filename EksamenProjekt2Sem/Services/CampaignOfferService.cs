@@ -21,7 +21,6 @@ namespace EksamenProjekt2Sem.Services
         }
 
         //Getting mock data into the database
-
         public async Task SeedCampaignAsync()
         {
             var campaign = MockOffer.GetCampaignOffers();
@@ -50,17 +49,18 @@ namespace EksamenProjekt2Sem.Services
         {
             if (campaignOffer != null)
             {
-                var campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
-                foreach (CampaignOffer c in campaignOffers)
+                foreach (CampaignOffer c in _campaignOffers)
                 {
                     if (c.Id == campaignOffer.Id)
                     {
                         c.Name = campaignOffer.Name;
                         c.ImageLink = campaignOffer.ImageLink;
                         c.Price = campaignOffer.Price;
+                        c.StartTime = campaignOffer.StartTime;
+                        c.EndTime = campaignOffer.EndTime;
                     }
                 }
-                _dbService.SaveObjects(campaignOffers);
+                _dbService.UpdateObjectAsync(campaignOffer).Wait();
             }
         }
 
@@ -75,6 +75,33 @@ namespace EksamenProjekt2Sem.Services
 
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;
+        }
+
+        public void SetOfferValidities()
+        {
+            foreach (CampaignOffer offer in _campaignOffers)
+            {
+                if (CheckOfferValidity(offer))
+                {
+                    offer.IsActive = true;
+                    _dbService.UpdateObjectAsync(offer).Wait();
+                    continue;
+                }
+                offer.IsActive = false;
+                _dbService.UpdateObjectAsync(offer).Wait();
+            }
+        }
+
+        public bool CheckOfferValidity(CampaignOffer offer)
+        {
+            if (offer.StartTime == null || offer.StartTime < DateTime.Now)
+            {
+                if (offer.EndTime > DateTime.Now)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
