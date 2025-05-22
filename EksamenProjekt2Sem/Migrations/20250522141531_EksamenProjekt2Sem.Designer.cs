@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    [Migration("20250520091033_DataV3")]
-    partial class DataV3
+    [Migration("20250522141531_EksamenProjekt2Sem")]
+    partial class EksamenProjekt2Sem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

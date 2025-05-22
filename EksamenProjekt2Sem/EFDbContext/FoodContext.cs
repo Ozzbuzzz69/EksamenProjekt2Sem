@@ -28,14 +28,16 @@ namespace EksamenProjektTest.EFDbContext
             {
                 options.UseSqlServer(
                 $@"Data Source=mssql10.unoeuro.com;
-              Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
-              User ID=koebmandenellevej_dk;
-              Password={Passwords.DbPassword};
-              Connect Timeout=30;
-              Encrypt=True;
-              Trust Server Certificate=True;
-              Application Intent=ReadWrite;
-              Multi Subnet Failover=False");
+                Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
+                User ID=koebmandenellevej_dk;
+                Password={Passwords.DbPassword};
+                Connect Timeout=30;
+                Encrypt=True;
+                Trust Server Certificate=True;
+                Application Intent=ReadWrite;
+                Multi Subnet Failover=False");
+
+                //options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False");
             }
         }
         public DbSet<CampaignOffer> CampaignOffers { get; set; }

@@ -107,16 +107,19 @@ namespace EksamenProjekt2Sem.Services
             session.SetString(CartSessionKey, cartJson);
         }
 
-       
+
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
-        /// <param name="order"></param>
+        /// <param name = "order" ></ param >
         public void CreateOrder(Order order)
         {
             _orders.Add(order);
-            _dbService.AddObjectAsync(order).Wait();
+            _dbService.AddObjectAsync(order);
         }
+
+
+
         /// <summary>
         /// Reads an order from the database by its id.
         /// </summary>

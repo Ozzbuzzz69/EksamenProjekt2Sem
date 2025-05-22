@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EksamenProjekt2Sem.Migrations
 {
     /// <inheritdoc />
-    public partial class DataV3 : Migration
+    public partial class EksamenProjekt2Sem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
