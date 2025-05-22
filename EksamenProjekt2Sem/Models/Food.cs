@@ -10,8 +10,6 @@ namespace EksamenProjekt2Sem.Models
     [JsonDerivedType(typeof(WarmMeal), "warmmeal")]
     public abstract class Food
     {
-        private static int nextId = 1;
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
