@@ -12,6 +12,21 @@ namespace EksamenProjekt2Sem.Services
         public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                if (_campaignOffers == null || _campaignOffers.Count() < 1)
+                {
+                    SeedCampaignAsync().Wait();
+                    _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            /*
             if (_campaignOffers == null)
             {
                 _campaignOffers = MockOffer.GetCampaignOffers();
