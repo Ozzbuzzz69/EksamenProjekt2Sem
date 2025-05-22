@@ -24,7 +24,7 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
             WarmMeal = _warmMealService.ReadWarmMeal(id);
             if (WarmMeal == null)
             {
-                return RedirectToPage("/NotFound");
+                return RedirectToPage("NotFound");
             }
             return Page();
         }

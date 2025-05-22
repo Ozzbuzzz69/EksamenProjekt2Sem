@@ -19,7 +19,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             if (Order == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index"); // Redirect to the index page if order not found
+                RedirectToPage("Index"); // Redirect to the index page if order not found
             }
             return Page();
         }
@@ -30,7 +30,7 @@ namespace EksamenProjekt2Sem.Pages.Order
                 return Page();
             }
             _orderService.UpdateOrder(Order.Id, Order);
-            return RedirectToPage("./Index"); // Redirect to the index page after updating
+            return RedirectToPage("Index"); // Redirect to the index page after updating
         }
     }
 }

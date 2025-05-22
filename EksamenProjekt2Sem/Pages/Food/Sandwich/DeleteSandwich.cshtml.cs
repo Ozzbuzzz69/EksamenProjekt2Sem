@@ -34,7 +34,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             Models.Sandwich deletedSandwich = _sandwichService.DeleteSandwich(Sandwich.Id);
             if (deletedSandwich == null)
             {
-                return RedirectToPage("/NotFound");
+                return RedirectToPage("NotFound");
             }
             return RedirectToPage("ReadAllSandwiches");
         }
