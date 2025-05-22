@@ -26,10 +26,9 @@ namespace EksamenProjekt2Sem.Models
         }
 
         
-        public OrderLine(int quantity, Food? food, CampaignOffer? campaign)
+        public OrderLine(int quantity, CampaignOffer campaign)
         {
             Quantity = quantity;
-            Food = food;
             CampaignOffer = campaign;
         }
     }
