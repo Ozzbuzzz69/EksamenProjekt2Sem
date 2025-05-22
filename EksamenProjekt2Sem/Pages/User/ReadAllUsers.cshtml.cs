@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EksamenProjekt2Sem.Pages.User
 {
@@ -13,33 +16,33 @@ namespace EksamenProjekt2Sem.Pages.User
         public List<Models.User> Users { get; set; }
         [BindProperty]
         public string SearchString { get; set; }
-        // Other search criteria properties can be added here:
-        //
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             // Get all users
-            Users = _userService.ReadAllUsers();
+            Users = await _userService.ReadAllUsersAsync();
             if (Users == null)
             {
-                // Handle not found case
                 RedirectToPage("./Index");
             }
         }
-        // Other onget methods such as sorting order can be added here:
-        //
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             // Handle search input
+            var allUsers = await _userService.ReadAllUsersAsync();
             if (!string.IsNullOrEmpty(SearchString))
             {
-                Users = _userService.ReadAllUsers().ToList();
+                Users = allUsers
+                    .Where(u => u.Name.Contains(SearchString, System.StringComparison.OrdinalIgnoreCase)
+                             || u.Email.Contains(SearchString, System.StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+            else
+            {
+                Users = allUsers;
             }
             return Page();
         }
-        // Other onpost methods such as filtering can be added here:
-        //
-
     }
 }
