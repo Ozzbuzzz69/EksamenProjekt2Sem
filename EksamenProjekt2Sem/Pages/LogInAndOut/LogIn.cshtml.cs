@@ -58,7 +58,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                 }
 
             }
-            return RedirectToPage("/Index");
+            return RedirectToPage("Index");
 
         }
     }

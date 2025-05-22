@@ -28,7 +28,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             if (Orders == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("Index");
             }
         }
         /// <summary>

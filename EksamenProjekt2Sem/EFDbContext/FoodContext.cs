@@ -1,5 +1,6 @@
 ﻿using EksamenProjekt2Sem.Models;
 using Microsoft.EntityFrameworkCore;
+using EksamenProjekt2Sem.Secrets;
 using Microsoft.Extensions.Options;
 
 namespace EksamenProjektTest.EFDbContext
@@ -26,8 +27,15 @@ namespace EksamenProjektTest.EFDbContext
             if (!options.IsConfigured)
             {
                 options.UseSqlServer(
-                    @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False");
-                //@"Data Source=mssql10.unoeuro.com;User ID=koebmandenellevej_dk;Password=********;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+                $@"Data Source=mssql10.unoeuro.com;
+              Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
+              User ID=koebmandenellevej_dk;
+              Password={Passwords.DbPassword};
+              Connect Timeout=30;
+              Encrypt=True;
+              Trust Server Certificate=True;
+              Application Intent=ReadWrite;
+              Multi Subnet Failover=False");
             }
         }
         public DbSet<CampaignOffer> CampaignOffers { get; set; }

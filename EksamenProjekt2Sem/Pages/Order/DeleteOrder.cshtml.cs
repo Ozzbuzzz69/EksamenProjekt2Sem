@@ -20,7 +20,7 @@ namespace EksamenProjekt2Sem.Pages.Order
             if (Order == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("Index");
             }
             return Page();
         }
@@ -30,10 +30,10 @@ namespace EksamenProjekt2Sem.Pages.Order
             if (deletedOrder == null)
             {
                 // Handle not found case
-                RedirectToPage("./Index");
+                RedirectToPage("Index");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
     }
 }

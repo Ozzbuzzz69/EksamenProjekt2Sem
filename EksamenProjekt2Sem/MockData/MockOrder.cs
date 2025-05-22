@@ -8,23 +8,23 @@
         
         private static List<OrderLine> _orderLines = new List<OrderLine>()
         {
-            new OrderLine(2, MockFood.GetSandwiches()[1], null),
-            new OrderLine(1, MockFood.GetSandwiches()[0], null),
-            new OrderLine(1, MockFood.GetSandwiches()[2], null),
-            new OrderLine(1, MockFood.GetWarmMeals()[3], null),
+            new OrderLine(2, MockFood.GetSandwiches()[1]),
+            new OrderLine(1, MockFood.GetSandwiches()[0]),
+            new OrderLine(1, MockFood.GetSandwiches()[2]),
+            new OrderLine(1, MockFood.GetWarmMeals()[3]),
         };
         private static List<OrderLine> _orderLines1 = new List<OrderLine>()
         {
-            new OrderLine(1, MockFood.GetSandwiches()[1], null),
-            new OrderLine(2, MockFood.GetWarmMeals()[0], null),
-            new OrderLine(3, MockFood.GetSandwiches()[2], null)
+            new OrderLine(1, MockFood.GetSandwiches()[1]),
+            new OrderLine(2, MockFood.GetWarmMeals()[0]),
+            new OrderLine(3, MockFood.GetSandwiches()[2])
         };
         private static List<OrderLine> _orderLines2 = new List<OrderLine>()
         {
-            new OrderLine(1, MockFood.GetWarmMeals()[1], null),
-            new OrderLine(1, MockFood.GetSandwiches()[0], null),
-            new OrderLine(2, MockFood.GetWarmMeals()[2], null),
-            new OrderLine(4, MockFood.GetSandwiches()[3], null),
+            new OrderLine(1, MockFood.GetWarmMeals()[1]),
+            new OrderLine(1, MockFood.GetSandwiches()[0]),
+            new OrderLine(2, MockFood.GetWarmMeals()[2]),
+            new OrderLine(4, MockFood.GetSandwiches()[3]),
         };
         private static List<Order> _orders = new List<Order>()
         {
