@@ -33,6 +33,7 @@ namespace EksamenProjekt2Sem.Services
             }
             else
                 _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
 
         //Getting mock data into the database
