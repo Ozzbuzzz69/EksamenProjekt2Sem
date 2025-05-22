@@ -26,6 +26,10 @@ namespace EksamenProjekt2Sem.Services
                 // Handle the exception as needed
                 Console.WriteLine($"Error: {ex.InnerException?.Message}");
             }
+            if (_campaignOffers == null)
+            {
+                _campaignOffers = new();
+            }
             /*
             if (_campaignOffers == null)
             {
@@ -63,6 +67,14 @@ namespace EksamenProjekt2Sem.Services
 
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
+            try
+            {
+                ReadCampaignOffer(campaignOffer.Id);
+            }
+            catch
+            {
+                return;
+            }
             if (campaignOffer != null)
             {
                 foreach (CampaignOffer c in _campaignOffers)
@@ -80,8 +92,15 @@ namespace EksamenProjekt2Sem.Services
             }
         }
 
-        public CampaignOffer DeleteCampaignOffer(int? id)
+        public CampaignOffer? DeleteCampaignOffer(int? id)
         {
+            var offerToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
+            if (offerToBeDeleted == null) return null;
+
+            _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
+            return offerToBeDeleted;
+
+            /*
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
 
@@ -91,11 +110,13 @@ namespace EksamenProjekt2Sem.Services
 
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;
+            */
         }
 
         public void SetOfferValidities()
         {
-            foreach (CampaignOffer offer in _campaignOffers)
+            List<CampaignOffer> temp = ReadAllCampaignOffers();
+            foreach (CampaignOffer offer in temp)
             {
                 if (CheckOfferValidity(offer))
                 {
@@ -103,8 +124,11 @@ namespace EksamenProjekt2Sem.Services
                     _dbService.UpdateObjectAsync(offer).Wait();
                     continue;
                 }
-                offer.IsActive = false;
-                _dbService.UpdateObjectAsync(offer).Wait();
+                else
+                {
+                    offer.IsActive = false;
+                    _dbService.UpdateObjectAsync(offer).Wait();
+                }
             }
         }
 

@@ -18,11 +18,11 @@ namespace EksamenProjekt2Sem.Models
         [Required]
         public double Price { get; set; }
 
-        //Annotation needed
         [DataType(DataType.DateTime)]
         public DateTime? StartTime { get; set; }
 
         //Annotation needed
+        [Required]
         [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
 
@@ -49,7 +49,8 @@ namespace EksamenProjekt2Sem.Models
             EndTime = endTime;
             if (DateTime.Now > startTime || startTime == null)
             {
-                IsActive = true;
+                if (DateTime.Now > endTime) IsActive = false;
+                else IsActive = true;
             }
             else
             {

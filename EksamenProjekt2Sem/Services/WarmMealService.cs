@@ -12,15 +12,26 @@ namespace EksamenProjekt2Sem.Services
         public WarmMealService(GenericDbService<WarmMeal> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
+                if (_warmMeals == null || _warmMeals.Count() < 1)
+                {
+                    SeedWarmMealAsync().Wait();
+                    _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
             if (_warmMeals == null)
             {
-                _warmMeals = MockFood.GetWarmMeals();
+                _warmMeals = new();
             }
-            else
-                _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
         }
         //Getting mock data into the database
-
         public async Task SeedWarmMealAsync()
         {
             _warmMeals = new List<WarmMeal>();
@@ -70,6 +81,14 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="warmMeal"></param>
         public void UpdateWarmMeal(WarmMeal warmMeal)
         {
+            try
+            {
+                ReadWarmMeal(warmMeal.Id);
+            }
+            catch
+            {
+                return;
+            }
             if (warmMeal != null)
             {
                 foreach (WarmMeal w in _warmMeals)
@@ -104,52 +123,52 @@ namespace EksamenProjekt2Sem.Services
             return warmMealToBeDeleted;
         }
 
-#region Sorting/Filtering functions
-    #region Filtering functions
+        #region Sorting/Filtering functions
+        #region Filtering functions
+/*
+                /// <summary>
+                /// Filters warm meals by specified minimum person amount.
+                /// </summary>
+                /// <param name="criteria"></param>
+                /// <returns></returns>
+                public List<WarmMeal> FilterWarmMealByMinPersonLower(int criteria)
+                {
+                    return _warmMeals.FindAll(w => w.MinPersonAmount >= criteria);
+                }
 
-        /// <summary>
-        /// Filters warm meals by specified minimum person amount.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public List<WarmMeal> FilterWarmMealByMinPersonLower(int criteria)
-        {
-            return _warmMeals.FindAll(w => w.MinPersonAmount >= criteria);
-        }
+                /// <summary>
+                /// Filters warm meals by specified maximum person amount.
+                /// </summary>
+                /// <param name="criteria"></param>
+                /// <returns></returns>
+                public List<WarmMeal> FilterWarmMealByMinPersonUpper(int criteria)
+                {
+                    return _warmMeals.FindAll(w => w.MinPersonAmount <= criteria);
+                }
 
-        /// <summary>
-        /// Filters warm meals by specified maximum person amount.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public List<WarmMeal> FilterWarmMealByMinPersonUpper(int criteria)
-        {
-            return _warmMeals.FindAll(w => w.MinPersonAmount <= criteria);
-        }
+                /// <summary>
+                /// Filters warm meals by specified person amount range (including upper/lower).
+                /// </summary>
+                /// <param name="lower"></param>
+                /// <param name="upper"></param>
+                /// <returns></returns>
+                public List<WarmMeal> FilterWarmMealByMinPersonRange(int lower, int upper)
+                {
+                    return _warmMeals.FindAll(w => w.MinPersonAmount >= lower && w.MinPersonAmount <= upper);
+                }
 
-        /// <summary>
-        /// Filters warm meals by specified person amount range (including upper/lower).
-        /// </summary>
-        /// <param name="lower"></param>
-        /// <param name="upper"></param>
-        /// <returns></returns>
-        public List<WarmMeal> FilterWarmMealByMinPersonRange(int lower, int upper)
-        {
-            return _warmMeals.FindAll(w => w.MinPersonAmount >= lower && w.MinPersonAmount <= upper);
-        }
-
-        /// <summary>
-        /// Filters food by specified ingredients.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns>
-        /// Returns a list of warm meals that matches the criteria.
-        /// </returns>
-        public List<WarmMeal> FilterWarmMealByIngredient(string criteria)
-        {
-            return _warmMeals.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
-        }
-
+                /// <summary>
+                /// Filters food by specified ingredients.
+                /// </summary>
+                /// <param name="criteria"></param>
+                /// <returns>
+                /// Returns a list of warm meals that matches the criteria.
+                /// </returns>
+                public List<WarmMeal> FilterWarmMealByIngredient(string criteria)
+                {
+                    return _warmMeals.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
+                }
+        */
         /// <summary>
         /// Filters warm meals by specified meat type.
         /// </summary>
@@ -157,11 +176,29 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<WarmMeal> SearchWarmMealByMeatType(string criteria)
         {
-            return _warmMeals.FindAll(w => string.IsNullOrEmpty(criteria) || w.MeatType.ToLower().Contains(criteria.ToLower()));
+            List<WarmMeal> temp = new();
 
+            foreach (WarmMeal m in _warmMeals)
+            {
+                if (m == null)
+                {
+                    continue;
+                }
+                if (m.MeatType == null)
+                {
+                    temp.Add(m);
+                    continue;
+                }
+                if (m.MeatType.ToLower().Contains(criteria.ToLower()))
+                {
+                    temp.Add(m);
+                }
+            }
+            //return _warmMeals.FindAll(w => string.IsNullOrEmpty(criteria) || w.MeatType.ToLower().Contains(criteria.ToLower()));
+            return temp;
         }
 
-
+/*
         /// <summary>
         /// Finds all warm meals that cost more than the criteria.
         /// </summary>
@@ -211,6 +248,7 @@ namespace EksamenProjekt2Sem.Services
         {
             return SortByCriteria(_warmMeals, "Price");
         }
+*/
     #endregion
 #endregion
     }
