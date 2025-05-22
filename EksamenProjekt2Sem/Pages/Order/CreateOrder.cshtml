@@ -16,9 +16,8 @@
 
     <br />
     <h3>Vælg afhentningsdato</h3>
-    <strong>Dato skal minimum være 24 timer frem i tiden, og mellem 8 og 20.</strong>
     <div class="form-group" style="width:250px;">
-        <input asp-for="PickupTime" class="form-control" min="@DateTime.Now.AddDays(1)"/>
+        <input asp-for="PickupTime" class="form-control"/>
         <span asp-validation-for="PickupTime" class="text-danger"></span>
     </div>
     <br />

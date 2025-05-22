@@ -10,6 +10,7 @@ namespace EksamenProjekt2Sem.Models
     [JsonDerivedType(typeof(WarmMeal), "warmmeal")]
     public abstract class Food
     {
+        private static int nextId = 1;
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -33,7 +34,6 @@ namespace EksamenProjekt2Sem.Models
         
         public Food(string ingredients, string? inSeason, string meatType, double price)
         {
-            
             Ingredients = ingredients;
             InSeason = inSeason;
             MeatType = meatType;
