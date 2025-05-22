@@ -29,10 +29,10 @@ namespace EksamenProjekt2Sem.Pages.User
             if (!ModelState.IsValid)
             {
                 // Handle invalid model state
-                RedirectToPage("./Index");
+                RedirectToPage("/Index");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
     }
 }

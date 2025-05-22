@@ -59,11 +59,12 @@ namespace EksamenProjekt2Sem.Services
         /// Reads all users. 
         /// </summary>
         /// <returns></returns>
-        public List<User> ReadAllUsers()
-        {
-            return _users;
-        }
 
+        public async Task<List<User>> ReadAllUsersAsync()
+        {
+            var users = await _dbService.GetObjectsAsync();
+            return users.ToList();
+        }
         /// <summary>
         /// Updates user with given id. 
         /// </summary>

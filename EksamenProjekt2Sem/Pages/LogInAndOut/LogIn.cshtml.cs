@@ -35,7 +35,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         public async Task<IActionResult> OnPost()
         {
 
-            List<Models.User> users = _userService.ReadAllUsers();
+            var users = await _userService.ReadAllUsersAsync();
             foreach (Models.User user in users)
             {
 
@@ -58,7 +58,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
                 }
 
             }
-            return RedirectToPage("Index");
+            return RedirectToPage("/Index");
 
         }
     }
