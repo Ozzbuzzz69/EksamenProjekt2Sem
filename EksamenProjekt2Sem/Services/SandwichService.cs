@@ -14,12 +14,24 @@ namespace EksamenProjekt2Sem.Services
         public SandwichService(GenericDbService<Sandwich> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+                if (_sandwiches == null || _sandwiches.Count() < 1)
+                {
+                    SeedSandwichAsync().Wait();
+                    _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
             if (_sandwiches == null)
             {
-                _sandwiches = MockFood.GetSandwiches();
+                _sandwiches = new();
             }
-            else
-                _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
         }
         //Getting mock data into the database
 
@@ -98,12 +110,10 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>
         /// Returns the sandwich to be deleted.
         /// </returns>
-        public Sandwich DeleteSandwich(int? id)
+        public Sandwich? DeleteSandwich(int? id)
         {
-           
-
             var sandwichToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
-            
+            if (sandwichToBeDeleted == null) return null;
 
             _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             return sandwichToBeDeleted;
@@ -143,7 +153,27 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Sandwich> SearchSandwichByMeatType(string criteria)
         {
-            return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()));
+            List<Sandwich> temp = new();
+
+            foreach (Sandwich s in _sandwiches)
+            {
+                if (s == null)
+                {
+                    continue;
+                }
+                if (s.MeatType == null)
+                {
+                    temp.Add(s);
+                    continue;
+                }
+                if (s.MeatType.ToLower().Contains(criteria.ToLower()))
+                {
+                    temp.Add(s);
+                }
+            }
+            return temp;
+
+            //return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()) || s.MeatType.IsNullOrEmpty());
         }
 
 
@@ -156,7 +186,27 @@ namespace EksamenProjekt2Sem.Services
         /// </returns>
         public List<Sandwich> FilterSandwichByIngredient(string criteria)
         {
-            return _sandwiches.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
+            List<Sandwich> temp = new();
+
+            foreach (Sandwich s in _sandwiches)
+            {
+                if (s == null)
+                {
+                    continue;
+                }
+                if (s.Ingredients == null)
+                {
+                    temp.Add(s);
+                    continue;
+                }
+                if (s.Ingredients.ToLower().Contains(criteria.ToLower()))
+                {
+                    temp.Add(s);
+                }
+            }
+            return temp;
+
+            // return _sandwiches.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
         }
 
 
