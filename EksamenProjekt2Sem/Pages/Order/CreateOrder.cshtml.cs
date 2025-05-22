@@ -22,7 +22,7 @@ namespace EksamenProjekt2Sem.Pages.Order
         }
 
         [BindProperty]
-        public DateTime PickupTime { get; set; } = DateTime.Now.Date;
+        public DateTime PickupTime { get; set; } = DateTime.Now.Date.AddDays(1);
 
         public Order Cart { get; set; }
 
