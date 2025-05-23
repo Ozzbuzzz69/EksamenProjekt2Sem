@@ -80,7 +80,7 @@ namespace EksamenProjekt2Sem.Services.Tests
             };
 
             // Act
-            service.CreateUser(newUser);
+            service.CreateUser(newUser).Wait();
 
             // Assert
             using (var context = new FoodContext(_options))
@@ -236,7 +236,7 @@ namespace EksamenProjekt2Sem.Services.Tests
                 Id = 999,
                 Name = "TestUser4",
                 Email = "something@elpmaxe.moc",
-                PhoneNumber = "12345678",
+                PhoneNumber = "12345679",
                 Password = "password1224"
             };
             
@@ -253,24 +253,24 @@ namespace EksamenProjekt2Sem.Services.Tests
                 var userInDb3 = users.First(u => u.Id != userInDb1.Id && u.Id != userInDb2.Id);
 
                 // Check for updated names
-                Assert.IsNotNull(userInDb1.Name, newUser.Name);
-                Assert.IsNotNull(userInDb2.Name, newUser.Name);
-                Assert.IsNotNull(userInDb3.Name, newUser.Name);
+                Assert.AreNotEqual(userInDb1.Name, newUser.Name);
+                Assert.AreNotEqual(userInDb2.Name, newUser.Name);
+                Assert.AreNotEqual(userInDb3.Name, newUser.Name);
 
                 // Check for updated emails
-                Assert.IsNotNull(userInDb1.Email, newUser.Email);
-                Assert.IsNotNull(userInDb2.Email, newUser.Email);
-                Assert.IsNotNull(userInDb3.Email, newUser.Email);
+                Assert.AreNotEqual(userInDb1.Email, newUser.Email);
+                Assert.AreNotEqual(userInDb2.Email, newUser.Email);
+                Assert.AreNotEqual(userInDb3.Email, newUser.Email);
 
                 // Check for updated phone numbers
-                Assert.IsNotNull(userInDb1.PhoneNumber, newUser.PhoneNumber);
-                Assert.IsNotNull(userInDb2.PhoneNumber, newUser.PhoneNumber);
-                Assert.IsNotNull(userInDb3.PhoneNumber, newUser.PhoneNumber);
+                Assert.AreNotEqual(userInDb1.PhoneNumber, newUser.PhoneNumber);
+                Assert.AreNotEqual(userInDb2.PhoneNumber, newUser.PhoneNumber);
+                Assert.AreNotEqual(userInDb3.PhoneNumber, newUser.PhoneNumber);
 
                 // Check for updated passwords
-                Assert.IsNotNull(userInDb1.Password, newUser.Password);
-                Assert.IsNotNull(userInDb2.Password, newUser.Password);
-                Assert.IsNotNull(userInDb3.Password, newUser.Password);
+                Assert.AreNotEqual(userInDb1.Password, newUser.Password);
+                Assert.AreNotEqual(userInDb2.Password, newUser.Password);
+                Assert.AreNotEqual(userInDb3.Password, newUser.Password);
             }
         }
         [TestMethod]
@@ -295,7 +295,7 @@ namespace EksamenProjekt2Sem.Services.Tests
             }
         }
         [TestMethod]
-        public void DeleteUserTest_InvalidId_ThrowsException()
+        public void DeleteUserTest_InvalidId_ReturnsNull()
         {
             // Arrange
             var service = new UserService(_dbService);
