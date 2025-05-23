@@ -30,7 +30,7 @@ namespace EksamenProjekt2Sem.Pages.User
                 // Handle invalid model state
                 return Page();
             }
-            _userService.UpdateUser(User.Id, User);
+            _userService.UpdateUser(User);
             return RedirectToPage("./Index"); // Redirect to the index page after updating
         }
     }
