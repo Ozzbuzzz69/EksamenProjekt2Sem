@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    [Migration("20250522141531_EksamenProjekt2Sem")]
+    [Migration("20250523085029_EksamenProjekt2Sem")]
     partial class EksamenProjekt2Sem
     {
         /// <inheritdoc />

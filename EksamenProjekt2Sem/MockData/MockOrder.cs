@@ -5,7 +5,7 @@
 
     public class MockOrder
     {
-        
+
         private static List<OrderLine> _orderLines = new List<OrderLine>()
         {
             new OrderLine(2, MockFood.GetSandwiches()[1]),
@@ -28,21 +28,18 @@
         };
         private static List<Order> _orders = new List<Order>()
         {
-            new(MockUser.GetMockUsers()[0], new DateTime(3000, 2, 1))
+            new(MockUser.GetMockUsers()[0], new DateTime(3000, 2, 1), _orderLines)
             {
-                OrderLines = _orderLines
+
             },
-            new(MockUser.GetMockUsers()[1], new DateTime(3000, 3, 1))
+            new(MockUser.GetMockUsers()[1], new DateTime(3000, 3, 1), _orderLines1)
             {
-                OrderLines = _orderLines1
             },
-            new(MockUser.GetMockUsers()[2], new DateTime(3000,1,1))
+            new(MockUser.GetMockUsers()[2], new DateTime(3000,1,1), _orderLines2)
             {
-                OrderLines = _orderLines2
             },
-            new(MockUser.GetMockUsers()[3], new DateTime(3000, 4, 1))
+            new(MockUser.GetMockUsers()[3], new DateTime(3000, 4, 1), _orderLines2)
             {
-                OrderLines = _orderLines
             }
         };
         public static List<Order> GetOrders()
