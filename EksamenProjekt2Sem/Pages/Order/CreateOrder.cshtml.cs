@@ -47,12 +47,12 @@ namespace EksamenProjekt2Sem.Pages.Order
                 return Page();
             }
 
-            Order order = new Order(User, PickupTime);
+            Order order = new Order(User, PickupTime, Cart.OrderLines);
 
-            foreach (var orderline in Cart.OrderLines)
-            {
-                order.OrderLines.Add(orderline);
-            }
+            //foreach (var orderline in Cart.OrderLines)
+            //{
+            //    order.OrderLines.Add(orderline);
+            //}
 
             _orderService.CreateOrder(order);
 
