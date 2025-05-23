@@ -81,29 +81,20 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="warmMeal"></param>
         public void UpdateWarmMeal(WarmMeal warmMeal)
         {
-            try
-            {
-                ReadWarmMeal(warmMeal.Id);
-            }
-            catch
-            {
+            if (warmMeal == null)
                 return;
-            }
-            if (warmMeal != null)
-            {
-                foreach (WarmMeal w in _warmMeals)
-                {
-                    if (w.Id == warmMeal.Id)
-                    {
-                        w.Ingredients = warmMeal.Ingredients;
-                        w.InSeason = warmMeal.InSeason;
-                        w.MeatType = warmMeal.MeatType;
-                        w.Price = warmMeal.Price;
-                        w.MinPersonAmount = warmMeal.MinPersonAmount;
-                    }
-                }
-                _dbService.UpdateObjectAsync(warmMeal).Wait();
-            }
+
+            var existingMeal = _warmMeals.FirstOrDefault(w => w.Id == warmMeal.Id);
+            if (existingMeal == null)
+                return;
+
+            existingMeal.Ingredients = warmMeal.Ingredients;
+            existingMeal.InSeason = warmMeal.InSeason;
+            existingMeal.MeatType = warmMeal.MeatType;
+            existingMeal.Price = warmMeal.Price;
+            existingMeal.MinPersonAmount = warmMeal.MinPersonAmount;
+
+            _dbService.UpdateObjectAsync(existingMeal).Wait(); // Only update if the meal exists
         }
 
         /// <summary>

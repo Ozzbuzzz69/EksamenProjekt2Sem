@@ -67,29 +67,20 @@ namespace EksamenProjekt2Sem.Services
 
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
-            try
-            {
-                ReadCampaignOffer(campaignOffer.Id);
-            }
-            catch
-            {
+            if (campaignOffer == null)
                 return;
-            }
-            if (campaignOffer != null)
-            {
-                foreach (CampaignOffer c in _campaignOffers)
-                {
-                    if (c.Id == campaignOffer.Id)
-                    {
-                        c.Name = campaignOffer.Name;
-                        c.ImageLink = campaignOffer.ImageLink;
-                        c.Price = campaignOffer.Price;
-                        c.StartTime = campaignOffer.StartTime;
-                        c.EndTime = campaignOffer.EndTime;
-                    }
-                }
-                _dbService.UpdateObjectAsync(campaignOffer).Wait();
-            }
+
+            var existingOffer = _campaignOffers.FirstOrDefault(w => w.Id == campaignOffer.Id);
+            if (existingOffer == null)
+                return;
+
+            existingOffer.Name = campaignOffer.Name;
+            existingOffer.ImageLink = campaignOffer.ImageLink;
+            existingOffer.Price = campaignOffer.Price;
+            existingOffer.StartTime = campaignOffer.StartTime;
+            existingOffer.EndTime = campaignOffer.EndTime;
+
+            _dbService.UpdateObjectAsync(existingOffer).Wait(); // Only update if the meal exists
         }
 
         public CampaignOffer? DeleteCampaignOffer(int? id)

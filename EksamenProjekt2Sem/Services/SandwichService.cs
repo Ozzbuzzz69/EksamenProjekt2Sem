@@ -87,29 +87,20 @@ namespace EksamenProjekt2Sem.Services
         /// <param name="sandwich"></param>
         public void UpdateSandwich(Sandwich sandwich)
         {
-            try
-            {
-                ReadSandwich(sandwich.Id);
-            }
-            catch
-            {
+            if (sandwich == null)
                 return;
-            }
 
-            if (sandwich != null)
-            {
-                foreach (Sandwich s in _sandwiches)
-                {
-                    if (s.Id == sandwich.Id)
-                    {
-                        s.Ingredients = sandwich.Ingredients;
-                        s.InSeason = sandwich.InSeason;
-                        s.MeatType = sandwich.MeatType;
-                        s.Price = sandwich.Price;
-                    }
-                }
-                _dbService.UpdateObjectAsync(sandwich).Wait();
-            }
+            var existingSandwich = _sandwiches.FirstOrDefault(w => w.Id == sandwich.Id);
+            if (existingSandwich == null)
+                return;
+
+            existingSandwich.Ingredients = sandwich.Ingredients;
+            existingSandwich.InSeason = sandwich.InSeason;
+            existingSandwich.MeatType = sandwich.MeatType;
+            existingSandwich.Price = sandwich.Price;
+            existingSandwich.Category = sandwich.Category;
+
+            _dbService.UpdateObjectAsync(existingSandwich).Wait(); // Only update if the meal exists
         }
 
         /// <summary>
