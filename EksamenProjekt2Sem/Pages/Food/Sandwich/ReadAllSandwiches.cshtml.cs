@@ -25,6 +25,11 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public string SearchCategory { get; set; }
 
+        //public static Models.Order Cart = new Models.Order();
+
+        //[BindProperty]
+        //public Models.Order Order => Cart;
+
         [BindProperty]
         public Models.Order Cart => _orderService.ReadCart();
 
@@ -58,11 +63,11 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
             return Page();
         }
         
-        public IActionResult OnPostAddFoodToCart()
+        public IActionResult OnPostAddSandwichToCart()
         {
             Sandwich = _sandwichService.ReadSandwich(Id);
 
-            _orderService.AddFoodToCart(Sandwich, Quantity);
+            _orderService.AddSandwichToCart(Sandwich, Quantity);
 
             Sandwiches = _sandwichService.ReadAllSandwiches();
 

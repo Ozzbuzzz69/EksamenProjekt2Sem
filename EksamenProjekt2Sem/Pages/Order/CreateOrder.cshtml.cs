@@ -24,8 +24,10 @@ namespace EksamenProjekt2Sem.Pages.Order
         [BindProperty]
         public DateTime PickupTime { get; set; } = DateTime.Now.Date.AddDays(1);
 
+        [BindProperty]
         public Order Cart { get; set; }
 
+        [BindProperty]
         public User User { get; set; }
 
         public void OnGet()
@@ -47,12 +49,12 @@ namespace EksamenProjekt2Sem.Pages.Order
                 return Page();
             }
 
-            Order order = new Order(User, PickupTime, Cart.OrderLines);
+            Order order = new Order(User, PickupTime);
 
-            //foreach (var orderline in Cart.OrderLines)
-            //{
-            //    order.OrderLines.Add(orderline);
-            //}
+            foreach (var orderline in Cart.OrderLines)
+            {
+                order.OrderLines.Add(orderline);
+            }
 
             _orderService.CreateOrder(order);
 

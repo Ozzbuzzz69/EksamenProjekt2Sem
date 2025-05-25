@@ -23,7 +23,7 @@ builder.Services.AddScoped<WarmMealService>();
 builder.Services.AddScoped<GenericDbService<WarmMeal>>();
 
 //used for Sessions
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddHttpContextAccessor();
 
 
 // Add DB context
@@ -46,7 +46,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 //used for Sessions
 
-builder.Services.AddSession();
+//builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -78,7 +78,7 @@ app.UseStaticFiles();
 app.UseRouting();
 //used for Sessions
 
-app.UseSession();
+//app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

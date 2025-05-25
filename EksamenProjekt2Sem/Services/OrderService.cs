@@ -9,52 +9,66 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private const string CartSessionKey = "Cart";
         private List<Order> _orders; // Overskud fra domain model
         private GenericDbService<Order> _dbService; // Overskud fra domain model
         private Order _cart = new Order();
 
-        public OrderService(GenericDbService<Order> dbService, IHttpContextAccessor httpContextAccessor)
+        public OrderService(GenericDbService<Order> dbService)
         {
-            _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            _orders = MockOrder.GetOrders();
+            //_orders = MockOrder.GetOrders();
             //_dbService.SaveObjects(_orders);
 
-            //if (_orders == null)
-            //{
-            //    _orders = MockOrder.GetOrders();
-            //}
-            //else
-            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
-        }
-
-        public void AddFoodToCart(Food food, int quantity)
-        {
-            var cart = ReadCart();
-
-            // Ensure OrderLines is initialized
-            if (cart.OrderLines == null)
-                cart.OrderLines = new List<OrderLine>();
-
-            // Find if the food already exists in the cart (by type and id)
-            var existingOrderLine = cart.OrderLines
-                .FirstOrDefault(ol => ol.Food.Id == food.Id && ol.Food.GetType() == food.GetType());
-
-            if (existingOrderLine != null)
+            if (_orders == null)
             {
-                // If it exists, increase the quantity
-                existingOrderLine.Quantity = quantity;
+                _orders = MockOrder.GetOrders();
             }
             else
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
+        }
+
+        //public void AddSandwichToCart(Food food, int quantity)
+        //{
+        //    var cart = ReadCart();
+
+        //    // Ensure OrderLines is initialized
+        //    if (cart.OrderLines == null)
+        //        cart.OrderLines = new List<OrderLine>();
+
+        //    // Find if the food already exists in the cart (by type and id)
+        //    var existingOrderLine = cart.OrderLines
+        //        .FirstOrDefault(ol => ol.Food.Id == food.Id && ol.Food.GetType() == food.GetType());
+
+        //    if (existingOrderLine != null)
+        //    {
+        //        // If it exists, increase the quantity
+        //        existingOrderLine.Quantity = quantity;
+        //    }
+        //    else
+        //    {
+        //        // If not, add a new order line
+        //        cart.OrderLines.Add(new OrderLine(quantity, food));
+        //    }
+        //    //SaveCart(cart);
+        //}
+
+        public void AddSandwichToCart(Sandwich sandwich, int quantity)
+        {
+            if (sandwich != null && quantity > 0 && quantity <= 50)
             {
-                // If not, add a new order line
-                cart.OrderLines.Add(new OrderLine(quantity, food));
+                _cart.OrderLines.Add(new OrderLine
+                {
+                    Quantity = quantity,
+                    Food = sandwich
+                });
             }
-            SaveCart(cart);
+        }
+
+        public Order ReadCart()
+        {
+            return _cart;
         }
 
 
@@ -62,12 +76,14 @@ namespace EksamenProjekt2Sem.Services
 
         public OrderLine? ReadOrderLine(int orderLineFoodId, int quantity)
         {
-            var cart = ReadCart();
-            foreach (var orderLine in cart.OrderLines)
+            OrderLine tempOrderLine;
+
+            foreach (var orderLine in _cart.OrderLines)
             {
                 if (orderLine.Food.Id == orderLineFoodId && orderLine.Quantity == quantity)
                 {
-                    return orderLine;
+                    tempOrderLine = orderLine;
+                    return tempOrderLine;
                 }
             }
             return null;
@@ -77,36 +93,8 @@ namespace EksamenProjekt2Sem.Services
 
         public void DeleteOrderLine(OrderLine orderLine)
         {
-            var cart = ReadCart();
-            var toRemove = cart.OrderLines
-                .FirstOrDefault(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity);
-            if (toRemove != null)
-            {
-                cart.OrderLines.Remove(toRemove);
-                SaveCart(cart);
-            }
+            _cart.OrderLines.Remove(_cart.OrderLines.Find(ol => ol.Food.Id == orderLine.Food.Id && ol.Quantity == orderLine.Quantity));
         }
-
-
-
-        public Order ReadCart()
-        {
-            var session = _httpContextAccessor.HttpContext.Session;
-            var cartJson = session.GetString(CartSessionKey);
-            if (cartJson != null)
-            {
-                return JsonSerializer.Deserialize<Order>(cartJson);
-            }
-            return new Order();
-        }
-
-        public void SaveCart(Order cart)
-        {
-            var session = _httpContextAccessor.HttpContext.Session;
-            var cartJson = JsonSerializer.Serialize(cart);
-            session.SetString(CartSessionKey, cartJson);
-        }
-
 
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.

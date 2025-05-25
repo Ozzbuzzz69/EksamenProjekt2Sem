@@ -18,16 +18,15 @@ namespace EksamenProjekt2Sem.Models
         [DataType(DataType.DateTime)]
         public DateTime PickupTime { get; set; }
 
-        public List<OrderLine> OrderLines { get; set; }
+        public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         public Order()
         { }
 
-        public Order(User user, DateTime pickupTime, List<OrderLine> orderLines)
+        public Order(User user, DateTime pickupTime)
         {
             User = user;
             PickupTime = pickupTime;
-            OrderLines = orderLines;
         }
     }
 }

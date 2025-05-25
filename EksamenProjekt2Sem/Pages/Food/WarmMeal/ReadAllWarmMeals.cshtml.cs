@@ -48,16 +48,16 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
             return Page();
         }
 
-        public IActionResult OnPostAddFoodToCart()
-        {
-            WarmMeal = _warmMealService.ReadWarmMeal(Id);
+        //public IActionResult OnPostAddFoodToCart()
+        //{
+        //    WarmMeal = _warmMealService.ReadWarmMeal(Id);
 
-            _orderService.AddFoodToCart(WarmMeal, Quantity);
+        //    _orderService.AddFoodToCart(WarmMeal, Quantity);
 
-            WarmMeals = _warmMealService.ReadAllWarmMeals();
+        //    WarmMeals = _warmMealService.ReadAllWarmMeals();
 
-            return Page();
-        }
+        //    return Page();
+        //}
 
         public IActionResult OnPostDeleteOrderLine(int orderLineFoodId, int quantity)
         {
