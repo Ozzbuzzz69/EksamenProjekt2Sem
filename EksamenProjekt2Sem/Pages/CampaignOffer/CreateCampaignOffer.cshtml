@@ -3,28 +3,28 @@
 @{
 }
 
-<h1>Opret Kampange Tilbud</h1>
+<h1>Opret Kampagne Tilbud</h1>
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="@Model.CampaignOffer.Name" class="control-label"></label>
+        <label asp-for="@Model.CampaignOffer.Name" class="control-label">Navn</label>
         <input asp-for="@Model.CampaignOffer.Name" class="form-control" />
         <span asp-validation-for="@Model.CampaignOffer.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.CampaignOffer.ImageLink" class="control-label"></label>
+        <label asp-for="@Model.CampaignOffer.ImageLink" class="control-label">Link til billede</label>
         <input asp-for="@Model.CampaignOffer.ImageLink" class="form-control" />
         <span asp-validation-for="@Model.CampaignOffer.ImageLink" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.CampaignOffer.Price" class="control-label"></label>
+        <label asp-for="@Model.CampaignOffer.Price" class="control-label">Pris</label>
         <input asp-for="@Model.CampaignOffer.Price" class="form-control" />
         <span asp-validation-for="@Model.CampaignOffer.Price" class="text-danger"></span>
     </div>
 
     <p>
         <div class="form-group">
-            <input type="submit" value="Opret Kampange Tilbud" class="btn btn-primary" />
+            <input type="submit" value="Opret Kampagne Tilbud" class="btn btn-primary" />
         </div>
     </p>
 </form>
