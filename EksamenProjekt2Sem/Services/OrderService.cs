@@ -21,15 +21,15 @@ namespace EksamenProjekt2Sem.Services
             _dbService = dbService;
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            _orders = MockOrder.GetOrders();
+            //_orders = MockOrder.GetOrders();
             //_dbService.SaveObjects(_orders);
 
-            //if (_orders == null)
-            //{
-            //    _orders = MockOrder.GetOrders();
-            //}
-            //else
-            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
+            if (_orders == null)
+            {
+                _orders = MockOrder.GetOrders();
+            }
+            else
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         public void AddFoodToCart(Food food, int quantity)

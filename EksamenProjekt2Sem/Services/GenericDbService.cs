@@ -1,4 +1,5 @@
 ﻿using EksamenProjekt2Sem.Models;
+using EksamenProjekt2Sem.Secrets;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 namespace EksamenProjekt2Sem.Services
@@ -14,7 +15,16 @@ namespace EksamenProjekt2Sem.Services
         public GenericDbService() 
         {
             _options = new DbContextOptionsBuilder<FoodContext>()
-                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FoodContentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False")
+                .UseSqlServer(
+                $@"Data Source=mssql10.unoeuro.com;
+                Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
+                User ID=koebmandenellevej_dk;
+                Password={Passwords.DbPassword};
+                Connect Timeout=30;
+                Encrypt=True;
+                Trust Server Certificate=True;
+                Application Intent=ReadWrite;
+                Multi Subnet Failover=False")
                 .Options;
             // Har indsat en default konstruktør som fungere ligsom FoodContext, men jeg kunne ikke bruge
             // FoodContext i GenericDbService, da den jeg skulle bruge en non-generic konstruktør til tests.
