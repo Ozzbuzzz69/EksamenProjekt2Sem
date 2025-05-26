@@ -12,16 +12,35 @@ namespace EksamenProjekt2Sem.Services
         public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
         {
             _dbService = dbService;
+            try
+            {
+                _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                if (_campaignOffers == null || _campaignOffers.Count() < 1)
+                {
+                    SeedCampaignAsync().Wait();
+                    _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            if (_campaignOffers == null)
+            {
+                _campaignOffers = new();
+            }
+            /*
             if (_campaignOffers == null)
             {
                 _campaignOffers = MockOffer.GetCampaignOffers();
             }
             else
                 _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
+            */
         }
 
         //Getting mock data into the database
-
         public async Task SeedCampaignAsync()
         {
             var campaign = MockOffer.GetCampaignOffers();
@@ -48,24 +67,31 @@ namespace EksamenProjekt2Sem.Services
 
         public void UpdateCampaignOffer(CampaignOffer campaignOffer)
         {
-            if (campaignOffer != null)
-            {
-                var campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
-                foreach (CampaignOffer c in campaignOffers)
-                {
-                    if (c.Id == campaignOffer.Id)
-                    {
-                        c.Name = campaignOffer.Name;
-                        c.ImageLink = campaignOffer.ImageLink;
-                        c.Price = campaignOffer.Price;
-                    }
-                }
-                _dbService.SaveObjects(campaignOffers);
-            }
+            if (campaignOffer == null)
+                return;
+
+            var existingOffer = _campaignOffers.FirstOrDefault(w => w.Id == campaignOffer.Id);
+            if (existingOffer == null)
+                return;
+
+            existingOffer.Name = campaignOffer.Name;
+            existingOffer.ImageLink = campaignOffer.ImageLink;
+            existingOffer.Price = campaignOffer.Price;
+            existingOffer.StartTime = campaignOffer.StartTime;
+            existingOffer.EndTime = campaignOffer.EndTime;
+
+            _dbService.UpdateObjectAsync(existingOffer).Wait(); // Only update if the meal exists
         }
 
-        public CampaignOffer DeleteCampaignOffer(int? id)
+        public CampaignOffer? DeleteCampaignOffer(int? id)
         {
+            var offerToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
+            if (offerToBeDeleted == null) return null;
+
+            _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
+            return offerToBeDeleted;
+
+            /*
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
 
@@ -75,6 +101,38 @@ namespace EksamenProjekt2Sem.Services
 
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;
+            */
+        }
+
+        public void SetOfferValidities()
+        {
+            List<CampaignOffer> temp = ReadAllCampaignOffers();
+            foreach (CampaignOffer offer in temp)
+            {
+                if (CheckOfferValidity(offer))
+                {
+                    offer.IsActive = true;
+                    _dbService.UpdateObjectAsync(offer).Wait();
+                    continue;
+                }
+                else
+                {
+                    offer.IsActive = false;
+                    _dbService.UpdateObjectAsync(offer).Wait();
+                }
+            }
+        }
+
+        public bool CheckOfferValidity(CampaignOffer offer)
+        {
+            if (offer.StartTime == null || offer.StartTime < DateTime.Now)
+            {
+                if (offer.EndTime > DateTime.Now)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

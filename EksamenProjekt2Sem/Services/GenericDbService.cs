@@ -12,7 +12,7 @@ namespace EksamenProjekt2Sem.Services
         {
             _options = options;
         }
-        public GenericDbService() 
+        public GenericDbService()
         {
             _options = new DbContextOptionsBuilder<FoodContext>()
                 .UseSqlServer(
@@ -107,10 +107,34 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<T> SortByCriteria(List<T> list, string criteria)
         {
+            List<T> sortedList = new List<T>();
+            List<T> unsortedList = new List<T>();
+
+            foreach (T l in list)
+            {
+                if (l?.GetType().GetProperty(criteria)?.GetValue(l, null) != null)
+                {
+                    sortedList.Add(l);
+                }
+                else
+                {
+                    unsortedList.Add(l);
+                }
+            }
+            sortedList = sortedList
+                .OrderBy(l => l.GetType().GetProperty(criteria)?.GetValue(l, null))
+                .ToList();
+
+            sortedList.AddRange(unsortedList);
+
+            return sortedList;
+
+            /*
             return list
                 .Where(l => l?.GetType().GetProperty(criteria)?.GetValue(l, null) != null)
                 .OrderBy(l => l.GetType().GetProperty(criteria)?.GetValue(l, null))
                 .ToList();
+            */
         }
 #endregion
     }

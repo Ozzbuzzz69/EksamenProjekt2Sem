@@ -19,6 +19,24 @@ namespace EksamenProjekt2Sem.Services
         {
             _httpContextAccessor = httpContextAccessor;
             _dbService = dbService;
+            try
+            {
+                _orders = _dbService.GetObjectsAsync().Result.ToList();
+                if (_orders == null || _orders.Count() < 1)
+                {
+                    SeedOrderAsync().Wait();
+                    _orders = _dbService.GetObjectsAsync().Result.ToList();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                // Handle the exception as needed
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            }
+            if (_orders == null)
+            {
+                _orders = new();
+            }
 
             //_orders = _dbService.GetObjectsAsync().Result.ToList();
             //_orders = MockOrder.GetOrders();
@@ -30,6 +48,13 @@ namespace EksamenProjekt2Sem.Services
             }
             else
                 _orders = _dbService.GetObjectsAsync().Result.ToList();
+        }
+       
+        public async Task SeedOrderAsync()
+        {
+            _orders = new List<Order>();
+            var order = MockOrder.GetOrders();
+            await _dbService.SaveObjects(order);
         }
 
         public void AddFoodToCart(Food food, int quantity)
@@ -53,6 +78,28 @@ namespace EksamenProjekt2Sem.Services
             {
                 // If not, add a new order line
                 cart.OrderLines.Add(new OrderLine(quantity, food));
+            }
+            SaveCart(cart);
+        }
+        public void AddOfferToCart(CampaignOffer offer, int quantity)
+        {
+            var cart = ReadCart();
+
+            // Find if the sandwich already exists in the cart
+            var existingOrderLine = cart.OrderLines
+                .FirstOrDefault(ol => ol.CampaignOffer.Id == offer.Id);
+
+            if (existingOrderLine != null)
+            {
+                // If it exists, just increase the quantity
+                existingOrderLine.Quantity = quantity;
+
+            }
+            else
+            {
+                // If not, add a new order line
+                cart.OrderLines.Add(new OrderLine(quantity, offer));
+
             }
             SaveCart(cart);
         }
@@ -111,11 +158,11 @@ namespace EksamenProjekt2Sem.Services
         /// <summary>
         /// Adds the order object from argument to the database, and the _orders list.
         /// </summary>
-        /// <param name = "order" ></ param >
-        public void CreateOrder(Order order)
+        /// <param name="order"></param>
+        public async Task CreateOrder(Order order)
         {
             _orders.Add(order);
-            _dbService.AddObjectAsync(order);
+            await _dbService.AddObjectAsync(order);
         }
 
 
@@ -127,16 +174,10 @@ namespace EksamenProjekt2Sem.Services
         /// <returns>Order?</returns>
         public Order? ReadOrder(int id)
         {
-            foreach (Order order in _orders)
-            {
-                if (order.Id == id)
-                {
-                    return order;
-                }
-            }
-            return null;
+            Order? order = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
+            return order;
         }
-
+        /*
         /// <summary>
         /// Reads all order objects from the database.
         /// </summary>
@@ -145,6 +186,18 @@ namespace EksamenProjekt2Sem.Services
         {
             return _orders;
         }
+        */
+
+        /*
+        ***********************
+        Note: ReadAllOrdersByUser can't function right in the test
+              This is due to the test not having all the services
+              registered.
+              Frankly it is too much work to be worth fixing.
+              Therefore, this function is not, and will not, be tested
+        */
+
+
         /// <summary>
         /// Reads a list of orders which belongs to the user in argument.
         /// </summary>
@@ -177,21 +230,21 @@ namespace EksamenProjekt2Sem.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="order"></param>
-        public void UpdateOrder(int id, Order order)
+        public void UpdateOrder(Order order)
         {
-            if (order != null)
-            {
-                foreach (Order o in _orders)
-                {
-                    if (o.Id == id)
-                    {
-                        o.User = order.User;
-                        o.PickupTime = order.PickupTime;
-                        o.OrderLines = order.OrderLines;
-                    }
-                }
-                _dbService.UpdateObjectAsync(order).Wait();
-            }
+            if (order == null)
+                return;
+
+            var existingOrder = _orders.FirstOrDefault(o => o.Id == order.Id);
+            if (existingOrder == null)
+                return;
+
+            existingOrder.User = order.User;
+            existingOrder.PickupTime = order.PickupTime;
+            existingOrder.OrderLines = order.OrderLines;
+
+
+            _dbService.UpdateObjectAsync(existingOrder).Wait(); // Only update if the meal exists
         }
         /// <summary>
         /// Deletes the order object from argument to the database, and the _orders list. Returns the deleted order.
@@ -216,6 +269,7 @@ namespace EksamenProjekt2Sem.Services
             }
             return ToBeDeleted; // Return the deleted order
         }
+        /*
         /// <summary>
         /// Calculates the total price of the order by going through each orderline in the list to calculate the total price.
         /// </summary>
@@ -233,10 +287,9 @@ namespace EksamenProjekt2Sem.Services
             {
                 throw new Exception("Order not found");
             }
-
-
         }
-
+        */
+        /*
         public Order? ReadOrderByUserId(int userId)
         {
             foreach (Order order in _orders)
@@ -248,9 +301,10 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
+        */
 #region Sorting/Filtering functions
     #region Filtering functions
-
+        /*
 
         /// <summary>
         /// Gets all orders with the same pickup time as the one given in argument.
@@ -259,7 +313,8 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersPickupTime(DateTime pickTime)
         {
-            return _orders.FindAll(o => o.PickupTime == pickTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.PickupTime == pickTime).ToList();
         }
 
         /// <summary>
@@ -269,7 +324,8 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersPickupTimeLower(DateTime pickTime)
         {
-            return _orders.FindAll(o => o.PickupTime >= pickTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.PickupTime >= pickTime).ToList();
         }
 
         /// <summary>
@@ -279,7 +335,8 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersPickupTimeUpper(DateTime pickTime)
         {
-            return _orders.FindAll(o => o.PickupTime <= pickTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.PickupTime <= pickTime).ToList();
         }
 
         /// <summary>
@@ -290,10 +347,11 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersPickupTimeRange(DateTime lowerTime, DateTime upperTime)
         {
-            return _orders.FindAll(o => o.PickupTime >= lowerTime && o.PickupTime <= upperTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.PickupTime >= lowerTime && o.PickupTime <= upperTime).ToList();
         }
-
-
+        */
+        /*
         /// <summary>
         /// Gets all orders with the same order time as the one given in argument.
         /// </summary>
@@ -303,6 +361,7 @@ namespace EksamenProjekt2Sem.Services
         {
             return _orders.FindAll(o => o.OrderTime == orderTime).ToList();
         }
+        
 
         /// <summary>
         /// Gets all orders with an order time higher than the one given in argument.
@@ -311,7 +370,8 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersOrderTimeLower(DateTime orderTime)
         {
-            return _orders.FindAll(o => o.OrderTime >= orderTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.OrderTime >= orderTime).ToList();
         }
 
         /// <summary>
@@ -321,7 +381,8 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersOrderTimeUpper(DateTime orderTime)
         {
-            return _orders.FindAll(o => o.OrderTime <= orderTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.OrderTime <= orderTime).ToList();
         }
 
         /// <summary>
@@ -332,8 +393,10 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Order> FilterOrdersOrderTimeRange(DateTime lowerTime, DateTime upperTime)
         {
-            return _orders.FindAll(o => o.OrderTime >= lowerTime && o.OrderTime <= upperTime).ToList();
+            var orders = _dbService.GetObjectsAsync().Result.ToList();
+            return orders.FindAll(o => o.OrderTime >= lowerTime && o.OrderTime <= upperTime).ToList();
         }
+        */
     #endregion
 
     #region Sorting functions
@@ -420,6 +483,7 @@ namespace EksamenProjekt2Sem.Services
 #endregion
 
 #region Orderline manipulation
+        /*
         /// <summary>
         /// Calculates the total price of a given orderline.
         /// </summary>
@@ -504,9 +568,11 @@ namespace EksamenProjekt2Sem.Services
                 _dbService.UpdateObjectAsync(order).Wait();
             }
         }
+        */
 #endregion
 
 #region Former model:
+        /*
         /// <summary>
         /// Calculates the total price based on the order lines.
         /// </summary>
@@ -536,6 +602,7 @@ namespace EksamenProjekt2Sem.Services
             }
             return null;
         }
+        */
 #endregion
 
     }

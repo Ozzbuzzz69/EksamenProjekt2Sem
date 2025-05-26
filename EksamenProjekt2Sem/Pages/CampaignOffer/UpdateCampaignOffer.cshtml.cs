@@ -20,8 +20,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
             CampaignOffer = _campaignOfferService.ReadCampaignOffer(id);
             if (CampaignOffer == null)
             {
-                // Handle not found case
-                RedirectToPage("ReadAllCampaignOffers"); // Redirect to the index page if not found
+                return RedirectToPage("/NotFound");
             }
             return Page();
         }
@@ -32,7 +31,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
                 return Page();
             }
             _campaignOfferService.UpdateCampaignOffer(CampaignOffer);
-            return RedirectToPage("ReadAllCampaignOffers"); // Redirect to the index page after updating
+            return RedirectToPage("ReadAllCampaignOffers");
         }
     }
 }
