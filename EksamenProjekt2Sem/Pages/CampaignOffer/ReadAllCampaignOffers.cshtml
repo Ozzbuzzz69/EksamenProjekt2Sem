@@ -25,9 +25,8 @@
 <table class="table table-hover table-light">
     <thead>
         <tr>
-            <th>Navn</th>>
+            <th>Navn</th>
             <th>Billede</th>
-            <th>Kategori</th>
             <th>Pris (DKK)</th>
             <th>Start Tid</th>
             <th>Slut Tid</th>
@@ -53,7 +52,7 @@
                     }
                     <tr>
                         <td>@campaignOffer.Name</td>
-                        <td>@campaignOffer.ImageLink</td>
+                        <td><img src="@campaignOffer.ImageLink"/></td>
                         <td>@campaignOffer.Price</td>
                         <td>@campaignOffer.StartTime</td>
                         <td>@campaignOffer.EndTime</td>
