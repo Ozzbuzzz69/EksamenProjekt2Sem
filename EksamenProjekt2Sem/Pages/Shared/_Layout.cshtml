@@ -32,7 +32,7 @@
                         @{
                             if (Context.User.Identity != null && Context.User.Identity.Name == "admin@admin.com")
                             {
-                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <li class="btn-group me-2" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <li class="btn-group me-2" role="group" aria-label="Button group with nested dropdown">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Menuer</a></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop2" type="button" class="button-10 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -62,10 +62,10 @@
                             }
                             else
                             {
-                                <li class="nav-item">
+                                <li class="nav-item me-2">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/Sandwich/ReadAllSandwiches">Smørrebrød</a></button>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item me-2">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Food/WarmMeal/ReadAllWarmMeals">Menuer</a></button>
                                 </li>
                                 <li class="nav-item">
@@ -85,7 +85,7 @@
                             }
                             else
                             {
-                                <li class="nav-item">
+                                <li class="nav-item me-2">
                                     <button class="button-42"><a class="nav-link text-white" asp-area="" asp-page="/Order/ReadAllOrders">Mine ordrer</a></button>
                                 </li>
 
