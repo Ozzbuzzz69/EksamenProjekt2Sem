@@ -25,7 +25,7 @@ namespace EksamenProjekt2Sem.Models
             User = new();        
         }
 
-        public Order(User user, DateTime pickupTime, List<OrderLine> orderLines)
+        public Order(User user, DateTime pickupTime, List<OrderLine>? orderLines = new List<OrderLine>())
         {
             User = user;
             PickupTime = pickupTime;
