@@ -3,11 +3,11 @@
 @{
 }
 
-<h1>All Orders</h1>
+<h1>Alle ordrer</h1>
 
 <form method="post">
-    <input type="text" asp-for="SearchString" placeholder="Search by ingredient..." />
-    <button type="submit">Search</button>
+    <input type="text" asp-for="SearchString" placeholder="Søg efter ingrediens..." />
+    <button type="submit">Søg</button>
 </form>
 
 @if (Model.Orders != null && Model.Orders.Any())
@@ -18,9 +18,8 @@
             double totalPrice = 0;
 
             <li>
-                <strong>Order ID:</strong> @order.Id<br />
-                <strong>Customer:</strong> @order.User.Name<br />
-                <strong>Date:</strong> @order.PickupTime<br />
+                <strong>Bruger:</strong> @order.User.Name<br />
+                <strong>Dato:</strong> @order.PickupTime<br />
                 <ul>
                     @foreach (var line in order.OrderLines)
                     {
@@ -38,5 +37,5 @@
 }
 else
 {
-    <p>No orders found.</p>
+    <p>Ingen ordrer fundet.</p>
 }
