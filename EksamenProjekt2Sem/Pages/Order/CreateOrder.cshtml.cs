@@ -49,11 +49,6 @@ namespace EksamenProjekt2Sem.Pages.Order
 
             Order order = new Order(User, PickupTime, Cart.OrderLines);
 
-            //foreach (var orderline in Cart.OrderLines)
-            //{
-            //    order.OrderLines.Add(orderline);
-            //}
-
             _orderService.CreateOrder(order);
 
             return RedirectToPage("ReadAllOrders");
