@@ -37,7 +37,7 @@ namespace EksamenProjekt2Sem.Pages.Food.Sandwich
         [BindProperty]
         public int Id { get; set; }
 
-        public OrderLine OrderLine { get; set; }
+        public OrderLine? OrderLine { get; set; }
 
 
 

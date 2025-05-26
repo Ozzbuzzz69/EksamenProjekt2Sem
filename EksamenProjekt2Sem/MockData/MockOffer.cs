@@ -5,7 +5,7 @@
     {
         private static List<CampaignOffer> _campaignOffers = new List<CampaignOffer>()
         {
-            new( "Buy potato, get potato", "https://n3dp.dk/wp-content/uploads/2024/09/Tilbud.png.webp", 15),
+            new( "Buy potato, get potato", "https://n3dp.dk/wp-content/uploads/2024/09/Tilbud.png.webp", 15, new DateTime(2025, 5, 1), new DateTime(2026, 5, 1)),
         };
         /// <summary>
         /// Returns a list of mock campaign offers.

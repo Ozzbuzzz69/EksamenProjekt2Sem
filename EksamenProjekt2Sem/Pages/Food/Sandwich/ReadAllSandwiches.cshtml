@@ -122,6 +122,10 @@
     <div style="background-color: white;">
         @foreach (var orderLine in Model.Cart.OrderLines)
         {
+            if (orderLine.Food == null)
+            {
+                continue;
+            }
             <div>
                 <p style="display: inline;">
                     @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.

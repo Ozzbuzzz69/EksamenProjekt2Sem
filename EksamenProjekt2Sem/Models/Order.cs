@@ -16,18 +16,24 @@ namespace EksamenProjekt2Sem.Models
 
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
-        public DateTime PickupTime { get; set; }
+        public DateTime? PickupTime { get; set; }
 
         public List<OrderLine> OrderLines { get; set; }
 
         public Order()
-        { }
+        {
+            User = new();        
+        }
 
         public Order(User user, DateTime pickupTime, List<OrderLine> orderLines)
         {
             User = user;
             PickupTime = pickupTime;
-            OrderLines = orderLines;
+            if (orderLines != null)
+            {
+                OrderLines = orderLines;
+            }
+            else { OrderLines = new List<OrderLine>(); }
         }
     }
 }
