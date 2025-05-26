@@ -85,6 +85,9 @@ namespace EksamenProjekt2Sem.Services
         {
             var cart = ReadCart();
 
+            if (cart.OrderLines == null)
+                cart.OrderLines = new List<OrderLine>();
+
             // Find if the sandwich already exists in the cart
             var existingOrderLine = cart.OrderLines
                 .FirstOrDefault(ol => ol.CampaignOffer.Id == offer.Id);

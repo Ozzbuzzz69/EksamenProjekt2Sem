@@ -112,6 +112,17 @@
             totalPrice += orderLine.CampaignOffer.Price * orderLine.Quantity;
         }
 
-        <p>Samlet pris: @totalPrice.ToString("0.00") kr.</p>
+        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
     </div>
 }
+
+<div class="button" style="margin-bottom: 10px;">
+    <a class="btn btn-danger" style="background-color:#ff2d00;" asp-page="/Order/CreateOrder">Bestil</a>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
