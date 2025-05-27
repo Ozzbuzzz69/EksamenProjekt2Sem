@@ -121,26 +121,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<WarmMeal> SearchWarmMealByMeatType(string criteria)
         {
-            List<WarmMeal> temp = new();
-
-            foreach (WarmMeal m in _warmMeals)
-            {
-                if (m == null)
-                {
-                    continue;
-                }
-                if (m.MeatType == null)
-                {
-                    temp.Add(m);
-                    continue;
-                }
-                if (m.MeatType.ToLower().Contains(criteria.ToLower()))
-                {
-                    temp.Add(m);
-                }
-            }
-            //return _warmMeals.FindAll(w => string.IsNullOrEmpty(criteria) || w.MeatType.ToLower().Contains(criteria.ToLower()));
-            return temp;
+            return _warmMeals.FindAll(w => string.IsNullOrEmpty(criteria) || w.MeatType.ToLower().Contains(criteria.ToLower()));    
         }
        
     }

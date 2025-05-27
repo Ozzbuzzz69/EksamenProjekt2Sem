@@ -139,27 +139,7 @@ namespace EksamenProjekt2Sem.Services
         /// <returns></returns>
         public List<Sandwich> SearchSandwichByMeatType(string criteria)
         {
-            List<Sandwich> temp = new();
-
-            foreach (Sandwich s in _sandwiches)
-            {
-                if (s == null)
-                {
-                    continue;
-                }
-                if (s.MeatType == null)
-                {
-                    temp.Add(s);
-                    continue;
-                }
-                if (s.MeatType.ToLower().Contains(criteria.ToLower()))
-                {
-                    temp.Add(s);
-                }
-            }
-            return temp;
-
-            //return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()) || s.MeatType.IsNullOrEmpty());
+            return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()) || s.MeatType.IsNullOrEmpty());
         }
 
 

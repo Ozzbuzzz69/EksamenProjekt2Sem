@@ -44,25 +44,5 @@ namespace EksamenProjekt2Sem.MockData
         {
             return _warmMeals;
         }
-        /// <summary>
-        /// Returns a list of mock foods, which is a combination of sandwiches and warm meals.
-        /// </summary>
-        /// <returns></returns>
-        public static List<Food> GetFoods()
-        {
-            if (_foods.Count == 0)
-            {
-                foreach (var sandwich in _sandwiches)
-                {
-                    _foods.Add(sandwich);
-                }
-                foreach (var warmMeal in _warmMeals)
-                {
-                    _foods.Add(warmMeal);
-                }
-            }
-            return _foods;
-        }
-
     }
 }
