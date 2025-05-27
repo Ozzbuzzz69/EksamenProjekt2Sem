@@ -72,17 +72,6 @@ namespace EksamenProjekt2Sem.Services
             var users = await _dbService.GetObjectsAsync();
             return users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
         }
-
-
-        public User GetUserById(int id)
-        {
-            var user = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
-            if (user == null)
-            {
-                throw new Exception($"User with id {id} not found.");
-            }
-            return user;
-        }
  
 
         /// <summary>
@@ -140,20 +129,6 @@ namespace EksamenProjekt2Sem.Services
             }
             return userToBeDeleted;
         }
-
-
-        //public Order Order(List<OrderLine> orderlines)
-        //{
-        //    // Create order from orderlines
-        //    return new Order(); // Placeholder return
-        //}
-        //public User GetUserOrders(User user)
-        //{
-        //    return (User)(from o in Orders
-        //                   where o.User.Id == GetObjectByIdAsync(user.Id).Result.Id
-        //                   select o);
-
-        //}
 
 
     }

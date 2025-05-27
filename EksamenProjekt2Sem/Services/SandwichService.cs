@@ -119,20 +119,6 @@ namespace EksamenProjekt2Sem.Services
             return sandwichToBeDeleted;
         }
 
-        //public void AddSandwichToCart(int quantity, int id)
-        //{
-        //    OrderLine orderLine = new OrderLine();
-
-        //    orderLine.Quantity = quantity;
-        //    orderLine.Food = Sandwich;
-
-        //    Order.OrderLines.Add(orderLine);
-        //}
-
-
-
-        #region Sorting/Filtering functions
-        #region Filtering functions
 
         /// <summary>
         /// Filters sandwiches by specified category.
@@ -177,90 +163,6 @@ namespace EksamenProjekt2Sem.Services
         }
 
 
-        /// <summary>
-        /// Filters food by specified ingredients.
-        /// </summary>
-        /// <param name="meatType"></param>
-        /// <returns>
-        /// Returns a list of matching sandwiches.
-        /// </returns>
-        public List<Sandwich> FilterSandwichByIngredient(string criteria)
-        {
-            List<Sandwich> temp = new();
-
-            foreach (Sandwich s in _sandwiches)
-            {
-                if (s == null)
-                {
-                    continue;
-                }
-                if (s.Ingredients == null)
-                {
-                    temp.Add(s);
-                    continue;
-                }
-                if (s.Ingredients.ToLower().Contains(criteria.ToLower()))
-                {
-                    temp.Add(s);
-                }
-            }
-            return temp;
-
-            // return _sandwiches.FindAll(s => s.Ingredients.ToLower().Contains(criteria.ToLower()));
-        }
-
-
-        /// <summary>
-        /// Finds all sandwiches that cost more than the criteria.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public List<Sandwich> FilterSandwichByPriceLower(double criteria)
-        {
-            return _sandwiches.FindAll(s => s.Price >= criteria);
-        }
-
-        /// <summary>
-        /// Finds all sandwiches that cost less than the criteria.
-        /// </summary>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public List<Sandwich> FilterSandwichByPriceUpper(double criteria)
-        {
-            return _sandwiches.FindAll(s => s.Price <= criteria);
-        }
-
-        /// <summary>
-        /// Finds all sandwiches that cost between the two criteria (including the criteria).
-        /// </summary>
-        /// <param name="lower"></param>
-        /// <param name="upper"></param>
-        /// <returns></returns>
-        public List<Sandwich> FilterSandwichByPriceRange(double lower, double upper)
-        {
-            return _sandwiches.FindAll(s => s.Price >= lower && s.Price <= upper);
-        }
-    #endregion
-
-    #region Sorting functions
-        /// <summary>
-        /// Gets all sandwiches sorted by id.
-        /// </summary>
-        /// <returns></returns>
-        public List<Sandwich> GetSandwichesSortedById()
-        {
-            return SortById(_sandwiches);
-        }
-
-        /// <summary>
-        /// Gets all sandwiches sorted by price.
-        /// </summary>
-        /// <returns></returns>
-        public List<Sandwich> GetSandwichesSortedByPrice()
-        {
-            return SortByCriteria(_sandwiches, "Price");
-        }
-    #endregion
-#endregion
     }
 }
+

@@ -91,17 +91,6 @@ namespace EksamenProjekt2Sem.Services
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;
 
-            /*
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-
-            var offerToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(o => o.Id == id);
-            if (offerToBeDeleted == null)
-                throw new Exception($"CampaignOffer with id {id} not found.");
-
-            _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
-            return offerToBeDeleted;
-            */
         }
 
         public void SetOfferValidities()
