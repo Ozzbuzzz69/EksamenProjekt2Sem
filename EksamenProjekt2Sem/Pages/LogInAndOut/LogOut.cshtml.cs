@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Session;
 
 namespace EksamenProjekt2Sem.Pages.LogInAndOut
 {
@@ -12,6 +13,7 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         {
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear(); // Clear session data
             return RedirectToPage("/index");
         }
 
