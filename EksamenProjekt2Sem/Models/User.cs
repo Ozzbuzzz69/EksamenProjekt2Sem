@@ -11,7 +11,8 @@ namespace EksamenProjekt2Sem.Models
 
         [Required(ErrorMessage = "Navnet skal være udfyldt")]
         [StringLength(50, ErrorMessage = "Navnet må max være 50 tegn langt")]
-        [RegularExpression(@"^[a-zA-ZæøåÆØÅ\s]+$", ErrorMessage = "Navnet må kun indeholde bogstaver og mellemrum")] // Regex til at sikre at der kun er bogstaver og mellemrum
+        [RegularExpression(@"^[a-zA-ZæøåÆØÅ\s]+$", ErrorMessage = "Navnet må kun indeholde bogstaver og mellemrum")] 
+        // Regex til at sikre at der kun er bogstaver og mellemrum
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
@@ -31,7 +32,7 @@ namespace EksamenProjekt2Sem.Models
         [MinLength(8, ErrorMessage = "Koden skal minimum indeholde 8 tegn")]
         [MaxLength(500, ErrorMessage = "Koden må max være 500 tegn langt")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$",
-        ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.")]
+        ErrorMessage = "Adgangskoden skal være mindst 8 tegn og indeholde mindst ét stort bogstav, ét lille bogstav og ét tal.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

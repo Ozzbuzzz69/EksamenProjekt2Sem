@@ -1,7 +1,6 @@
 ﻿@page
 @model EksamenProjekt2Sem.Pages.User.CreateUserModel
 @{
-    //Very incorrect implementation of the page, but it is a placeholder for the actual implementation.
 }
 
 <form method="post">
@@ -25,9 +24,7 @@
         <input asp-for="@Model.User.Password" class="form-control" />
         <span asp-validation-for="@Model.User.Password" class="text-danger"></span>
     </div>
-    @{
-        /* More inputs should be added here */
-    }
+    
 
     <p>
         <div class="form-group">
@@ -35,3 +32,4 @@
         </div>
     </p>
 </form>
+
