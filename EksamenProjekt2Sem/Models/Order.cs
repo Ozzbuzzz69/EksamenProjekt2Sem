@@ -26,8 +26,6 @@ namespace EksamenProjekt2Sem.Models
 
         public int? CampaignOfferId { get; set; }
 
-
-
         public Order() { }
 
 

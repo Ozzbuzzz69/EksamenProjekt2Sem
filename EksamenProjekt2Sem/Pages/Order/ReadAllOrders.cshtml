@@ -15,6 +15,7 @@
     <ul>
         @foreach (var order in Model.Orders)
         {
+            <li>Indhold</li>
             @if (order.FoodId != null)
             {
                 <p>@order.Food.Ingredients</p>
@@ -23,7 +24,10 @@
             {
                 <p>@order.CampaignOffer.Name</p>
             }
+            <li>Antal</li>
             <p>@order.Quantity</p>
+
+            <li>Bruger</li>
             <p>@order.User</p>
         }
     </ul>
