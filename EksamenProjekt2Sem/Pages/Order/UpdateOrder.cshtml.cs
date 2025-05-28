@@ -23,14 +23,14 @@ namespace EksamenProjekt2Sem.Pages.Order
             }
             return Page();
         }
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            _orderService.UpdateOrder(Order);
-            return RedirectToPage("Index"); // Redirect to the index page after updating
-        }
+        //public IActionResult OnPost()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+        //    _orderService.UpdateOrder(Order);
+        //    return RedirectToPage("Index"); // Redirect to the index page after updating
+        //}
     }
 }

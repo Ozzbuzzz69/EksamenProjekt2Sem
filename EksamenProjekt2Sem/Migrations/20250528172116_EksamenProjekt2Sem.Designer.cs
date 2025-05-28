@@ -4,6 +4,7 @@ using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    partial class FoodContextModelSnapshot : ModelSnapshot
+    [Migration("20250528172116_EksamenProjekt2Sem")]
+    partial class EksamenProjekt2Sem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,10 +103,10 @@ namespace EksamenProjekt2Sem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CampaignOfferId")
+                    b.Property<int>("CampaignOfferId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FoodId")
+                    b.Property<int>("FoodId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PickupTime")
@@ -184,11 +187,15 @@ namespace EksamenProjekt2Sem.Migrations
                 {
                     b.HasOne("EksamenProjekt2Sem.Models.CampaignOffer", "CampaignOffer")
                         .WithMany()
-                        .HasForeignKey("CampaignOfferId");
+                        .HasForeignKey("CampaignOfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EksamenProjekt2Sem.Models.Food", "Food")
                         .WithMany()
-                        .HasForeignKey("FoodId");
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EksamenProjekt2Sem.Models.User", "User")
                         .WithMany()

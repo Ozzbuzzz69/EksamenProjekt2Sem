@@ -13,7 +13,6 @@ namespace EksamenProjekt2Sem.Pages.LogInAndOut
         {
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear(); // Clear session data
             return RedirectToPage("/index");
         }
 

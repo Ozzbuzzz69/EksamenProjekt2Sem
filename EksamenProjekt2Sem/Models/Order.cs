@@ -11,29 +11,33 @@ namespace EksamenProjekt2Sem.Models
 
         public User User { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime OrderTime { get; } = DateTime.Now;
-
         [Required(ErrorMessage = "Der skal angives en afhentningstid")]
         [DataType(DataType.DateTime)]
         public DateTime? PickupTime { get; set; }
 
-        public List<OrderLine> OrderLines { get; set; }
+        public Food Food { get; set; }
 
-        public Order()
-        {
-            User = new();        
-        }
+        public int Quantity { get; set; }
 
-        public Order(User user, DateTime pickupTime, List<OrderLine> orderLines)
+        public int UserId { get; set; }
+        public int? FoodId { get; set; }
+
+        public CampaignOffer CampaignOffer { get; set; }
+
+        public int? CampaignOfferId { get; set; }
+
+
+
+        public Order() { }
+
+
+        public Order(User user, DateTime pickupTime, Food? food, CampaignOffer? campaignOffer)
         {
             User = user;
             PickupTime = pickupTime;
-            if (orderLines != null)
-            {
-                OrderLines = orderLines;
-            }
-            else { OrderLines = new List<OrderLine>(); }
+            Food = food;
+            CampaignOffer = campaignOffer;
         }
+
     }
 }

@@ -7,11 +7,15 @@ namespace EksamenProjekt2Sem.Services
     {
 
         private List<WarmMeal> _warmMeals;
-        private GenericDbService<WarmMeal> _dbService;
+        private List<Order> _orders;
 
-        public WarmMealService(GenericDbService<WarmMeal> dbService)
+        private GenericDbService<WarmMeal> _dbService;
+        private GenericDbService<Order> _dbOrderService;
+
+        public WarmMealService(GenericDbService<WarmMeal> dbService, GenericDbService<Order> dbOrderService)
         {
             _dbService = dbService;
+            _dbOrderService = dbOrderService;
             try
             {
                 _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
@@ -20,6 +24,7 @@ namespace EksamenProjekt2Sem.Services
                     SeedWarmMealAsync().Wait();
                     _warmMeals = _dbService.GetObjectsAsync().Result.ToList();
                 }
+                _orders = _dbOrderService.GetObjectsAsync().Result.ToList();
             }
             catch (AggregateException ex)
             {
@@ -109,6 +114,7 @@ namespace EksamenProjekt2Sem.Services
             var warmMealToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(w => w.Id == id);
             if (warmMealToBeDeleted == null)
                 throw new Exception($"WarmMeal with id {id} not found.");
+            if (_orders.Any(o => o.FoodId == id)) return null;
 
             _dbService.DeleteObjectAsync(warmMealToBeDeleted).Wait();
             return warmMealToBeDeleted;

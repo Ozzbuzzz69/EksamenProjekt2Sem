@@ -44,10 +44,10 @@
         <tr>
             <th>Ingredienser</th>
             <th>Kødtype</th>
-            <th>Antal portioner</th>
+            <th>Bestil minimum antal portioner</th>
             <th>Kun i sæson *</th>
             <th>Pris pr portion (DKK)</th>
-            <th>Vælg antal og tilføj</th>
+            <th>Bestil her</th>
             @{
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
                 {
@@ -70,14 +70,7 @@
                         <td>@warmmeal.InSeason</td>
                         <td>@warmmeal.Price</td>
                         <td>
-                            <form method="post">
-                                <div class="button" style="float: left">
-                                    <input class="inputsize" type="number"
-                                           name="quantity" min="@warmmeal.MinPersonAmount" />
-                                    <input type="submit" asp-page-handler="AddFoodToCart" asp-route-id="@warmmeal.Id"
-                                           value="Tilføj" class="btn btn-outline-dark" />
-                                </div>
-                            </form>
+                            <a class="btn btn-danger" style="background-color:#ff2d00;" type="button" title="Bestil" asp-page="/Order/CreateOrder" asp-route-type="WarmMeal" asp-route-id="@warmmeal.Id"><p>Bestil</p></a>
                         </td>
                         @{
                             if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com")
@@ -96,38 +89,3 @@
         }
     </tbody>
 </table>
-
-@{
-    double totalPrice = 0;
-}
-
-@if (Model.Cart != null && Model.Cart.OrderLines != null)
-{
-    <div style="background-color: white;">
-        @foreach (var orderLine in Model.Cart.OrderLines)
-        {
-            <div>
-                <p style="display: inline;">
-                    @orderLine.Food.Ingredients, @orderLine.Food.Price kr., @orderLine.Quantity stk.
-                    <form method="post" style="display: inline; float: right;">
-                        <input type="hidden" name="orderLineFoodId" value="@orderLine.Food.Id" />
-                        <input type="hidden" name="quantity" value="@orderLine.Quantity" />
-                        <button type="submit" asp-page-handler="DeleteOrderLine" class="btn btn-danger" style="background-color:#ff2d00;">X</button>
-                    </form>
-                </p>
-            </div>
-
-            totalPrice += orderLine.Food.Price * orderLine.Quantity;
-        }
-
-        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
-    </div>
-}
-
-
-
-<div class="button" style="margin-bottom: 150px;">
-    <a class="btn btn-danger" style="background-color:#ff2d00;" asp-page="/Order/CreateOrder">Bestil</a>
-</div>
-
-

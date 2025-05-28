@@ -21,43 +21,10 @@ namespace EksamenProjekt2Sem.Pages.Order
         // Other search criteria properties can be added here:
         //
 
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
-            // Get all orders
             Orders = _orderService.ReadAllOrdersByUser(_userService.GetUserByEmail(HttpContext.User.Identity.Name));
-            if (Orders == null)
-            {
-                // Handle not found case
-                RedirectToPage("Index");
-            }
-        }
-        /// <summary>
-        /// Search for ingredients in the order's lines
-        /// </summary>
-        /// <returns>Updated list which fits the searchstring</returns>
-        public IActionResult OnPost()
-        {
-            // Handle search input
-            if (!string.IsNullOrEmpty(SearchString))
-            {
-                List<Order> temp = new();
-                foreach (Order o in Orders)
-                {
-                    foreach (OrderLine ol in o.OrderLines)
-                    {
-                        if (ol.Food.Ingredients.ToLower().Contains(SearchString.ToLower()))
-                        {
-                            temp.Add(o);
-                            break;
-                        }
-                    }
-                }
-                Orders = temp;
-            }
             return Page();
         }
-        // Other onpost methods such as filtering can be added here:
-        //
-
     }
 }

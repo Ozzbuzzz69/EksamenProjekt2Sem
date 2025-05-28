@@ -24,7 +24,7 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
             WarmMeal = _warmMealService.ReadWarmMeal(id);
             if (WarmMeal == null)
             {
-                return RedirectToPage("NotFound");
+                return RedirectToPage("ReadAllWarmMeals");
             }
             return Page();
         }
@@ -34,7 +34,7 @@ namespace EksamenProjekt2Sem.Pages.Food.WarmMeal
             Models.WarmMeal deletedWarmMeal = _warmMealService.DeleteWarmMeal(WarmMeal.Id);
             if (deletedWarmMeal == null)
             {
-                return RedirectToPage("NotFound");
+                return RedirectToPage("ReadAllWarmMeals");
             }
             return RedirectToPage("ReadAllWarmMeals");
         }
