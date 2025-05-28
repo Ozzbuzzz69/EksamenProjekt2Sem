@@ -46,10 +46,10 @@
             {
                 foreach (var campaignOffer in Model.CampaignOffers)
                 {
-                    if (campaignOffer.IsActive == false && !(HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com"))
-                    {
-                        continue;
-                    }
+                    // if (campaignOffer.IsActive == false && !(HttpContext.User.Identity != null && HttpContext.User.Identity.Name == "admin@admin.com"))
+                    // {
+                    //     continue;
+                    // }
                     <tr>
                         <td>@campaignOffer.Name</td>
                         <td><img src="@campaignOffer.ImageLink"/></td>

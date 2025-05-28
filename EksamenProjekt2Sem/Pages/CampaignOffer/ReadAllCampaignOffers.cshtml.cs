@@ -31,7 +31,5 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
                 RedirectToPage("Index");
             }
         }
-        // Hvis der skal laves søgninger på campaignoffers, så skal services laves først til det
-        //
     }
 }
