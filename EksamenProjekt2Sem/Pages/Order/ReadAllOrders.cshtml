@@ -12,25 +12,23 @@
 
 @if (Model.Orders != null)
 {
-    <ul>
         @foreach (var order in Model.Orders)
         {
-            <li>Indhold</li>
             @if (order.FoodId != null)
             {
-                <p>@order.Food.Ingredients</p>
+                <p>Indhold: @order.Food.Ingredients.</p>
+                <p>Antal: @order.Quantity stk.</p>
+                <p>Samlet pris: @(order.Food.Price * order.Quantity) kr.</p>
             }
             @if (order.CampaignOffer != null)
             {
-                <p>@order.CampaignOffer.Name</p>
+                <p>Indhold: @order.CampaignOffer.Name.</p>
+                <p>Antal: @order.Quantity stk.</p>
+                <p>Samlet pris: @(order.CampaignOffer.Price * order.Quantity) kr.</p>
             }
-            <li>Antal</li>
-            <p>@order.Quantity</p>
-
-            <li>Bruger</li>
-            <p>@order.User</p>
+            <br />
+            <br />
         }
-    </ul>
 }
 else
 {

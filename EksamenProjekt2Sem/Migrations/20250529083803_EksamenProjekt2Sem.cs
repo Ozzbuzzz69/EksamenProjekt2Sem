@@ -73,8 +73,8 @@ namespace EksamenProjekt2Sem.Migrations
                     PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false),
-                    CampaignOfferId = table.Column<int>(type: "int", nullable: false)
+                    FoodId = table.Column<int>(type: "int", nullable: true),
+                    CampaignOfferId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,14 +83,12 @@ namespace EksamenProjekt2Sem.Migrations
                         name: "FK_Orders_CampaignOffers_CampaignOfferId",
                         column: x => x.CampaignOfferId,
                         principalTable: "CampaignOffers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Food_FoodId",
                         column: x => x.FoodId,
                         principalTable: "Food",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,

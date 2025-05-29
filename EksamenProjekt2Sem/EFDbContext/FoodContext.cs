@@ -21,18 +21,18 @@ namespace EksamenProjektTest.EFDbContext
         {
             if (!options.IsConfigured)
             {
-                //options.UseSqlServer(
-                //$@"Data Source=mssql10.unoeuro.com;
-                //Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
-                //User ID=koebmandenellevej_dk;
-                //Password={Passwords.DbPassword};
-                //Connect Timeout=30;
-                //Encrypt=True;
-                //Trust Server Certificate=True;
-                //Application Intent=ReadWrite;
-                //Multi Subnet Failover=False");
+                options.UseSqlServer(
+                $@"Data Source=mssql10.unoeuro.com;
+                Initial Catalog=koebmandenellevej_dk_db_ellevej_database;
+                User ID=koebmandenellevej_dk;
+                Password={Passwords.DbPassword};
+                Connect Timeout=30;
+                Encrypt=True;
+                Trust Server Certificate=True;
+                Application Intent=ReadWrite;
+                Multi Subnet Failover=False");
 
-                options.UseSqlServer($@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+                //options.UseSqlServer($@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             }
         }
         public DbSet<CampaignOffer> CampaignOffers { get; set; }

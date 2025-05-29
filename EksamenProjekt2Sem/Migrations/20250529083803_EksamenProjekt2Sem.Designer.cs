@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EksamenProjekt2Sem.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    [Migration("20250528195409_tilføjelse")]
-    partial class tilføjelse
+    [Migration("20250529083803_EksamenProjekt2Sem")]
+    partial class EksamenProjekt2Sem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,9 +114,6 @@ namespace EksamenProjekt2Sem.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
