@@ -36,11 +36,6 @@ namespace EksamenProjekt2Sem.Services
             {
                 _sandwiches = new();
             }
-
-            //_sandwiches = MockFood.GetSandwiches();
-            //_dbService.SaveObjects(_sandwiches);
-
-            //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
         }
         //Getting mock data into the database
 
@@ -150,8 +145,5 @@ namespace EksamenProjekt2Sem.Services
         {
             return _sandwiches.FindAll(s => string.IsNullOrEmpty(criteria) || s.MeatType.ToLower().Contains(criteria.ToLower()) || s.MeatType.IsNullOrEmpty());
         }
-
-
     }
 }
-

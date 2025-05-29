@@ -43,6 +43,7 @@ namespace EksamenProjekt2Sem.Models
             PhoneNumber = phoneNumber;
             Password = password;
         }
+
         public User()
         {
             Name = "";
@@ -50,6 +51,5 @@ namespace EksamenProjekt2Sem.Models
             PhoneNumber = "";
             Password = "";
         }
-
     }
 }

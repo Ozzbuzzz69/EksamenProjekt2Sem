@@ -9,10 +9,10 @@ namespace EksamenProjekt2Sem.Services
 {
     public class OrderService : GenericDbService<Order>
     {
-        private List<Order> _orders; // Overskud fra domain model
+        private List<Order> _orders;
         private List<Food> _food;
         private List<CampaignOffer> _campaignOffers;
-        private GenericDbService<Order> _dbService; // Overskud fra domain model
+        private GenericDbService<Order> _dbService;
         private GenericDbService<Food> _dbFoodService;
         private GenericDbService<CampaignOffer> _dbCampaignOfferService;
 
@@ -41,17 +41,6 @@ namespace EksamenProjekt2Sem.Services
             {
                 _orders = new();
             }
-
-            //_orders = _dbService.GetObjectsAsync().Result.ToList();
-            //_orders = MockOrder.GetOrders();
-            //_dbService.SaveObjects(_orders);
-
-            //if (_orders == null)
-            //{
-            //    _orders = MockOrder.GetOrders();
-            //}
-            //else
-            //    _orders = _dbService.GetObjectsAsync().Result.ToList();
         }
        
         //public async Task SeedOrderAsync()

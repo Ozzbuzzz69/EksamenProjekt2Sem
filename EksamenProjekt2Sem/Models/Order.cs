@@ -28,7 +28,6 @@ namespace EksamenProjekt2Sem.Models
 
         public Order() { }
 
-
         public Order(User user, DateTime pickupTime, Food? food, CampaignOffer? campaignOffer)
         {
             User = user;
@@ -36,6 +35,5 @@ namespace EksamenProjekt2Sem.Models
             Food = food;
             CampaignOffer = campaignOffer;
         }
-
     }
 }

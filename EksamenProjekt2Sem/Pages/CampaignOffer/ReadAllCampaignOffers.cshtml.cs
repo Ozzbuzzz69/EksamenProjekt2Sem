@@ -17,7 +17,6 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
         [BindProperty]
         public string SearchString { get; set; }
 
-
         public void OnGet()
         {
             // Update the validity of Offers

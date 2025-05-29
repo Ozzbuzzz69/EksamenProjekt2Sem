@@ -18,8 +18,6 @@ namespace EksamenProjekt2Sem.Pages.Order
         public List<Order>? Orders { get; set; }
         [BindProperty]
         public string? SearchString { get; set; }
-        // Other search criteria properties can be added here:
-        //
 
         public IActionResult OnGet(int id)
         {
