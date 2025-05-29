@@ -35,14 +35,6 @@ namespace EksamenProjekt2Sem.Services
             {
                 _campaignOffers = new();
             }
-            /*
-            if (_campaignOffers == null)
-            {
-                _campaignOffers = MockOffer.GetCampaignOffers();
-            }
-            else
-                _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
-            */
         }
 
         //Getting mock data into the database

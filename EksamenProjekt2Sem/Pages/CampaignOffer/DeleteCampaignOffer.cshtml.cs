@@ -35,9 +35,7 @@ namespace EksamenProjekt2Sem.Pages.CampaignOffer
                 // Handle not found case
                 RedirectToPage("ReadAllCampaignOffers");
             }
-
             return RedirectToPage("ReadAllCampaignOffers");
         }
     }
 }
-

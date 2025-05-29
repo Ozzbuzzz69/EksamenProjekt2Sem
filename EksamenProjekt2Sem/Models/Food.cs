@@ -29,7 +29,6 @@ namespace EksamenProjekt2Sem.Models
         public Food()
         { }
 
-        
         public Food(string ingredients, string? inSeason, string meatType, double price)
         {
             Ingredients = ingredients;

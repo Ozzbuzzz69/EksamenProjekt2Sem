@@ -129,6 +129,5 @@ namespace EksamenProjekt2Sem.Services
         {
             return _warmMeals.FindAll(w => string.IsNullOrEmpty(criteria) || w.MeatType.ToLower().Contains(criteria.ToLower()));    
         }
-       
     }
 }

@@ -8,8 +8,8 @@ namespace EksamenProjekt2Sem.Services
 {
     public class UserService : GenericDbService<User>
     {
-        public List<User> _users;// Overskud fra domain model
-        private GenericDbService<User> _dbService; // Overskud fra domain model
+        public List<User> _users;
+        private GenericDbService<User> _dbService;
 
        
         public UserService(GenericDbService<User> genericDbService)
@@ -33,19 +33,6 @@ namespace EksamenProjekt2Sem.Services
             {
                 _users = new();
             }
-
-
-
-            /*
-            _dbService = genericDbService;
-            
-            if (_users == null)
-            {
-                _users = MockUser.GetMockUsers();
-            }
-            else
-                _users = _dbService.GetObjectsAsync().Result.ToList();
-            */
         }
         //Getting mock data into the database
         public async Task SeedMockUsersAsync()
@@ -60,8 +47,6 @@ namespace EksamenProjekt2Sem.Services
             await _dbService.AddObjectAsync(user);
         }
 
-
-        
         public User? GetUserByEmail(string email)
         {
             return _users.Find(user => user.Email.ToLower() == email.ToLower());
@@ -129,7 +114,5 @@ namespace EksamenProjekt2Sem.Services
             }
             return userToBeDeleted;
         }
-
-
     }
 }
