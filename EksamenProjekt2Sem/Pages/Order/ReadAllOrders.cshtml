@@ -26,6 +26,7 @@
                 <p>Antal: @order.Quantity stk.</p>
                 <p>Samlet pris: @(order.CampaignOffer.Price * order.Quantity) kr.</p>
             }
+            <p>Afhentningsdato: @order.PickupTime.</p>
             <br />
             <br />
         }
