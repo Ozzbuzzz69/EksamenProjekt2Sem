@@ -100,40 +100,19 @@ namespace EksamenProjekt2Sem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CampaignOfferId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("PickupTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("EksamenProjekt2Sem.Models.OrderLine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CampaignOfferId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -142,9 +121,9 @@ namespace EksamenProjekt2Sem.Migrations
 
                     b.HasIndex("FoodId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("OrderLine");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("EksamenProjekt2Sem.Models.User", b =>
@@ -203,41 +182,25 @@ namespace EksamenProjekt2Sem.Migrations
 
             modelBuilder.Entity("EksamenProjekt2Sem.Models.Order", b =>
                 {
+                    b.HasOne("EksamenProjekt2Sem.Models.CampaignOffer", "CampaignOffer")
+                        .WithMany()
+                        .HasForeignKey("CampaignOfferId");
+
+                    b.HasOne("EksamenProjekt2Sem.Models.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId");
+
                     b.HasOne("EksamenProjekt2Sem.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EksamenProjekt2Sem.Models.OrderLine", b =>
-                {
-                    b.HasOne("EksamenProjekt2Sem.Models.CampaignOffer", "CampaignOffer")
-                        .WithMany()
-                        .HasForeignKey("CampaignOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EksamenProjekt2Sem.Models.Food", "Food")
-                        .WithMany()
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EksamenProjekt2Sem.Models.Order", null)
-                        .WithMany("OrderLines")
-                        .HasForeignKey("OrderId");
-
                     b.Navigation("CampaignOffer");
 
                     b.Navigation("Food");
-                });
 
-            modelBuilder.Entity("EksamenProjekt2Sem.Models.Order", b =>
-                {
-                    b.Navigation("OrderLines");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

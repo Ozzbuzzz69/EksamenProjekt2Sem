@@ -16,7 +16,7 @@ namespace EksamenProjekt2Sem.Models
         { }
 
         
-        public Sandwich( string? ingredients, string? inSeason, string meatType, double price, string category) : base( ingredients, inSeason, meatType, price)
+        public Sandwich(string? ingredients, string? inSeason, string meatType, double price, string category) : base(ingredients, inSeason, meatType, price)
         {
             Category = category;
         }

@@ -7,11 +7,15 @@ namespace EksamenProjekt2Sem.Services
     {
 
         private List<CampaignOffer> _campaignOffers;
-        private GenericDbService<CampaignOffer> _dbService;
+        private List<Order> _orders;
 
-        public CampaignOfferService(GenericDbService<CampaignOffer> dbService)
+        private GenericDbService<CampaignOffer> _dbService;
+        private GenericDbService<Order> _dbOrderService;
+
+        public CampaignOfferService(GenericDbService<CampaignOffer> dbService, GenericDbService<Order> dbOrderService)
         {
             _dbService = dbService;
+            _dbOrderService = dbOrderService;
             try
             {
                 _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
@@ -20,6 +24,7 @@ namespace EksamenProjekt2Sem.Services
                     SeedCampaignAsync().Wait();
                     _campaignOffers = _dbService.GetObjectsAsync().Result.ToList();
                 }
+                _orders = _dbOrderService.GetObjectsAsync().Result.ToList();
             }
             catch (AggregateException ex)
             {
@@ -87,6 +92,7 @@ namespace EksamenProjekt2Sem.Services
         {
             var offerToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
             if (offerToBeDeleted == null) return null;
+            if (_orders.Any(o => o.CampaignOfferId == id)) return null;
 
             _dbService.DeleteObjectAsync(offerToBeDeleted).Wait();
             return offerToBeDeleted;

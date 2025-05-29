@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<GenericDbService<Order>>();
+builder.Services.AddScoped<GenericDbService<Food>>();
 builder.Services.AddScoped<GenericDbService<User>>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CampaignOfferService>();
@@ -21,9 +22,6 @@ builder.Services.AddScoped<SandwichService>();
 builder.Services.AddScoped<GenericDbService<Sandwich>>();
 builder.Services.AddScoped<WarmMealService>();
 builder.Services.AddScoped<GenericDbService<WarmMeal>>();
-
-//used for Sessions
-builder.Services.AddHttpContextAccessor();
 
 
 // Add DB context
@@ -43,10 +41,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 });
 
-
-//used for Sessions
-
-builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -76,9 +70,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//used for Sessions
 
-app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

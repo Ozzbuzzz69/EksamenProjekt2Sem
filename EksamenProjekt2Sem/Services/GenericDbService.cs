@@ -2,6 +2,7 @@
 using EksamenProjekt2Sem.Secrets;
 using EksamenProjektTest.EFDbContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 namespace EksamenProjekt2Sem.Services
 {
     public class GenericDbService<T> where T : class
@@ -26,6 +27,9 @@ namespace EksamenProjekt2Sem.Services
                 Application Intent=ReadWrite;
                 Multi Subnet Failover=False")
                 .Options;
+
+           // _options = new DbContextOptionsBuilder<FoodContext>()
+             //   .UseSqlServer($@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False").Options;
         }
 
 

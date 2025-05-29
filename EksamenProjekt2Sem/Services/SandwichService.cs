@@ -8,12 +8,15 @@ namespace EksamenProjekt2Sem.Services
     {
 
         private List<Sandwich> _sandwiches;
+        private List<Order> _orders;
 
         private GenericDbService<Sandwich> _dbService;
+        private GenericDbService<Order> _dbOrderService;
 
-        public SandwichService(GenericDbService<Sandwich> dbService)
+        public SandwichService(GenericDbService<Sandwich> dbService, GenericDbService<Order> dbOrderService)
         {
             _dbService = dbService;
+            _dbOrderService = dbOrderService;
             try
             {
                 _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
@@ -22,6 +25,7 @@ namespace EksamenProjekt2Sem.Services
                     SeedSandwichAsync().Wait();
                     _sandwiches = _dbService.GetObjectsAsync().Result.ToList();
                 }
+                _orders = _dbOrderService.GetObjectsAsync().Result.ToList();
             }
             catch (AggregateException ex)
             {
@@ -32,6 +36,11 @@ namespace EksamenProjekt2Sem.Services
             {
                 _sandwiches = new();
             }
+
+            //_sandwiches = MockFood.GetSandwiches();
+            //_dbService.SaveObjects(_sandwiches);
+
+            //_sandwiches = _dbService.GetObjectsAsync().Result.ToList();
         }
         //Getting mock data into the database
 
@@ -114,7 +123,7 @@ namespace EksamenProjekt2Sem.Services
         {
             var sandwichToBeDeleted = _dbService.GetObjectsAsync().Result.FirstOrDefault(s => s.Id == id);
             if (sandwichToBeDeleted == null) return null;
-
+            if (_orders.Any(o => o.FoodId == id)) return null;
             _dbService.DeleteObjectAsync(sandwichToBeDeleted).Wait();
             return sandwichToBeDeleted;
         }

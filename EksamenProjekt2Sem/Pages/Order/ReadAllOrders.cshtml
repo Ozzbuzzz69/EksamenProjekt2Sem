@@ -6,34 +6,29 @@
 <h1>Alle ordrer</h1>
 
 <form method="post">
-    <input type="text" asp-for="SearchString" placeholder="Søg efter ingrediens..." />
+    <input type="text" asp-for="SearchString" placeholder="ikke implementeret" />
     <button type="submit">Søg</button>
 </form>
 
-@if (Model.Orders != null && Model.Orders.Any())
+@if (Model.Orders != null)
 {
-    <ul>
         @foreach (var order in Model.Orders)
         {
-            double totalPrice = 0;
-
-            <li>
-                <strong>Bruger:</strong> @order.User.Name<br />
-                <strong>Dato:</strong> @order.PickupTime<br />
-                <ul>
-                    @foreach (var line in order.OrderLines)
-                    {
-                        <li>
-                            <p>@line.Food.Ingredients, @line.Quantity stk., @line.Food.Price kr.</p>
-                        </li>
-
-                        totalPrice += line.Food.Price * line.Quantity;
-                    }
-                </ul>
-                <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
-            </li>
+            @if (order.FoodId != null)
+            {
+                <p>Indhold: @order.Food.Ingredients.</p>
+                <p>Antal: @order.Quantity stk.</p>
+                <p>Samlet pris: @(order.Food.Price * order.Quantity) kr.</p>
+            }
+            @if (order.CampaignOffer != null)
+            {
+                <p>Indhold: @order.CampaignOffer.Name.</p>
+                <p>Antal: @order.Quantity stk.</p>
+                <p>Samlet pris: @(order.CampaignOffer.Price * order.Quantity) kr.</p>
+            }
+            <br />
+            <br />
         }
-    </ul>
 }
 else
 {

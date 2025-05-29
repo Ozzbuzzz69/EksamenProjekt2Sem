@@ -5,51 +5,100 @@
 
 <h1>Opret bestilling</h1>
 
-@if (Model.Cart.User != null)
+@if (Model.User != null)
 {
     <h3>Bruger</h3>
-    <p>Navn: @Model.Cart.User.Name</p>
-    <p>Email: @Model.Cart.User.Email</p>
-    <p>Telefonnummer: @Model.Cart.User.PhoneNumber</p>
+    <p>Navn: @Model.User.Name</p>
+    <p>Email: @Model.User.Email</p>
+    <p>Telefonnummer: @Model.User.PhoneNumber</p>
 }
 
 <h2>Nuværende indhold</h2>
 
-@{
-    double totalPrice = 0;
-}
-
-@if (Model.Cart != null && Model.Cart.OrderLines.Any())
+@if (Model.Sandwich != null)
 {
-    foreach (var orderLine in Model.Cart.OrderLines)
-    {
-        if (orderLine.Food != null)
-        {
-                        <p> - @orderLine.Food.Ingredients, @orderLine.Quantity stk., @orderLine.Food.Price kr.</p>
-            totalPrice += orderLine.Food.Price * orderLine.Quantity;
-        }
-        else if (orderLine.CampaignOffer != null)
-        {
-                        <p> - Kampagnetilbud: @orderLine.CampaignOffer.Name, @orderLine.Quantity stk., @orderLine.CampaignOffer.Price kr.</p>
-            totalPrice += orderLine.CampaignOffer.Price * orderLine.Quantity;
-        }
-    }
-        <strong>Samlet pris: @totalPrice.ToString("0.00") kr.</strong>
-}
+    <p>@Model.Sandwich.Ingredients</p>
 
-
-<form method="post">
-    <br />
-    <h3>Vælg afhentningsdato</h3>
-    <div class="form-group" style="width:250px;">
-        <input asp-for="PickupTime" class="form-control" />
-        <span asp-validation-for="PickupTime" class="text-danger"></span>
-    </div>
-    <br />
-
-    <p>
-        <div class="form-group">
-            <input type="submit" class="btn btn-danger" style="background-color:#ff2d00;" value="Bekræft" />
+    <form method="post" asp-page-handler="OrderSandwich" asp-route-id="@Model.Sandwich.Id">
+        <br />
+        <h3>Vælg afhentningsdato</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.PickupTime" class="form-control" />
         </div>
-    </p>
-</form>
+
+        <br />
+        <h3>Vælg antal</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.Quantity" class="form-control" />
+        </div>
+        <br />
+
+        <p>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" style="background-color:#ff2d00;" value="Bekræft" />
+            </div>
+        </p>
+    </form>
+
+    <div>
+        <a asp-page="/Food/Sandwich/ReadAllSandwiches">Tilbage</a>
+    </div>
+}
+else if (Model.WarmMeal != null)
+{
+    <p>@Model.WarmMeal.Ingredients</p>
+
+    <form method="post" asp-page-handler="OrderWarmMeal" asp-route-id="@Model.WarmMeal.Id">
+        <br />
+        <h3>Vælg afhentningsdato</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.PickupTime" class="form-control" />
+        </div>
+
+        <br />
+        <h3>Vælg antal</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.Quantity" class="form-control" />
+        </div>
+        <br />
+
+        <p>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" style="background-color:#ff2d00;" value="Bekræft" />
+            </div>
+        </p>
+    </form>
+
+    <div>
+        <a asp-page="/Food/Sandwich/ReadAllSandwiches">Tilbage</a>
+    </div>
+}
+else if (Model.CampaignOffer != null)
+{
+    <p>@Model.CampaignOffer.Name</p>
+
+    <form method="post" asp-page-handler="OrderCampaignOffer" asp-route-id="@Model.CampaignOffer.Id">
+        <br />
+        <h3>Vælg afhentningsdato</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.PickupTime" class="form-control" />
+        </div>
+
+        <br />
+        <h3>Vælg antal</h3>
+        <div class="form-group" style="width:250px;">
+            <input asp-for="@Model.Quantity" class="form-control" />
+        </div>
+        <br />
+
+        <p>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" style="background-color:#ff2d00;" value="Bekræft" />
+            </div>
+        </p>
+    </form>
+
+    <div>
+        <a asp-page="/Food/Sandwich/ReadAllSandwiches">Tilbage</a>
+    </div>
+}
