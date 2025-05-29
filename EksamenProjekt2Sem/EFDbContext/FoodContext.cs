@@ -16,7 +16,6 @@ namespace EksamenProjektTest.EFDbContext
         /// <param name="options"></param>
         public FoodContext(DbContextOptions<FoodContext> options) : base(options) { }
        
-
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
